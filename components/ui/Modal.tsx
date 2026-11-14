@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { GAMES } from "@/components/games";
 import { useT } from "@/lib/i18n";
 import { useUI } from "@/lib/store";
 import {
@@ -37,7 +38,11 @@ export default function ModalHost() {
   let body: ReactNode;
   switch (m.kind) {
     case "zone": body = <ZoneMenu zone={m.zone} />; break;
-    case "activity": body = <ActivityPlaceholder id={m.id} />; break;
+    case "activity": {
+      const Game = GAMES[m.id];
+      body = Game ? <Game /> : <ActivityPlaceholder id={m.id} />;
+      break;
+    }
     case "missions": body = <MissionsPanel />; break;
     case "inventory": body = <InventoryPanel />; break;
     case "achievements": body = <AchievementsPanel />; break;

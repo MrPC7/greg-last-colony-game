@@ -11,6 +11,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import ts from "typescript";
 import * as characters from "../lib/characters.ts";
+import * as games from "../lib/content/games.ts";
 import * as story from "../lib/content/story.ts";
 import { UI } from "../lib/content/ui.ts";
 
@@ -42,7 +43,7 @@ function walk(v: unknown, path: string, seen = new Set<unknown>()) {
 }
 
 walk(UI, "UI");
-for (const [name, mod] of [["story", story], ["characters", characters]] as const) {
+for (const [name, mod] of [["story", story], ["games", games], ["characters", characters]] as const) {
   for (const [k, v] of Object.entries(mod)) walk(v, `${name}.${k}`);
 }
 

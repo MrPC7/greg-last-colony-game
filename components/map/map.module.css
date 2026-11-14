@@ -1,5 +1,6 @@
 /* Map stage: % positioning ported 1:1 from the prototype (.stage, .hs, .hud, .nav, .mn, .sp, #pr). */
-.stage{position:relative;width:100%;aspect-ratio:1172/657;background:var(--map) center/100% 100%;border-radius:12px;overflow:hidden;touch-action:manipulation}
+/* isolation: the sprites' depth z-index (3 + y%) stays inside the map, below the modal (#md, z-index 9). */
+.stage{position:relative;isolation:isolate;width:100%;aspect-ratio:1172/657;background:var(--map) center/100% 100%;border-radius:12px;overflow:hidden;touch-action:manipulation}
 
 .hs{position:absolute;width:8%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:2px dashed #7df9ff;cursor:pointer;z-index:2;animation:pl 1.8s infinite}
 @keyframes pl{50%{box-shadow:0 0 18px #7df9ff}}

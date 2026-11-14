@@ -28,6 +28,10 @@ body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans
 .op.ok{border-color:#2ecc71;background:#2ecc7133}.op.no{border-color:#e74c3c;background:#e74c3c33}
 canvas{max-width:100%;border-radius:10px;background:#05031a}
 .bar2{height:14px;border-radius:7px;background:#2ecc71}
+.jf{display:flex;gap:40px;justify-content:center;height:280px;align-items:flex-start;padding-top:10px}
+.jc{position:relative;width:70px;height:230px;border-bottom:4px solid #999;text-align:center}
+.jc i{position:absolute;left:25px;bottom:0;width:20px;height:20px;border-radius:50%;background:#ffb300}
+.jc span{position:absolute;bottom:-28px;left:0;right:0}
 input[type=range]{width:100%}
 .pt{border-radius:50%;aspect-ratio:1;border:3px solid;flex:none;background-repeat:no-repeat}
 #bub{position:fixed;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);max-width:640px;margin:auto;z-index:10;display:flex;gap:12px;align-items:center;background:var(--card);color:var(--fg);border:3px solid var(--bd);border-radius:20px;padding:12px;cursor:pointer;box-shadow:0 6px 24px #000a}
