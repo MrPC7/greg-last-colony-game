@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Portrait, faceStyle } from "@/components/ui/Portrait";
+import Watermark from "@/components/ui/Watermark";
 import { music, sfx, unlock } from "@/lib/audio";
 import { CH, PL } from "@/lib/characters";
 import { IN, IN_MS } from "@/lib/content/story";
@@ -45,6 +47,7 @@ export default function TitlePage() {
   return (
     <div id="app">
       <div id="title" className={phase === "ready" ? "rdy" : undefined}>
+        <div className="wmc">
         <div className="art" role="img" aria-label={t("title.artLabel")} />
         <div id="cin">
           <div id="cic" aria-live="polite">
@@ -69,6 +72,8 @@ export default function TitlePage() {
             <button className="b" id="sk" onClick={endCin}>{t("title.skip")}</button>
           )}
         </div>
+        <Watermark />
+        </div>
         <div className="bar">
           <span>{t("title.choose")}</span>
           <span id="pks">
@@ -84,9 +89,13 @@ export default function TitlePage() {
               />
             ))}
           </span>
+          <Watermark compact />
           <button className="b" onClick={() => router.push("/play")}>{t("title.play")}</button>
           <button className="b o" onClick={() => useUI.getState().openModal({ kind: "ar" })}>{t("title.tryAr")}</button>
         </div>
+        <p className="tl">
+          <Link href="/credits" prefetch={false}>{t("credits.link")}</Link>
+        </p>
       </div>
     </div>
   );

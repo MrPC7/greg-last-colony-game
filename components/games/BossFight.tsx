@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cropStyle } from "@/components/ui/Portrait";
+import Watermark from "@/components/ui/Watermark";
 import { music, sfx } from "@/lib/audio";
 import { CH } from "@/lib/characters";
 import { BOSS, BOSS_ALLIES, BOSS_TXT, BQ, type QuizQuestion } from "@/lib/content/games";
@@ -121,10 +122,13 @@ export default function BossFight() {
     <div ref={shake}>
       <h3>{t(BOSS_TXT.title)}</h3>
       <div
+        className="wmb"
         role="img"
         aria-label={t(BOSS_TXT.art)}
-        style={{ aspectRatio: 2.2, ...cropStyle([350, 0, 470, 215], "key"), borderRadius: 10 }}
-      />
+        style={{ position: "relative", aspectRatio: 2.2, ...cropStyle([350, 0, 470, 215], "key"), borderRadius: 10 }}
+      >
+        <Watermark compact />
+      </div>
       <div className="s">{t(BOSS_TXT.queen)}</div>
       <div className="bar2" style={{ width: Math.max(0, f.q) + "%", background: "#ab47bc" }} />
       <div className="s">{t(CH[hero].n)}</div>

@@ -93,5 +93,11 @@ export const UI = {
   "settings.resetYes": { es: "Sí, reiniciar", en: "Yes, reset" },
   "settings.cancel": { es: "Cancelar", en: "Cancel" },
   "settings.resetDone": { es: "✅ Progreso reiniciado.", en: "✅ Progress reset." },
+  "credits.link": { es: "📜 Créditos y fuentes", en: "📜 Credits and sources" },
+
+  // AI-image watermark (Space Apps rule)
+  "ai.watermark": { es: "Imagen generada con IA", en: "AI-generated image" },
+  "ai.watermarkShort": { es: "Imagen IA", en: "AI image" },
+
   "settings.home": { es: "🏠 Volver a la portada", en: "🏠 Back to the title screen" },
 } satisfies Record<string, Localized>;

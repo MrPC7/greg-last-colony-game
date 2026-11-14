@@ -190,6 +190,9 @@ export function SettingsPanel() {
           </>
         )}
       </div>
+      <div className="st">
+        <button className="b" onClick={() => { useUI.getState().closeModal(); router.push("/credits"); }}>{t("credits.link")}</button>
+      </div>
       {pathname !== "/" && (
         <div className="st">
           <button className="b" onClick={() => { useUI.getState().closeModal(); router.push("/"); }}>{t("settings.home")}</button>

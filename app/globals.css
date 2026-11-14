@@ -81,3 +81,25 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .st{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
 .st>span{min-width:140px;font-weight:700}
 .st .b.on{outline:3px solid #ffd54a}
+/* AI-image watermark (components/ui/Watermark.tsx). .wmc = position:relative size container
+   around an AI image; .wm covers the label burned into the JPEG by scripts/extract_assets.py
+   (same geometry in cqw = % of the image width: 0.6 margin, 23.86 × 1.86 box). */
+.wmc{position:relative;container-type:inline-size}
+.wm{position:absolute;right:.6cqw;bottom:.6cqw;z-index:200;box-sizing:border-box;min-width:23.86cqw;min-height:1.86cqw;display:flex;align-items:center;justify-content:center;padding:.3cqw .6cqw;border-radius:.56cqw;background:#000000d9;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);color:#fff;font:700 max(9px,1.1cqw)/1.15 system-ui,sans-serif;white-space:nowrap;pointer-events:none;user-select:none}
+/* Compact badge for crops of the AI images (portraits, sprites, boss art). */
+.wm.wms{position:static;min-width:0;min-height:0;display:inline-block;padding:2px 6px;border-radius:6px;font-size:10px}
+.wmp{position:relative;flex:none;display:inline-block}
+.wmp>.wms{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);z-index:1}
+.wmb>.wms{position:absolute;right:6px;bottom:6px}
+/* Credits page */
+#cred{max-width:760px;margin:0 auto;max-height:none}
+#cred h2{margin:18px 0 6px;font-size:20px}
+#cred ul{padding-left:20px;margin:6px 0}#cred li{margin:6px 0}
+#cred a:not(.b){color:#7c4dff;overflow-wrap:anywhere}
+:root[data-theme="dark"] #cred a:not(.b){color:#b39dff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) #cred a:not(.b){color:#b39dff}}
+#cred .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0}
+#cred figure{margin:0}#cred figcaption{font-size:14px;opacity:.85;margin-top:4px}
+#cred .th{border-radius:10px;background-size:100% 100%;background-repeat:no-repeat}
+.tl{text-align:center;margin:4px 0}
+.tl a{color:inherit;font-size:14px;opacity:.85}

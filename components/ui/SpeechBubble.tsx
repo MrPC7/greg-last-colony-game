@@ -5,6 +5,7 @@ import { CH } from "@/lib/characters";
 import { useT } from "@/lib/i18n";
 import { resolveSpeaker, useGame, useUI } from "@/lib/store";
 import { Portrait } from "./Portrait";
+import Watermark from "./Watermark";
 
 /** Prototype `talk()` bubble: portrait + name + line; tap / Enter / Space to continue. */
 export default function SpeechBubble() {
@@ -33,7 +34,10 @@ export default function SpeechBubble() {
   const c = CH[ci];
   return (
     <div id="bub" role="button" tabIndex={0} aria-live="polite" onClick={advance}>
-      <Portrait id="bp" ch={ci} />
+      <span className="wmp">
+        <Portrait id="bp" ch={ci} />
+        <Watermark compact />
+      </span>
       <div>
         <b id="bn" style={{ color: c.col }}>{t(c.n)}</b>
         <p id="btx">{t(text)}</p>

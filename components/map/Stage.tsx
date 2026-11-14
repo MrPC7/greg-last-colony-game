@@ -12,6 +12,7 @@ import Hud from "./Hud";
 import NavBar from "./NavBar";
 import PlayerToken from "./PlayerToken";
 import styles from "./map.module.css";
+import Watermark from "@/components/ui/Watermark";
 
 type Target = { x: number; y: number; after?: () => void };
 type Controller = {
@@ -226,6 +227,7 @@ export default function Stage() {
       <button data-ui className={`b o ${styles.tool} ${styles.tool2}`} onClick={hint}>
         {t("hub.hint")}
       </button>
+      <Watermark />
       {near >= 0 && (
         <button data-ui className={`b o ${styles.pr}`} onClick={() => ctrl.current?.enter(near)}>
           {t("hub.enter", { zone: t(ZONES[near].n) })}
