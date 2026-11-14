@@ -15,13 +15,13 @@ export default function Hud() {
   return (
     <div className={styles.hud}>
       <Portrait ch={ch} style={{ width: "16%" }} />
-      <div>
+      <div className={styles.nm}>
         {t(CH[ch].n)}
         <br />
         <small>{t("hud.level", { lv: 1 + Math.floor(stars / 5) })}</small>
       </div>
-      <div>⭐ {stars}</div>
-      <div>💎 {gems}</div>
+      <div className={styles.ct}>⭐ {stars}</div>
+      <div className={styles.ct}>💎 {gems}</div>
     </div>
   );
 }

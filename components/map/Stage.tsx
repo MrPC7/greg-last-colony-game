@@ -217,10 +217,10 @@ export default function Stage() {
       <PlayerToken ref={orbiRef} ch={ORBI} orbi />
       <Hud />
       <NavBar onMap={() => ctrl.current?.resetPos()} />
-      <button data-ui className={`b o ${styles.tool}`} style={{ top: "13%" }} onClick={() => useUI.getState().openModal({ kind: "ar" })}>
+      <button data-ui className={`b o ${styles.tool} ${styles.tool1}`} onClick={() => useUI.getState().openModal({ kind: "ar" })}>
         {t("hub.ar")}
       </button>
-      <button data-ui className={`b o ${styles.tool}`} style={{ top: "21%" }} onClick={hint}>
+      <button data-ui className={`b o ${styles.tool} ${styles.tool2}`} onClick={hint}>
         {t("hub.hint")}
       </button>
       {near >= 0 && (
