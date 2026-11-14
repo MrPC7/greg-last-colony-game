@@ -4,7 +4,20 @@ import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from 
 import StarShards, { collectShards } from "@/components/games/StarShards";
 import { sfx } from "@/lib/audio";
 import { ORBI } from "@/lib/characters";
-import { HINT_DONE, HINT_SUFFIX, HT, ORD, START_POS, ZONES, ZONE_INTRO } from "@/lib/content/story";
+import {
+  HINT_DONE,
+  HINT_SENAL,
+  HINT_SUFFIX,
+  HT,
+  ORD,
+  SENAL_LOCKED,
+  SENAL_UNLOCK,
+  START_POS,
+  ZONES,
+  ZONE_INTRO,
+  senalUnlocked,
+} from "@/lib/content/story";
+import type { Line, Localized } from "@/lib/content/types";
 import { useT } from "@/lib/i18n";
 import { isBusy, useGame, useUI } from "@/lib/store";
 import Hotspot from "./Hotspot";
@@ -24,14 +37,27 @@ type Controller = {
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const normKey = (e: KeyboardEvent) => (e.key.length > 1 ? e.key : e.key.toLowerCase());
+/** Where the hero stands to enter zone i (the dome hotspot is above the walkable area). */
+const walkPoint = (i: number) => ({ x: ZONES[i].wx ?? ZONES[i].x, y: ZONES[i].wy ?? ZONES[i].y });
+/** Fill {vars} in both languages (for dialogue lines, which the bubble shows without vars). */
+const fill = (l: Localized, v: Record<string, number>): Localized => {
+  const f = (s: string) => s.replace(/\{(\w+)\}/g, (m, k: string) => (k in v ? String(v[k]) : m));
+  return { es: f(l.es), en: f(l.en) };
+};
 
 /** Prototype `enter(p)`: first visit plays the zone's intro dialogue, then opens its sub-menu. */
 function enterZone(i: number) {
   if (isBusy()) return;
   const id = ZONES[i].id;
   const ui = useUI.getState();
+  const done = useGame.getState().done;
+  if (id === "senal" && !senalUnlocked(done)) {
+    const d = ORD.filter((k) => done[k]).length;
+    ui.startTalk(SENAL_LOCKED.map(([w, l]): Line => [w, fill(l as Localized, { d, k: SENAL_UNLOCK })]));
+    return;
+  }
   const open = () => useUI.getState().openModal({ kind: "zone", zone: id });
-  if (useGame.getState().done[id]) open();
+  if (done[id]) open();
   else ui.startTalk(ZONE_INTRO[id], open);
 }
 
@@ -40,7 +66,9 @@ function hint() {
   if (isBusy()) return;
   const done = useGame.getState().done;
   const n = ORD.findIndex((k) => !done[k]);
-  useUI.getState().startTalk([[2, n < 0 ? HINT_DONE : [HT[n], HINT_SUFFIX]]]);
+  const lines: Line[] = [[2, n < 0 ? HINT_DONE : [HT[n], HINT_SUFFIX]]];
+  if (senalUnlocked(done) && !done.senal) lines.push([2, HINT_SENAL]);
+  useUI.getState().startTalk(lines);
 }
 
 /** The map: hotspots, walking hero + Orbi follower, HUD and painted nav buttons. */
@@ -74,7 +102,10 @@ export default function Stage() {
     const c: Controller = {
       go,
       enter: enterZone,
-      visit: (i) => go(ZONES[i].x, ZONES[i].y, () => enterZone(i)),
+      visit: (i) => {
+        const w = walkPoint(i);
+        go(w.x, w.y, () => enterZone(i));
+      },
       resetPos: () => {
         s.x = START_POS.x;
         s.y = START_POS.y;
@@ -149,7 +180,10 @@ export default function Stage() {
         o.style.setProperty("--by", Math.sin(tm / 260) * 4 + "px");
       }
       collectShards(s.x, s.y);
-      const np = busy ? -1 : ZONES.findIndex((p) => Math.hypot(p.x - s.x, (p.y - s.y) * 0.56) < 4);
+      const np = busy ? -1 : ZONES.findIndex((_, i) => {
+        const w = walkPoint(i);
+        return Math.hypot(w.x - s.x, (w.y - s.y) * 0.56) < 4;
+      });
       if (np !== s.np) {
         s.np = np;
         setNear(np);
@@ -214,7 +248,15 @@ export default function Stage() {
       onPointerLeave={() => (drag.current = false)}
     >
       {ZONES.map((p, i) => (
-        <Hotspot key={p.id} x={p.x} y={p.y} label={t(p.n)} next={i === next} onSelect={() => ctrl.current?.visit(i)} />
+        <Hotspot
+          key={p.id}
+          x={p.x}
+          y={p.y}
+          label={t(p.n)}
+          next={i === next}
+          locked={p.id === "senal" && !senalUnlocked(done)}
+          onSelect={() => ctrl.current?.visit(i)}
+        />
       ))}
       <StarShards />
       <PlayerToken ref={tokenRef} ch={character} />

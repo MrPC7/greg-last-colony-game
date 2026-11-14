@@ -56,6 +56,7 @@ export function MissionsPanel() {
   const t = useT();
   const done = useGame((s) => s.done);
   const n = ACTIVITY_IDS.filter((k) => done[k]).length;
+  const total = ACTIVITY_IDS.length;
   const go = (k: ActivityId) => {
     const ui = useUI.getState();
     ui.closeModal();
@@ -64,8 +65,8 @@ export function MissionsPanel() {
   return (
     <>
       <h3>{t("missions.title")}</h3>
-      <div className="pb"><i style={{ width: `${n * 10}%` }} /></div>
-      <p className="s">{t("missions.progress", { d: n })}</p>
+      <div className="pb"><i style={{ width: `${(n / total) * 100}%` }} /></div>
+      <p className="s">{t("missions.progress", { d: n, total })}</p>
       {ACTIVITY_IDS.map((k) => (
         <button key={k} className="cd" onClick={() => go(k)}>
           <span className="ic">{ZI[k][0]}</span>
@@ -86,7 +87,7 @@ export function InventoryPanel() {
   return (
     <>
       <h3>{t("inv.title")}</h3>
-      <div className="pb"><i style={{ width: `${n * 10}%` }} /></div>
+      <div className="pb"><i style={{ width: `${(n / ACTIVITY_IDS.length) * 100}%` }} /></div>
       <div className="gr">
         {ACTIVITY_IDS.map((k) =>
           factOrder.includes(k) ? (

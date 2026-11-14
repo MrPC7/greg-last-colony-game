@@ -473,3 +473,107 @@ export const AR_TXT = {
   layers: { es: "Capas: frío y calor extremos", en: "Layers: extreme cold and heat" },
   boots: { es: "Botas: caminar con 1/6 de gravedad", en: "Boots: walking at 1/6 gravity" },
 } satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Phase 4 · La Señal de Ray — real NASA data (public/data/*.json, built by scripts/build_data.py)
+// Numbers here are formatted per language with Intl (es-PE / en-US: dot decimals, as used in Peru).
+// ---------------------------------------------------------------------------
+
+/** Shared texts of the NASA data games. */
+export const DATA_TXT = {
+  loading: { es: "Ray está sintonizando la señal…", en: "Ray is tuning in the signal…" },
+  error: {
+    es: "No pude leer los datos de la señal. Cierra y vuelve a intentarlo.",
+    en: "I couldn’t read the signal data. Close and try again.",
+  },
+  rayTitle: { es: "Ray explica:", en: "Ray explains:" },
+  again: { es: "🔁 Jugar otra vez", en: "🔁 Play again" },
+} satisfies Record<string, Localized>;
+
+/** TempChart: 5 rounds of "which year was hotter?"; stars by correct answers. */
+export const TEMP = { rounds: 5, minGap: 0.1, stars: [[5, 3], [4, 2], [3, 1]] as [number, number][] };
+
+export const TEMP_TXT = {
+  title: { es: "📈 El termómetro de la Tierra", en: "📈 Earth’s thermometer" },
+  ray: {
+    es: "Esta línea es la temperatura de toda la Tierra, año por año, desde 1880. No muestra grados normales: muestra cuánto más caliente (arriba de 0) o más frío (abajo de 0) fue cada año comparado con el promedio de 1951 a 1980. A eso los científicos le llaman «anomalía».",
+    en: "This line is the temperature of the whole Earth, year by year, since 1880. It doesn’t show normal degrees: it shows how much hotter (above 0) or colder (below 0) each year was compared with the 1951–1980 average. Scientists call that an “anomaly”.",
+  },
+  question: { es: "Ronda {r}/{total}: ¿qué año fue más caluroso?", en: "Round {r}/{total}: which year was hotter?" },
+  hidden: { es: "🔒 Elige un año para revelar la gráfica", en: "🔒 Pick a year to reveal the chart" },
+  right: { es: "✅ ¡Correcto! {hot} fue más caluroso que {cold}.", en: "✅ Correct! {hot} was hotter than {cold}." },
+  wrong: { es: "❌ Casi. {hot} fue más caluroso que {cold}.", en: "❌ Not quite. {hot} was hotter than {cold}." },
+  values: { es: "{y1}: {a1} °C · {y2}: {a2} °C", en: "{y1}: {a1} °C · {y2}: {a2} °C" },
+  next: { es: "Siguiente ronda ▶", en: "Next round ▶" },
+  finish: { es: "Ver resultado ▶", en: "See result ▶" },
+  score: { es: "Acertaste {c} de {total}.", en: "You got {c} out of {total} right." },
+  win: {
+    es: "🎉 ¡Sabes leer el termómetro de la Tierra! +{s} ⭐. ¿Notaste algo? Los años más recientes casi siempre ganan: la línea sube.",
+    en: "🎉 You can read Earth’s thermometer! +{s} ⭐. Did you notice? The most recent years almost always win: the line goes up.",
+  },
+  winReplay: {
+    es: "🎉 ¡Muy bien! Los años más recientes casi siempre son los más calurosos: la línea sube.",
+    en: "🎉 Well done! The most recent years are almost always the hottest: the line goes up.",
+  },
+  lose: {
+    es: "Necesitas al menos 3 aciertos. Pista de Ray: fíjate hacia dónde va la línea con los años.",
+    en: "You need at least 3 right answers. Ray’s tip: look at where the line goes over the years.",
+  },
+  axisY: { es: "Anomalía (°C)", en: "Anomaly (°C)" },
+  axisX: { es: "Año", en: "Year" },
+  series: { es: "Temperatura global vs. 1951–1980", en: "Global temperature vs. 1951–1980" },
+  tooltip: { es: "{y}: {a} °C", en: "{y}: {a} °C" },
+  chartLabel: {
+    es: "Gráfica de líneas: anomalía de temperatura global de {from} a {to}, de {min} °C a {max} °C.",
+    en: "Line chart: global temperature anomaly from {from} to {to}, from {min} °C to {max} °C.",
+  },
+  caption: {
+    es: "Datos: NASA GISTEMP v4 ({from}–{to}) — descargados el {date}",
+    en: "Data: NASA GISTEMP v4 ({from}–{to}) — downloaded {date}",
+  },
+} satisfies Record<string, Localized>;
+
+/** Continents for the FireMap game: first matching [latMin, latMax, lonMin, lonMax] box wins.
+ *  Rough bounding boxes (good enough to count fires; borders are approximate). */
+export const CONTINENTS: { id: string; name: Localized; boxes: [number, number, number, number][] }[] = [
+  { id: "oc", name: { es: "Oceanía", en: "Oceania" }, boxes: [[-50, -10, 110, 180], [-11, 0, 141, 180]] },
+  { id: "sa", name: { es: "América del Sur", en: "South America" }, boxes: [[-56, 12.5, -82, -34]] },
+  { id: "na", name: { es: "América del Norte y Central", en: "North and Central America" }, boxes: [[7, 84, -170, -50]] },
+  { id: "af", name: { es: "África", en: "Africa" }, boxes: [[-35, 37.5, -18, 34.5], [-35, 12, 34.5, 52], [12, 22, 34.5, 38.5]] },
+  { id: "eu", name: { es: "Europa", en: "Europe" }, boxes: [[42, 72, -25, 50], [50, 72, 50, 60], [36, 42, -25, 26]] },
+  { id: "as", name: { es: "Asia", en: "Asia" }, boxes: [[-11, 82, 25, 180]] },
+];
+
+export const FIRE = { stars: 3, starsRetry: 1 };
+
+export const FIRE_TXT = {
+  title: { es: "🔥 Mapa de incendios", en: "🔥 Fire map" },
+  ray: {
+    es: "Cada punto es un incendio que un satélite de la NASA vio desde el espacio. Su cámara especial «siente» el calor, como cuando acercas la mano a una fogata. De miles de incendios elegí {n} de los más seguros (confianza alta).",
+    en: "Each dot is a fire that a NASA satellite saw from space. Its special camera “feels” heat, like when you hold your hand near a campfire. Out of thousands of fires I picked {n} of the surest ones (high confidence).",
+  },
+  question: {
+    es: "Mira el mapa: ¿en qué continente hubo más incendios en estas 24 horas?",
+    en: "Look at the map: which continent had the most fires in these 24 hours?",
+  },
+  right: { es: "✅ ¡Exacto! {c} tuvo más incendios: {k} de {n} puntos.", en: "✅ Exactly! {c} had the most fires: {k} of {n} dots." },
+  wrong: {
+    es: "❌ No esta vez. Ganó {c} con {k} de {n} puntos. Mira los números de cada continente.",
+    en: "❌ Not this time. {c} won with {k} of {n} dots. Look at each continent’s numbers.",
+  },
+  win: { es: "+{s} ⭐ ¡Ya sabes leer un mapa de satélite!", en: "+{s} ⭐ Now you can read a satellite map!" },
+  why: {
+    es: "Ray: muchos incendios son quemas de pastos o de cultivos que hace la gente; otros son incendios forestales. Por eso los científicos vigilan el planeta todos los días.",
+    en: "Ray: many fires are grass or crop burns set by people; others are wildfires. That’s why scientists watch the planet every day.",
+  },
+  count: { es: "{k} incendios", en: "{k} fires" },
+  mapLabel: {
+    es: "Mapa del mundo con {n} incendios detectados por satélite.",
+    en: "World map with {n} fires detected by satellite.",
+  },
+  dot: { es: "Incendio: {lat}°, {lon}° · {b} K · {d}", en: "Fire: {lat}°, {lon}° · {b} K · {d}" },
+  caption: {
+    es: "Datos: NASA FIRMS (MODIS, 24 h) — {date}",
+    en: "Data: NASA FIRMS (MODIS, 24 h) — {date}",
+  },
+} satisfies Record<string, Localized>;

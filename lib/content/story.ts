@@ -3,19 +3,35 @@ import type { Line, Localized } from "./types";
 // Story & map data ported 1:1 from the prototype (P, ORD, HT, CL, IN, ZS, PO, ZI, ZXM, ZXS, BG).
 // Spanish = prototype original, English = prototype TR table (gaps translated and marked).
 
-export type ZoneId = "aulas" | "lab" | "cancha" | "verdes" | "aud";
+export type ZoneId = "aulas" | "lab" | "cancha" | "verdes" | "aud" | "senal";
 export type ActivityId =
-  | "course" | "aulas" | "lab" | "rad" | "cancha" | "body" | "verdes" | "therm" | "aud" | "ar";
+  | "course" | "aulas" | "lab" | "rad" | "cancha" | "body" | "verdes" | "therm" | "aud" | "ar"
+  // Phase 4 — "La Señal de Ray" (NASA data zone)
+  | "senal" | "fires";
 
-/** `P`: map hotspots, % coordinates on map.jpg. */
-export const ZONES: { id: ZoneId; n: Localized; x: number; y: number }[] = [
+/** Speaker index of Ray (CH[6] in lib/characters.ts). A literal here because content files
+ *  stay import-free for scripts/check_i18n.ts. */
+const RAY = 6;
+
+/** `P`: map hotspots, % coordinates on map.jpg. `wx`/`wy`: where the hero stands to enter
+ *  (only for hotspots outside the walkable area, y < 24). */
+export const ZONES: { id: ZoneId; n: Localized; x: number; y: number; wx?: number; wy?: number }[] = [
   { id: "aulas", n: { es: "Aulas", en: "Classrooms" }, x: 27.1, y: 30.1 },
   { id: "lab", n: { es: "Laboratorio Digital", en: "Digital Lab" }, x: 83.4, y: 38.4 },
   { id: "cancha", n: { es: "Cancha Deportiva", en: "Sports Court" }, x: 16.6, y: 52.5 },
   { id: "verdes", n: { es: "Zonas Verdes", en: "Green Zones" }, x: 46.8, y: 70.3 },
   // "Auditorio" alone had no TR entry in the prototype; translated here.
   { id: "aud", n: { es: "Auditorio", en: "Auditorium" }, x: 80.6, y: 66.2 },
+  // Phase 4: the observatory dome on top of the main building (not part of ORD; unlocks after 2 zones).
+  { id: "senal", n: { es: "La Señal de Ray", en: "Ray’s Signal" }, x: 59.3, y: 9.5, wx: 59.3, wy: 26 },
 ];
+
+/** Index of the NASA data zone in ZONES. */
+export const SENAL_INDEX = ZONES.findIndex((z) => z.id === "senal");
+/** ORD zones that must be completed before the observatory dome opens. */
+export const SENAL_UNLOCK = 2;
+export const senalUnlocked = (done: Record<string, boolean>) =>
+  ORD.filter((k) => done[k]).length >= SENAL_UNLOCK;
 
 /** `ORD`: recommended zone order (drives the golden "next zone" highlight). */
 export const ORD: ZoneId[] = ["aulas", "lab", "cancha", "verdes", "aud"];
@@ -75,6 +91,21 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
     es: "En una colonia el aire se cultiva. Hay que equilibrar plantas y tripulación.",
     en: "In a colony, air is grown. You have to balance plants and crew.",
   }]],
+  senal: [
+    [RAY, {
+      es: "Hola, {n}. Me llamo Ray… aunque me dicen el Sin Raíz: no recuerdo de dónde vengo. Pero sé escuchar señales.",
+      en: "Hi, {n}. My name is Ray… though they call me the Wanderer: I don’t remember where I come from. But I know how to listen to signals.",
+    }],
+    ["H", { es: "¿Señales? ¿De dónde?", en: "Signals? From where?" }],
+    [RAY, {
+      es: "De la Tierra. Los satélites de la NASA miran nuestro planeta todos los días: miden cuánto calor hace y ven los incendios desde el espacio.",
+      en: "From Earth. NASA satellites watch our planet every day: they measure how hot it is and spot fires from space.",
+    }],
+    [RAY, {
+      es: "Y algo anda mal: la Reina Hueca quiere conquistar la Tierra con fuego y calor. Ven, te muestro los datos reales.",
+      en: "And something is wrong: the Hollow Queen wants to conquer Earth with fire and heat. Come, I’ll show you the real data.",
+    }],
+  ],
   aud: [[2, {
     es: "En el Auditorio cuentan la historia de las misiones. Ordénalas bien: la pista final está en el pasado.",
     en: "The Auditorium tells the story of the missions. Put them in order: the final clue is in the past.",
@@ -103,6 +134,17 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
     [4, { es: "No… tenemos… hogar.", en: "We… have… no home." }],
     [2, { es: "Un Sin Raíz. Nos vigilan: hay que darse prisa.", en: "A Rootless one. They are watching us: we must hurry." }],
   ],
+  senal: [
+    [RAY, {
+      es: "¿Lo ves, {n}? Desde 1880 la Tierra se calentó más de 1 °C. Parece poco, pero es como si todo el planeta tuviera fiebre.",
+      en: "See, {n}? Since 1880 Earth has warmed by more than 1 °C. It sounds small, but it’s like the whole planet has a fever.",
+    }],
+    ["H", { es: "Entonces la Reina Hueca ya empezó…", en: "So the Hollow Queen has already started…" }],
+    [RAY, {
+      es: "Por eso hay que entender los datos. En el domo también tengo el mapa de incendios de hoy. ¡Échale un vistazo!",
+      en: "That’s why we need to understand the data. The dome also has today’s fire map. Take a look!",
+    }],
+  ],
   aud: [
     [2, {
       es: "¡Pista 5! Chang’e 4 llegó a la cara oculta: NOX-Ω está allí.",
@@ -120,6 +162,27 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
   ],
 };
 
+/** Extra dialogue after a zone's outro (prototype has none): the dome opens after SENAL_UNLOCK zones. */
+export const SENAL_OPENED: Line[] = [
+  [2, {
+    es: "¡Mira, {n}! El domo del observatorio se encendió. Alguien envía una señal desde la Tierra.",
+    en: "Look, {n}! The observatory dome just lit up. Someone is sending a signal from Earth.",
+  }],
+  [2, { es: "Sube al domo, arriba en el centro del mapa.", en: "Go up to the dome, at the top center of the map." }],
+];
+/** Orbi, when the dome is still locked. */
+export const SENAL_LOCKED: Line[] = [
+  [2, {
+    es: "Ese domo capta señales de la Tierra, pero aún está apagado. Completa {k} zonas para encenderlo ({d}/{k}).",
+    en: "That dome picks up signals from Earth, but it is still switched off. Complete {k} zones to turn it on ({d}/{k}).",
+  }],
+];
+/** Added to Orbi's 💡 hint while the dome is open and not yet done. */
+export const HINT_SENAL: Localized = {
+  es: "Y no olvides la señal de Ray en el domo del observatorio.",
+  en: "And don’t forget Ray’s signal in the observatory dome.",
+};
+
 /** `ZI`: the 10 activities (icon + name). Order matters (missions/inventory lists). */
 export const ZI: Record<ActivityId, [string, Localized]> = {
   course: ["📖", { es: "Curso: la Luna desde cero", en: "Course: the Moon from zero" }],
@@ -132,12 +195,14 @@ export const ZI: Record<ActivityId, [string, Localized]> = {
   therm: ["🌡️", { es: "Control térmico", en: "Thermal control" }],
   aud: ["🎤", { es: "Línea del tiempo", en: "Timeline" }],
   ar: ["📷", { es: "Realidad aumentada", en: "Augmented reality" }],
+  senal: ["📈", { es: "El termómetro de la Tierra", en: "Earth’s thermometer" }],
+  fires: ["🔥", { es: "Mapa de incendios", en: "Fire map" }],
 };
 export const ACTIVITY_IDS = Object.keys(ZI) as ActivityId[];
 
 /** `ZXM`: activity → index in ZONES. */
 export const ZXM: Record<ActivityId, number> = {
-  course: 0, aulas: 0, lab: 1, rad: 1, cancha: 2, body: 2, verdes: 3, therm: 3, aud: 4, ar: 4,
+  course: 0, aulas: 0, lab: 1, rad: 1, cancha: 2, body: 2, verdes: 3, therm: 3, aud: 4, ar: 4, senal: 5, fires: 5,
 };
 
 /** `ZXS`: zone sub-menus (title + activities). */
@@ -147,6 +212,7 @@ export const ZXS: Record<ZoneId, [Localized, ActivityId[]]> = {
   cancha: [{ es: "🏀 Cancha Deportiva", en: "🏀 Sports Court" }, ["cancha", "body"]],
   verdes: [{ es: "🌱 Zonas Verdes", en: "🌱 Green Zones" }, ["verdes", "therm"]],
   aud: [{ es: "🎤 Auditorio", en: "🎤 Auditorium" }, ["aud", "ar"]],
+  senal: [{ es: "📡 La Señal de Ray", en: "📡 Ray’s Signal" }, ["senal", "fires"]],
 };
 
 /** Facts saved to the inventory when an activity is won (prototype `win(id, s, fact)`). */
@@ -187,6 +253,14 @@ export const FACTS: Record<ActivityId | "boss", Localized> = {
   ar: {
     es: "Con realidad aumentada puedes explorar la Luna, la radiación y un traje de astronauta desde tu celular.",
     en: "With augmented reality you can explore the Moon, radiation and an astronaut suit from your phone.",
+  },
+  senal: {
+    es: "Según NASA GISTEMP, la Tierra está más de 1 °C más caliente que a fines del siglo XIX.",
+    en: "According to NASA GISTEMP, Earth is more than 1 °C warmer than in the late 1800s.",
+  },
+  fires: {
+    es: "Los satélites de NASA FIRMS detectan incendios desde el espacio gracias al calor que emiten.",
+    en: "NASA FIRMS satellites detect fires from space thanks to the heat they give off.",
   },
   boss: {
     es: "La Reina Hueca cayó: la lógica y el esfuerzo salvan al universo.",
@@ -263,5 +337,6 @@ export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: Progr
   { icon: "🌡️", name: { es: "Ingeniero térmico", en: "Thermal engineer" }, desc: { es: "Domina el control térmico", en: "Master thermal control" }, ok: (s) => !!s.done.therm },
   { icon: "💪", name: { es: "Astronauta en forma", en: "Fit astronaut" }, desc: { es: "Supera el entrenamiento", en: "Pass the training" }, ok: (s) => !!s.done.body },
   { icon: "✨", name: { es: "Cazador de estrellas", en: "Star hunter" }, desc: { es: "Reúne los 8 fragmentos", en: "Collect all 8 fragments" }, ok: (s) => s.shards.length >= 8 },
+  { icon: "📡", name: { es: "Lector de señales", en: "Signal reader" }, desc: { es: "Lee los datos de la NASA con Ray", en: "Read NASA data with Ray" }, ok: (s) => !!s.done.senal && !!s.done.fires },
   { icon: "👑", name: { es: "Vencedor de la Reina", en: "Queen slayer" }, desc: { es: "Derrota a la Reina Hueca", en: "Defeat the Hollow Queen" }, ok: (s) => !!s.done.boss },
 ];

@@ -53,8 +53,48 @@ export const NASA_RESOURCES: Source[] = [
   },
 ];
 
-/** NASA Earth data — added in Phase 4 ("La Señal de Ray"). Empty until then. */
-export const NASA_DATA: Source[] = [];
+/** NASA Earth data used in the "La Señal de Ray" zone (Phase 4). The files in public/data/ are
+ *  built by scripts/build_data.py from these exact URLs; snapshot downloaded 2026-11-14 (UTC). */
+export const NASA_DATA: Source[] = [
+  {
+    name: {
+      es: "NASA GISTEMP v4 — Índice global de temperatura tierra-océano (CSV)",
+      en: "NASA GISTEMP v4 — Global Land-Ocean Temperature Index (CSV)",
+    },
+    url: "https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv",
+    use: {
+      es: "Anomalía anual de temperatura global (columna J-D, 1880–2025, respecto a 1951–1980) en el juego «El termómetro de la Tierra». Descargado el 14 nov 2026.",
+      en: "Annual global temperature anomaly (J-D column, 1880–2025, vs 1951–1980) in the “Earth’s thermometer” game. Downloaded 14 Nov 2026.",
+    },
+  },
+  {
+    name: { es: "NASA GISTEMP v4 — página del conjunto de datos", en: "NASA GISTEMP v4 — dataset page" },
+    url: "https://data.giss.nasa.gov/gistemp/",
+    use: {
+      es: "Descripción y cita del análisis de temperatura GISS Surface Temperature (GISTEMP v4).",
+      en: "Description and citation of the GISS Surface Temperature Analysis (GISTEMP v4).",
+    },
+  },
+  {
+    name: {
+      es: "NASA FIRMS — Incendios activos MODIS C6.1, global, últimas 24 h (CSV)",
+      en: "NASA FIRMS — MODIS C6.1 active fires, global, last 24 h (CSV)",
+    },
+    url: "https://firms.modaps.eosdis.nasa.gov/data/active_fire/modis-c6.1/csv/MODIS_C6_1_Global_24h.csv",
+    use: {
+      es: "300 incendios de confianza alta (muestra aleatoria de 4.221, detectados el 13–14 nov 2026) en el «Mapa de incendios». El mapa del mundo es un dibujo simplificado propio.",
+      en: "300 high-confidence fires (random sample of 4,221, detected 13–14 Nov 2026) in the “Fire map”. The world map is our own simplified drawing.",
+    },
+  },
+  {
+    name: { es: "NASA FIRMS — archivos de incendios activos", en: "NASA FIRMS — active fire data files" },
+    url: "https://firms.modaps.eosdis.nasa.gov/active_fire/",
+    use: {
+      es: "Página de descarga de los archivos de incendios activos (Fire Information for Resource Management System).",
+      en: "Download page of the active fire files (Fire Information for Resource Management System).",
+    },
+  },
+];
 
 /** The three AI-generated images, shown as thumbnails on the credits page. */
 export const AI_IMAGES: { file: string; cssVar: string; ratio: string; name: Localized }[] = [
@@ -94,9 +134,9 @@ export const CREDITS = {
     en: "The game’s science facts come from these public NASA pages:",
   },
   dataTitle: { es: "🛰️ Datos de la Tierra (NASA)", en: "🛰️ Earth data (NASA)" },
-  dataSoon: {
-    es: "Próximamente: la zona «La Señal de Ray» usará datos reales de NASA GISTEMP v4 (temperatura global) y NASA FIRMS (incendios activos). Sus fuentes y fechas aparecerán aquí.",
-    en: "Coming soon: the “Ray’s Signal” zone will use real data from NASA GISTEMP v4 (global temperature) and NASA FIRMS (active fires). Their sources and dates will be listed here.",
+  dataIntro: {
+    es: "La zona «La Señal de Ray» usa datos reales de la NASA, guardados en el juego (funciona sin internet):",
+    en: "The “Ray’s Signal” zone uses real NASA data, stored in the game (works offline):",
   },
   noLogo: {
     es: "Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respaldado por la NASA.",

@@ -30,7 +30,12 @@ export const CH: Character[] = [
   { n: { es: "Joseph", en: "Joseph" }, col: "#e53935", f: [935, 115, 170, 170], b: [905, 110, 265, 640] },
   { n: { es: "Sin Raíz", en: "Rootless" }, col: "#26c6da", f: [1185, 15, 140, 140] },
   { n: { es: "Reina Hueca", en: "Hollow Queen" }, col: "#ab47bc", f: [505, 0, 150, 150], im: "key" },
+  // Phase 4: Ray, the Rootless one who shows NASA data (same art as CH[4]).
+  { n: { es: "Ray, el Sin Raíz", en: "Ray, the Wanderer" }, col: "#26c6da", f: [1185, 15, 140, 140] },
 ];
+
+/** Ray (El Sin Raíz / The Wanderer), host of the NASA data zone. */
+export const RAY = 6;
 
 /** Playable heroes (Orbi is the guide). */
 export const PL = [0, 1, 3];

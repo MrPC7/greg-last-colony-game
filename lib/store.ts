@@ -4,7 +4,17 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { sfx } from "./audio";
 import { CH, rival } from "./characters";
-import { SH, SHARD_BONUS, START_POS, ZONE_OUTRO, type ActivityId, type ZoneId } from "./content/story";
+import {
+  ORD,
+  SENAL_OPENED,
+  SENAL_UNLOCK,
+  SH,
+  SHARD_BONUS,
+  START_POS,
+  ZONE_OUTRO,
+  type ActivityId,
+  type ZoneId,
+} from "./content/story";
 import type { Lang, Line, Speaker } from "./content/types";
 
 export type Theme = "auto" | "light" | "dark";
@@ -221,8 +231,13 @@ export function awardWin(id: ActivityId | "boss", stars: number) {
   const first = useGame.getState().win(id, stars);
   if (first) {
     sfx("win");
-    const outro = (ZONE_OUTRO as Record<string, Line[] | undefined>)[id];
-    if (outro) useUI.setState({ queued: () => useUI.getState().startTalk(outro) });
+    let outro = (ZONE_OUTRO as Record<string, Line[] | undefined>)[id] ?? [];
+    // Phase 4: the zone that reaches SENAL_UNLOCK completed zones also opens the observatory dome.
+    const done = useGame.getState().done;
+    if ((ORD as string[]).includes(id) && ORD.filter((k) => done[k]).length === SENAL_UNLOCK && !done.senal) {
+      outro = [...outro, ...SENAL_OPENED];
+    }
+    if (outro.length) useUI.setState({ queued: () => useUI.getState().startTalk(outro) });
   }
   return first;
 }

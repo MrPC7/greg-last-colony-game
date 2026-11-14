@@ -61,8 +61,8 @@ export const UI = {
   // Panels
   "missions.title": { es: "⭐ Misiones", en: "⭐ Missions" },
   "missions.progress": {
-    es: "{d}/10 completadas. Toca una para ir a su zona.",
-    en: "{d}/10 completed. Tap one to go to its zone.",
+    es: "{d}/{total} completadas. Toca una para ir a su zona.",
+    en: "{d}/{total} completed. Tap one to go to its zone.",
   },
   "inv.title": { es: "🎒 Datos desbloqueados", en: "🎒 Unlocked facts" },
   "ach.title": { es: "🏆 Logros", en: "🏆 Achievements" },

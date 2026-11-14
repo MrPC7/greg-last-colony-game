@@ -8,12 +8,15 @@ export default function Hotspot({
   y,
   label,
   next,
+  locked = false,
   onSelect,
 }: {
   x: number;
   y: number;
   label: string;
   next: boolean;
+  /** dimmed, not pulsing (the dome before SENAL_UNLOCK zones) */
+  locked?: boolean;
   onSelect: () => void;
 }) {
   return (
@@ -21,7 +24,7 @@ export default function Hotspot({
       data-ui
       role="button"
       tabIndex={0}
-      className={styles.hs + (next ? " " + styles.nx : "")}
+      className={styles.hs + (next ? " " + styles.nx : "") + (locked ? " " + styles.lk : "")}
       style={{ left: `${x}%`, top: `${y}%` }}
       title={label}
       aria-label={label}

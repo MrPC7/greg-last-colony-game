@@ -5,6 +5,9 @@
 .hs{position:absolute;width:8%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:2px dashed #7df9ff;cursor:pointer;z-index:2;animation:pl 1.8s infinite}
 @keyframes pl{50%{box-shadow:0 0 18px #7df9ff}}
 .hs.nx{border:3px solid #ffd54a;box-shadow:0 0 22px #ffd54a}
+/* Phase 4: observatory dome hotspot before it unlocks */
+.hs.lk{border-color:#fff;opacity:.9;animation:none;background:#140c3266}
+.hs.lk::after{content:"🔒";position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(10px,1.8vw,20px)}
 
 .hud{position:absolute;left:70.5%;top:2%;width:28.5%;height:11.5%;background:#140c32;border:2px solid #4f6bff;border-radius:14px;display:flex;align-items:center;gap:5%;padding:0 3%;color:#fff;font-weight:700;font-size:clamp(9px,1.7vw,18px);z-index:4;container-type:size;overflow:hidden}
 /* Text never taller than the box: prototype size, capped at 32% of the HUD height (2 lines × 1.45). */

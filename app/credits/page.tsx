@@ -56,7 +56,8 @@ export default function CreditsPage() {
         <SourceList items={NASA_RESOURCES} />
 
         <h2>{t(C.dataTitle)}</h2>
-        {NASA_DATA.length ? <SourceList items={NASA_DATA} /> : <p className="s">{t(C.dataSoon)}</p>}
+        <p className="s">{t(C.dataIntro)}</p>
+        <SourceList items={NASA_DATA} />
         <p className="s">{t(C.noLogo)}</p>
 
         <h2>{t(C.aiTitle)}</h2>

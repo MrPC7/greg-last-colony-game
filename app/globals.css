@@ -103,3 +103,25 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 #cred .th{border-radius:10px;background-size:100% 100%;background-repeat:no-repeat}
 .tl{text-align:center;margin:4px 0}
 .tl a{color:inherit;font-size:14px;opacity:.85}
+
+/* ---- Phase 4: La Señal de Ray (TempChart, FireMap) ---- */
+.ray{display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:10px;border:2px solid #26c6da;border-radius:12px;background:#26c6da1a}
+.ray .pt{width:56px;border-color:#26c6da}
+.ray .wmp{margin:0 8px 10px}
+.ray p{margin:0;font-size:14px}
+.yrs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0 8px}
+.yrs .op{text-align:center;font-weight:700}
+.tc{position:relative;height:clamp(200px,42vw,260px);margin:8px 0}
+.tch{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;border-radius:10px;background:color-mix(in srgb,var(--card) 70%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-weight:700}
+.cap{margin:10px 0 0;font-size:12px;opacity:.85}
+.cap a{color:inherit}
+.fm{display:block;width:100%;height:auto;margin:8px 0;border-radius:10px;border:2px solid var(--bd)}
+.fmw{fill:#cfe3f7}.fml{fill:#e9e2c9;stroke:#a89c75;stroke-width:.3}
+.fmd{fill:#f03e3e;stroke:#fff;stroke-width:.4}
+.fmb{fill:#ffd54a33;stroke:#e6a700;stroke-width:.6;stroke-dasharray:2 1.5}
+:root[data-theme="dark"] .fmw{fill:#14204a}:root[data-theme="dark"] .fml{fill:#3a3f63;stroke:#5c6390}:root[data-theme="dark"] .fmd{stroke:#171238}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .fmw{fill:#14204a}:root:not([data-theme="light"]) .fml{fill:#3a3f63;stroke:#5c6390}:root:not([data-theme="light"]) .fmd{stroke:#171238}}
+.cb{display:grid;gap:4px;margin:8px 0}
+.cbr{display:grid;grid-template-columns:minmax(0,11em) 1fr auto;gap:8px;align-items:center;font-size:14px;padding:2px 6px;border-radius:8px;border:2px solid transparent}
+.cbr i{display:block;height:10px;min-width:2px;border-radius:0 4px 4px 0;background:#f03e3e}
+.cbr.ok{border-color:#2ecc71;background:#2ecc7122}.cbr.no{border-color:#e74c3c;background:#e74c3c22}
