@@ -2,19 +2,23 @@
 
 import { useT } from "@/lib/i18n";
 
-/** "Imagen generada con IA" / "AI-generated image" label (Space Apps rule for AI images).
+/** AI-image disclosure (Space Apps rule for AI images).
  *
- *  Default: absolutely positioned in the bottom-right corner of its container, which must be
- *  `position: relative` and a size container (`.wmc`). It is sized in cqw to cover exactly the
- *  bilingual label burned into the JPEG by scripts/extract_assets.py, so the in-game view shows
- *  one label in the current language, while downloaded files still carry the burned one.
+ *  Default: small semi-transparent "Imagen generada con IA" / "AI-generated image" text in the
+ *  bottom-right corner of its container, which must be `position: relative` and a size container
+ *  (`.wmc`). It sits just above the subtle bilingual label burned into the JPEG by
+ *  scripts/extract_assets.py, which stays in the file (and in downloads).
  *
- *  `compact`: a small inline badge for crops of the AI images (portraits, sprites, boss art). */
+ *  `compact`: a tiny "IA" / "AI" corner mark for small crops of the AI images (portraits,
+ *  sprites, boss art). Its parent must be `position: relative` (`.wmp`, `.wmb`, `.pk`). */
 export default function Watermark({ compact }: { compact?: boolean }) {
   const t = useT();
-  return (
-    <span className={compact ? "wm wms" : "wm"}>
-      {t(compact ? "ai.watermarkShort" : "ai.watermark")}
-    </span>
-  );
+  if (compact) {
+    return (
+      <span className="wms" role="img" aria-label={t("ai.watermark")} title={t("ai.watermark")}>
+        {t("ai.mark")}
+      </span>
+    );
+  }
+  return <span className="wm">{t("ai.watermark")}</span>;
 }

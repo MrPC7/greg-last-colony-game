@@ -104,7 +104,7 @@ export const UI = {
 
   // AI-image watermark (Space Apps rule)
   "ai.watermark": { es: "Imagen generada con IA", en: "AI-generated image" },
-  "ai.watermarkShort": { es: "Imagen IA", en: "AI image" },
+  "ai.mark": { es: "IA", en: "AI" },
 
   "settings.home": { es: "🏠 Volver a la portada", en: "🏠 Back to the title screen" },
 } satisfies Record<string, Localized>;

@@ -60,8 +60,8 @@ This game does not use NASA logos, insignia or branding, and it is not endorsed 
 
 ### Use of artificial intelligence (AI)
 
-- **Images:** the school map, the key art and the character sheet were generated with AI (AI text-to-image generation tool). They carry the label "AI-generated image" inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images.
-- **Code:** written with Claude Code (Anthropic), under the team's direction.
+- **Images:** the school map, the key art and the character sheet were generated with AI (AI text-to-image generation tool). They carry the label "AI-generated image" inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images and carry a small "AI" mark.
+- **Code:** developed by the team with AI-assisted programming tools.
 - **Sound and music:** synthesised in the browser with Web Audio (no audio files).
 
 ### Team
@@ -168,8 +168,8 @@ Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respalda
 
 ### Uso de inteligencia artificial (IA)
 
-- **Imágenes:** el mapa del colegio, la portada y la lámina de personajes fueron generados con IA (herramienta de generación de imágenes con IA, texto a imagen). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes.
-- **Código:** escrito con Claude Code (Anthropic), con la dirección del equipo.
+- **Imágenes:** el mapa del colegio, la portada y la lámina de personajes fueron generados con IA (herramienta de generación de imágenes con IA, texto a imagen). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes y llevan una pequeña marca «IA».
+- **Código:** desarrollado por el equipo con herramientas de programación asistida por IA.
 - **Sonido y música:** generados en el navegador con Web Audio (sin archivos de audio).
 
 ### Equipo

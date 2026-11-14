@@ -18,7 +18,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans
 .b{background:#7c4dff;color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
 .b.o{background:#e65100}
 .b:disabled{opacity:.5;cursor:default}
-.pk{width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
+.pk{position:relative;width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
 .pk.on{border-color:#ffd54a}
 /* Top padding leaves room for the config buttons, which stay above the backdrop. */
 #md{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 44px) 10px 10px;z-index:9;overflow:auto}
@@ -82,15 +82,14 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .st>span{min-width:140px;font-weight:700}
 .st .b.on{outline:3px solid #ffd54a}
 /* AI-image watermark (components/ui/Watermark.tsx). .wmc = position:relative size container
-   around an AI image; .wm covers the label burned into the JPEG by scripts/extract_assets.py
-   (same geometry in cqw = % of the image width: 0.6 margin, 23.86 × 1.86 box). */
+   around an AI image. .wm is the small in-game label; it sits just above the subtle label burned
+   into the JPEG by scripts/extract_assets.py (0.6 cqw margin, 1.14 cqw tall; cqw = % of image width). */
 .wmc{position:relative;container-type:inline-size}
-.wm{position:absolute;right:.6cqw;bottom:.6cqw;z-index:200;box-sizing:border-box;min-width:23.86cqw;min-height:1.86cqw;display:flex;align-items:center;justify-content:center;padding:.3cqw .6cqw;border-radius:.56cqw;background:#000000d9;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);color:#fff;font:700 max(9px,1.1cqw)/1.15 system-ui,sans-serif;white-space:nowrap;pointer-events:none;user-select:none}
-/* Compact badge for crops of the AI images (portraits, sprites, boss art). */
-.wm.wms{position:static;min-width:0;min-height:0;display:inline-block;padding:2px 6px;border-radius:6px;font-size:10px}
+.wm{position:absolute;right:max(4px,.6cqw);bottom:calc(2.1cqw + 2px);z-index:200;color:#fff;opacity:.6;font:600 11px/1.2 system-ui,sans-serif;text-shadow:0 0 3px #000,0 1px 2px #000;white-space:nowrap;pointer-events:none;user-select:none}
+/* Tiny corner mark for small crops of the AI images (portraits, sprites, boss art). */
+.wms{position:absolute;right:0;bottom:0;z-index:1;padding:1px 3px;border-radius:4px;background:#0000004d;color:#fff;opacity:.75;font:700 8px/1.1 system-ui,sans-serif;pointer-events:none;user-select:none}
 .wmp{position:relative;flex:none;display:inline-block}
-.wmp>.wms{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);z-index:1}
-.wmb>.wms{position:absolute;right:6px;bottom:6px}
+.wmb>.wms{right:4px;bottom:4px}
 /* Credits page */
 #cred{max-width:760px;margin:0 auto;max-height:none}
 #cred h2{margin:18px 0 6px;font-size:20px}
@@ -107,7 +106,7 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 /* ---- Phase 4: La Señal de Ray (TempChart, FireMap) ---- */
 .ray{display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:10px;border:2px solid #26c6da;border-radius:12px;background:#26c6da1a}
 .ray .pt{width:56px;border-color:#26c6da}
-.ray .wmp{margin:0 8px 10px}
+.ray .wmp{margin:0 8px}
 .ray p{margin:0;font-size:14px}
 .yrs{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0 8px}
 .yrs .op{text-align:center;font-weight:700}
@@ -129,7 +128,7 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 /* ---- Phase 5: character features ---- */
 .host{position:relative;display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:10px;border:2px solid var(--bd);border-radius:16px 16px 16px 4px;background:color-mix(in srgb,var(--card) 85%,#7c4dff)}
 .host .pt{width:56px;flex:none}
-.host .wmp{margin:0 8px 10px}
+.host .wmp{margin:0 8px}
 .host p{margin:0;font-size:14px}
 .b.hint{background:#ffd54a;color:#3b2a00;margin:6px 0}
 .patchw{position:relative;width:min(100%,320px);aspect-ratio:1;margin:8px auto}
@@ -143,7 +142,7 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .invp img{width:96px;height:96px;border-radius:12px}
 .memv{display:flex;gap:12px;align-items:center;margin:10px 0}
 .memv .pt{width:72px;flex:none;border-color:#26c6da}
-.memv .wmp{margin:0 8px 10px}
+.memv .wmp{margin:0 8px}
 .memv p{margin:4px 0;font-style:italic;opacity:0;animation:memIn .9s ease forwards}
 .memo{text-align:center;color:#26c6da}
 @keyframes memIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -158,7 +157,7 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .btopic{margin:8px 0 0;font-weight:700;color:#7c4dff}
 .end .endc{display:flex;flex:none}
 .end .endc .pt{width:64px}
-.end .endc .wmp{margin:0 4px 10px}
+.end .endc .wmp{margin:0 4px}
 @media(max-width:480px){.end .memv{flex-direction:column}}
 .certn{display:grid;gap:6px;margin:8px 0}
 .certn input{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--fg)}

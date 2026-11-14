@@ -145,12 +145,12 @@ export const CREDITS = {
 
   aiTitle: { es: "🤖 Uso de inteligencia artificial (IA)", en: "🤖 Use of artificial intelligence (AI)" },
   aiImages: {
-    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes.",
-    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). They carry the label “AI-generated image” inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images.",
+    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes y llevan una pequeña marca «IA».",
+    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). They carry the label “AI-generated image” inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images and carry a small “AI” mark.",
   },
   aiCode: {
-    es: "Código: escrito con Claude Code (Anthropic), con la dirección del equipo.",
-    en: "Code: written with Claude Code (Anthropic), under the team’s direction.",
+    es: "Código: desarrollado por el equipo con herramientas de programación asistida por IA.",
+    en: "Code: developed by the team with AI-assisted programming tools.",
   },
   aiAudio: {
     es: "Sonido y música: generados en el navegador con Web Audio (sin archivos de audio).",

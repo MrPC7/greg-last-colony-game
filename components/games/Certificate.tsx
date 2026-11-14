@@ -139,13 +139,16 @@ export default function Certificate() {
     x.beginPath();
     x.arc(px0, py0, pr, 0, Math.PI * 2);
     x.stroke();
-    x.font = `bold 15px ${SANS}`;
-    const wm = t("ai.watermarkShort");
-    const ww = x.measureText(wm).width + 16;
-    x.fillStyle = "#000000aa";
-    x.fillRect(px0 - ww / 2, py0 + pr + 10, ww, 24);
+    // Tiny "IA" / "AI" corner mark (the portrait is a crop of AI art).
+    x.save();
+    x.font = `bold 13px ${SANS}`;
+    x.textAlign = "right";
+    x.globalAlpha = 0.7;
+    x.shadowColor = "#000";
+    x.shadowBlur = 3;
     x.fillStyle = "#ffffff";
-    x.fillText(wm, px0, py0 + pr + 28);
+    x.fillText(t("ai.mark"), px0 + pr + 6, py0 + pr + 2);
+    x.restore();
     x.font = `20px ${SANS}`;
     x.fillStyle = "#cfc6ff";
     x.fillText(t(CERT_TXT.hero, { hero: heroName }), px0, py0 - pr - 16);

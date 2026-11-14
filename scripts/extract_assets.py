@@ -8,15 +8,16 @@ The prototype defines three CSS custom properties holding data URLs:
   --cast -> public/img/cast.jpg
 
 All three are AI-generated, so each file gets a bilingual label burned into its
-bottom-right corner ("Imagen generada con IA · AI-generated image") plus a JPEG
+bottom-right corner ("Imagen generada con IA · AI-generated image": small
+semi-transparent white text with a faint dark outline, no box) plus a JPEG
 comment with the same text. The images are re-encoded with Pillow's
 quality="keep" / subsampling="keep", i.e. the original quantisation tables and
 chroma subsampling, so quality matches the source. Always run this on the
 prototype HTML (the clean originals) — never on already-watermarked files.
 
-The label geometry is defined as fractions of the image width (WM_* below) so
-the in-game overlay (components/ui/Watermark.tsx, .wm in app/globals.css) can
-sit exactly on top of it.
+The label geometry is defined as fractions of the image width (WM_* below); the
+in-game label (components/ui/Watermark.tsx, .wm in app/globals.css) sits just
+above it.
 
 Requires Pillow (pip install Pillow).
 
@@ -50,9 +51,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 WM_TEXT = "Imagen generada con IA · AI-generated image"
 # Geometry as fractions of the image width; mirrored by .wm in app/globals.css.
 WM_FONT = 0.011  # text height (font size)
-WM_PAD_X = 0.006
-WM_PAD_Y = 0.003
 WM_MARGIN = 0.006  # distance from the right and bottom edges
+WM_FILL = (255, 255, 255, 160)  # ~63% opaque white
+WM_STROKE = (0, 0, 0, 110)  # faint outline so the text reads on light areas
 WM_FONTS = [
     "arialbd.ttf",  # Windows
     "Arial Bold.ttf",  # macOS
@@ -73,24 +74,23 @@ def load_font(size: int):
 
 
 def watermark(jpeg: bytes) -> tuple[bytes, tuple[float, float]]:
-    """Burn WM_TEXT into the bottom-right corner. Returns the new JPEG bytes and
-    the label box size (width, height) as fractions of the image width."""
+    """Burn WM_TEXT into the bottom-right corner (text only, no box). Returns the
+    new JPEG bytes and the label size (width, height) as fractions of the image width."""
     from PIL import Image, ImageDraw
 
     src = Image.open(io.BytesIO(jpeg))
     w, h = src.size
-    font = load_font(max(10, round(WM_FONT * w)))
-    pad_x, pad_y, margin = round(WM_PAD_X * w), round(WM_PAD_Y * w), round(WM_MARGIN * w)
-    l, t, r, b = font.getbbox(WM_TEXT)
-    asc, desc = font.getmetrics()
-    box_w, box_h = (r - l) + 2 * pad_x, asc + desc + 2 * pad_y
-    x1, y1 = w - margin, h - margin
-    x0, y0 = x1 - box_w, y1 - box_h
+    size = max(10, round(WM_FONT * w))
+    font = load_font(size)
+    stroke = max(1, round(size / 14))
+    margin = round(WM_MARGIN * w)
+    l, t, r, b = font.getbbox(WM_TEXT, stroke_width=stroke)
+    box_w, box_h = r - l, b - t
+    x0, y0 = w - margin - box_w, h - margin - box_h
 
     overlay = Image.new("RGBA", src.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(overlay)
-    d.rounded_rectangle((x0, y0, x1, y1), radius=round(box_h * 0.3), fill=(0, 0, 0, 165))
-    d.text((x0 + pad_x - l, y0 + pad_y), WM_TEXT, font=font, fill=(255, 255, 255, 235))
+    d.text((x0 - l, y0 - t), WM_TEXT, font=font, fill=WM_FILL, stroke_width=stroke, stroke_fill=WM_STROKE)
     out_img = Image.alpha_composite(src.convert("RGBA"), overlay).convert("RGB")
 
     buf = io.BytesIO()

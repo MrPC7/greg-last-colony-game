@@ -86,10 +86,11 @@ export default function TitlePage() {
                 title={t(CH[i].n)}
                 aria-label={t(CH[i].n)}
                 aria-pressed={character === i}
-              />
+              >
+                <Watermark compact />
+              </button>
             ))}
           </span>
-          <Watermark compact />
           <button className="b" onClick={() => router.push("/play")}>{t("title.play")}</button>
           <button className="b o" onClick={() => useUI.getState().openModal({ kind: "ar" })}>{t("title.tryAr")}</button>
         </div>
