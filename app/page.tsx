@@ -1,17 +1,93 @@
-import { asset } from "@/lib/asset";
+"use client";
 
-// Phase 0 placeholder — replaced by the title screen in Phase 1.
-export default function Home() {
+import { useRouter } from "next/navigation";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Portrait, faceStyle } from "@/components/ui/Portrait";
+import { music, sfx, unlock } from "@/lib/audio";
+import { CH, PL } from "@/lib/characters";
+import { IN, IN_MS } from "@/lib/content/story";
+import { useT } from "@/lib/i18n";
+import { useGame, useUI } from "@/lib/store";
+
+/** Title screen: Ken-Burns key art, intro cinematic (IN), character picker. */
+export default function TitlePage() {
+  const t = useT();
+  const router = useRouter();
+  const character = useGame((s) => s.character);
+  const pick = useGame((s) => s.setCharacter);
+  const [phase, setPhase] = useState<"idle" | "cin" | "ready">("idle");
+  const [ci, setCi] = useState(-1);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const endCin = () => {
+    clearTimeout(timer.current);
+    setCi(-1);
+    setPhase("ready");
+    sfx("ok");
+  };
+  const show = (i: number) => {
+    if (i >= IN.length) return endCin();
+    setCi(i);
+    sfx("whoosh");
+    timer.current = setTimeout(() => show(i + 1), IN_MS);
+  };
+  const startCin = () => {
+    unlock();
+    music("cover");
+    sfx("click");
+    setPhase("cin");
+    show(0);
+  };
+
+  const line = ci >= 0 ? IN[ci] : null;
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-6 bg-black p-6 text-center text-white">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={asset("/img/keyart.jpg")}
-        alt="Greg y la Colonia Última"
-        className="w-full max-w-3xl rounded-lg"
-      />
-      <h1 className="text-2xl font-bold">Greg y la Colonia Última</h1>
-      <p className="text-sm opacity-70">NASA Space Apps Challenge 2026 · Cajamarca</p>
-    </main>
+    <div id="app">
+      <div id="title" className={phase === "ready" ? "rdy" : undefined}>
+        <div className="art" role="img" aria-label={t("title.artLabel")} />
+        <div id="cin">
+          <div id="cic" aria-live="polite">
+            {line && (
+              <Fragment key={ci}>
+                <div className="cr">
+                  {line.chars.map((i) => (
+                    <div key={i}>
+                      <Portrait ch={i} />
+                      <b>{t(CH[i].n)}</b>
+                    </div>
+                  ))}
+                </div>
+                <p className="cp">{t(line.text)}</p>
+              </Fragment>
+            )}
+          </div>
+          {phase === "idle" && (
+            <button className="b o" id="go" onClick={startCin}>{t("title.start")}</button>
+          )}
+          {phase === "cin" && (
+            <button className="b" id="sk" onClick={endCin}>{t("title.skip")}</button>
+          )}
+        </div>
+        <div className="bar">
+          <span>{t("title.choose")}</span>
+          <span id="pks">
+            {PL.map((i) => (
+              <button
+                key={i}
+                className={"pk" + (character === i ? " on" : "")}
+                style={{ ...faceStyle(i), backgroundColor: "#222" }}
+                onClick={() => pick(i)}
+                title={t(CH[i].n)}
+                aria-label={t(CH[i].n)}
+                aria-pressed={character === i}
+              />
+            ))}
+          </span>
+          <button className="b" onClick={() => router.push("/play")}>{t("title.play")}</button>
+          <button className="b o" onClick={() => useUI.getState().openModal({ kind: "ar" })}>{t("title.tryAr")}</button>
+        </div>
+      </div>
+    </div>
   );
 }

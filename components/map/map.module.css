@@ -1,0 +1,20 @@
+/* Map stage: % positioning ported 1:1 from the prototype (.stage, .hs, .hud, .nav, .mn, .sp, #pr). */
+.stage{position:relative;width:100%;aspect-ratio:1172/657;background:var(--map) center/100% 100%;border-radius:12px;overflow:hidden;touch-action:manipulation}
+
+.hs{position:absolute;width:8%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:2px dashed #7df9ff;cursor:pointer;z-index:2;animation:pl 1.8s infinite}
+@keyframes pl{50%{box-shadow:0 0 18px #7df9ff}}
+.hs.nx{border:3px solid #ffd54a;box-shadow:0 0 22px #ffd54a}
+
+.hud{position:absolute;left:70.5%;top:2%;width:28.5%;height:11.5%;background:#140c32;border:2px solid #4f6bff;border-radius:14px;display:flex;align-items:center;gap:5%;padding:0 3%;color:#fff;font-weight:700;font-size:clamp(9px,1.7vw,18px);z-index:4}
+
+.nav{position:absolute;left:36.5%;top:88%;width:30%;height:10%;display:grid;grid-template-columns:repeat(4,1fr);z-index:4}
+.nav button,.mn{background:transparent;border:0;cursor:pointer}
+.mn{position:absolute;z-index:4}
+
+.sp{position:absolute;height:26%;transform:translate(-50%,-92%) translateY(var(--by,0px)) scaleX(var(--fl,1)) scaleY(var(--sq,1));z-index:3;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 52% 52% at 50% 50%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 52% 52% at 50% 50%,#000 58%,transparent 100%)}
+.orbi{height:14%;transition:left .7s,top .7s}
+
+.pr{position:absolute;left:50%;bottom:13%;transform:translateX(-50%);z-index:5}
+.tool{position:absolute;left:1%;z-index:4;padding:4px 8px;font-size:12px}
+
+@media(prefers-reduced-motion:reduce){.hs{animation:none}}

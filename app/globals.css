@@ -1,26 +1,68 @@
-@import "tailwindcss";
+/* Tailwind theme + utilities only: preflight is skipped on purpose so browser defaults
+   (paragraph margins, headings…) match the prototype 1:1. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---- Ported from the prototype (<style> of Greg and the Last Colony.html) ----
+   --map / --key / --cast are set on <body> in app/layout.tsx via lib/asset.ts. */
+:root{--bg:#f3f0ff;--fg:#1d1640;--card:#fff;--bd:#cfc6ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0820;--fg:#f1ecff;--card:#171238;--bd:#3b3180}}
+:root[data-theme="dark"]{--bg:#0b0820;--fg:#f1ecff;--card:#171238;--bd:#3b3180}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans-serif}
+#app{max-width:1180px;margin:0 auto;padding:8px}
+.art{aspect-ratio:1170/651;background:var(--key) center/100% 100%;border-radius:12px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px}
+.b{background:#7c4dff;color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
+.b.o{background:#e65100}
+.b:disabled{opacity:.5;cursor:default}
+.pk{width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
+.pk.on{border-color:#ffd54a}
+#md{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 10px) 10px 10px;z-index:9;overflow:auto}
+.card{background:var(--card);color:var(--fg);border:2px solid var(--bd);border-radius:14px;padding:16px;max-width:560px;width:100%;max-height:92vh;overflow:auto}
+.card h3{margin:0 0 6px}.x{float:right}
+.s{font-size:14px;opacity:.85}
+.op{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:10px;border:2px solid var(--bd);background:transparent;color:inherit;font:inherit;cursor:pointer}
+.op.ok{border-color:#2ecc71;background:#2ecc7133}.op.no{border-color:#e74c3c;background:#e74c3c33}
+canvas{max-width:100%;border-radius:10px;background:#05031a}
+.bar2{height:14px;border-radius:7px;background:#2ecc71}
+input[type=range]{width:100%}
+.pt{border-radius:50%;aspect-ratio:1;border:3px solid;flex:none;background-repeat:no-repeat}
+#bub{position:fixed;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);max-width:640px;margin:auto;z-index:10;display:flex;gap:12px;align-items:center;background:var(--card);color:var(--fg);border:3px solid var(--bd);border-radius:20px;padding:12px;cursor:pointer;box-shadow:0 6px 24px #000a}
+#bub .pt{width:76px}#bub p{margin:2px 0}
+#title{position:relative}
+#title .bar{display:none}#title.rdy .bar{display:flex}
+.art{animation:kb 22s ease-in-out infinite alternate}
+@keyframes kb{from{background-size:100% 100%;background-position:50% 50%}to{background-size:122% 122%;background-position:35% 25%}}
+#cin{position:absolute;left:0;right:0;top:0;aspect-ratio:1170/651;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;padding:3%;border-radius:12px;background:linear-gradient(transparent 35%,#000c);color:#fff;text-align:center}
+#title.rdy #cin{display:none}
+#cin .cp{margin:0;font-size:clamp(15px,2.8vw,30px);font-weight:700;text-shadow:0 2px 8px #000;animation:fi 1s both}
+#cin .cr{display:flex;gap:16px;justify-content:center;animation:fi .8s both}
+#cin .pt{width:clamp(70px,13vw,140px);margin:auto;animation:pop .6s both}
+@keyframes fi{from{opacity:0;transform:translateY(14px)}}
+@keyframes pop{from{opacity:0;transform:scale(.3)}}
+#cfg{position:fixed;top:calc(env(safe-area-inset-top,0px) + 6px);right:8px;z-index:8;display:flex;gap:6px}
+#cfg button{background:#140c32cc;color:#fff;border:1px solid #4f6bff;border-radius:8px;padding:4px 8px;font:inherit;font-size:13px;cursor:pointer}
+.shk{animation:sk .35s}@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@media(prefers-reduced-motion:reduce){.art,#cin *,.shk{animation:none!important}}
+.cd{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;padding:10px;margin:6px 0;border:2px solid var(--bd);border-radius:12px;background:transparent;color:inherit;font:inherit}
+button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
+.ic{font-size:28px;text-align:center}
+.bd{filter:grayscale(1);opacity:.5}
+.pb{height:10px;background:#8883;border-radius:6px;overflow:hidden}.pb i{display:block;height:100%;background:linear-gradient(90deg,#7c4dff,#22b8cf);transition:width .6s}
+.gr{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:8px 0}
+.sl{border:2px solid var(--bd);border-radius:12px;padding:10px;text-align:center;display:flex;flex-direction:column;gap:4px}.sl small{opacity:.85}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* ---- New in the Next.js port ---- */
+/* First-launch language picker */
+#lgp{position:fixed;inset:0;z-index:20;background:#000d;display:flex;align-items:center;justify-content:center;padding:16px}
+#lgp .card{text-align:center}
+#lgp .lb{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:12px}
+#lgp .lb .b{font-size:22px;padding:18px 28px;min-width:180px;border:3px solid transparent}
+#lgp .lb .b.on{border-color:#ffd54a}
+/* Settings rows */
+.st{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+.st>span{min-width:140px;font-weight:700}
+.st .b.on{outline:3px solid #ffd54a}
