@@ -31,6 +31,10 @@
 .bnm,.bct{display:flex;flex-direction:column;min-width:0}
 .bnm>*,.bct>*{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bnm small,.bct{font-size:13px}
-@media(max-width:820px){.hud{display:none}.barHud{display:flex}}
+/* Narrow: the live HUD moves to the top bar; the map box stays as an empty panel (same style)
+   so the static "Greg / Nivel 1 / 0 / 0" painted in map.jpg never shows. */
+/* Radius scales with the map (14px on the 75px-tall desktop box ≈ 1.2vw) so the small box keeps
+   square-enough corners and covers the painted corners (e.g. the gear) of the art. */
+@media(max-width:820px){.hud{border-radius:1.2vw}.hud>*{display:none}.barHud{display:flex}}
 
 @media(prefers-reduced-motion:reduce){.hs{animation:none}}
