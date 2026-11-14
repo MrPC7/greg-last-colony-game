@@ -6,6 +6,7 @@ import { sfx } from "@/lib/audio";
 import { ORBI } from "@/lib/characters";
 import {
   HINT_DONE,
+  HINT_FINISHED,
   HINT_SENAL,
   HINT_SUFFIX,
   HT,
@@ -66,7 +67,7 @@ function hint() {
   if (isBusy()) return;
   const done = useGame.getState().done;
   const n = ORD.findIndex((k) => !done[k]);
-  const lines: Line[] = [[2, n < 0 ? HINT_DONE : [HT[n], HINT_SUFFIX]]];
+  const lines: Line[] = [[2, done.boss ? HINT_FINISHED : n < 0 ? HINT_DONE : [HT[n], HINT_SUFFIX]]];
   if (senalUnlocked(done) && !done.senal) lines.push([2, HINT_SENAL]);
   useUI.getState().startTalk(lines);
 }

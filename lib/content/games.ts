@@ -428,73 +428,380 @@ export const TL_TXT = {
 
 // ---------------------------------------------------------------------------
 // Final · BossFight (prototype `BQ`, `fight`, `bturn`, `ba`, `ally`, `bend`)
+// Phase 6: a mixed quiz drawn from every zone (incl. La Señal de Ray and the Phase 5 crew
+// features). Every correct answer breaks one segment of the Hollow Queen's shield;
+// 3 wrong answers → retry.
 // ---------------------------------------------------------------------------
 
-/** `BQ`: the boss quiz = the 4 Aulas questions + 4 from the other zones (shuffled each fight). */
-export const BQ: QuizQuestion[] = Q.concat([
-  {
-    q: { es: "Con el mismo salto, ¿cuántas veces más alto llegas en la Luna?", en: "With the same jump, how many times higher do you go on the Moon?" },
-    // "Igual": no TR entry
-    options: [{ es: "≈ 6 veces", en: "≈ 6 times" }, { es: "≈ 2 veces", en: "≈ 2 times" }, { es: "Igual", en: "The same" }],
-    answer: 0,
-    explain: { es: "La gravedad lunar es ≈ 1/6 de la terrestre.", en: "Lunar gravity is ≈ 1/6 of Earth’s." },
-    hint: { es: "Recuerda la Cancha: la gravedad lunar es cerca de la sexta parte de la terrestre.", en: "Remember the Sports Court: lunar gravity is about one sixth of Earth’s." },
-  },
-  {
-    q: { es: "¿Cómo frena un módulo lunar sin atmósfera?", en: "How does a lunar lander brake without an atmosphere?" },
-    options: [{ es: "Con paracaídas", en: "With a parachute" }, { es: "Con su motor", en: "With its engine" }, { es: "Con alas", en: "With wings" }],
-    answer: 1,
-    explain: { es: "Sin aire no hay paracaídas ni alas: se usa el motor.", en: "With no air there are no parachutes or wings: you use the engine." },
-    hint: { es: "Recuerda el Laboratorio: sin aire, ¿qué cosas dejan de funcionar?", en: "Remember the Lab: with no air, which things stop working?" },
-  },
-  {
-    q: { es: "¿Qué misión aterrizó primero en la cara oculta de la Luna?", en: "Which mission first landed on the far side of the Moon?" },
-    options: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Chang’e 4", en: "Chang’e 4" }, { es: "Luna 2", en: "Luna 2" }],
-    answer: 1,
-    explain: { es: "Chang’e 4 lo logró en 2019.", en: "Chang’e 4 did it in 2019." },
-    hint: { es: "Recuerda el Auditorio: fue en 2019, y la misión lleva el nombre de una diosa lunar china.", en: "Remember the Auditorium: it was in 2019, and the mission is named after a Chinese Moon goddess." },
-  },
-  {
-    q: { es: "¿Qué aportan las plantas en una colonia?", en: "What do plants provide in a colony?" },
-    options: [
-      { es: "Gravedad", en: "Gravity" }, // no TR entry
-      { es: "Oxígeno y parte del ciclo del aire", en: "Oxygen and part of the air cycle" },
-      { es: "Protección total contra radiación", en: "Total radiation protection" },
-    ],
-    answer: 1,
-    explain: { es: "Ayudan a cerrar el ciclo del aire junto con sistemas mecánicos.", en: "They help close the air cycle together with mechanical systems." },
-    hint: { es: "Recuerda las Zonas Verdes: con la fotosíntesis, las plantas toman CO₂ y liberan algo que respiramos.", en: "Remember the Green Zones: through photosynthesis, plants take in CO₂ and release something we breathe." },
-  },
-]);
+/** Where each boss question comes from (one shield segment per topic). */
+export type BossTopic = "aulas" | "lab" | "cancha" | "verdes" | "aud" | "gistemp" | "firms" | "crew";
 
-/** Both sides start at 100; a hit takes 25, every 3rd correct answer in a row is a critical −50. */
-export const BOSS = { hp: 100, hit: 25, crit: 50, streak: 3, stars: 5 };
+/** Label shown above each boss question. */
+export const BOSS_TOPICS: Record<BossTopic, Localized> = {
+  aulas: { es: "📚 Aulas", en: "📚 Classrooms" },
+  lab: { es: "🚀 Laboratorio Digital", en: "🚀 Digital Lab" },
+  cancha: { es: "🏀 Cancha Deportiva", en: "🏀 Sports Court" },
+  verdes: { es: "🌱 Zonas Verdes", en: "🌱 Green Zones" },
+  aud: { es: "🎤 Auditorio", en: "🎤 Auditorium" },
+  gistemp: { es: "📈 La Señal de Ray · NASA GISTEMP", en: "📈 Ray’s Signal · NASA GISTEMP" },
+  firms: { es: "🔥 La Señal de Ray · NASA FIRMS", en: "🔥 Ray’s Signal · NASA FIRMS" },
+  crew: { es: "🧑‍🤝‍🧑 Tus amigos", en: "🧑‍🤝‍🧑 Your friends" },
+};
+
+/** The boss question pool by topic. The 8 prototype `BQ` questions (the 4 Aulas questions +
+ *  jump, lander, Chang’e 4, plants) are kept; the rest are new in Phase 6. */
+export const BOSS_POOL: Record<BossTopic, QuizQuestion[]> = {
+  aulas: Q,
+  lab: [
+    {
+      q: { es: "¿Cómo frena un módulo lunar sin atmósfera?", en: "How does a lunar lander brake without an atmosphere?" },
+      options: [{ es: "Con paracaídas", en: "With a parachute" }, { es: "Con su motor", en: "With its engine" }, { es: "Con alas", en: "With wings" }],
+      answer: 1,
+      explain: { es: "Sin aire no hay paracaídas ni alas: se usa el motor.", en: "With no air there are no parachutes or wings: you use the engine." },
+      hint: { es: "Recuerda el Laboratorio: sin aire, ¿qué cosas dejan de funcionar?", en: "Remember the Lab: with no air, which things stop working?" },
+    },
+    {
+      q: { es: "¿Qué materiales frenan mejor la radiación de una tormenta solar?", en: "Which materials best slow the radiation of a solar storm?" },
+      options: [
+        { es: "El vidrio y el papel", en: "Glass and paper" },
+        { es: "El agua y el polietileno, ricos en hidrógeno", en: "Water and polyethylene, rich in hydrogen" },
+        { es: "Ninguno: la radiación no se puede frenar", en: "None: radiation cannot be slowed" },
+      ],
+      answer: 1,
+      explain: {
+        es: "Los materiales ricos en hidrógeno, como el agua y el polietileno, frenan mejor la radiación.",
+        en: "Hydrogen-rich materials, such as water and polyethylene, slow radiation better.",
+      },
+      hint: {
+        es: "Recuerda la tormenta solar del Laboratorio: ¿qué materiales bloqueaban más por cada kilo?",
+        en: "Remember the Lab’s solar storm: which materials blocked the most per kilo?",
+      },
+    },
+    {
+      q: { es: "¿A qué velocidad máxima debías tocar el suelo en el aterrizaje lunar?", en: "What was the top speed for touching down in the lunar landing?" },
+      options: [{ es: "2,5 m/s", en: "2.5 m/s" }, { es: "25 m/s", en: "25 m/s" }, { es: "Da igual la velocidad", en: "Speed doesn’t matter" }],
+      answer: 0,
+      explain: {
+        es: "Para un alunizaje suave había que llegar a 2,5 m/s o menos (≤ 1,2 m/s para 3 ⭐).",
+        en: "For a soft landing you had to arrive at 2.5 m/s or less (≤ 1.2 m/s for 3 ⭐).",
+      },
+      hint: { es: "Un alunizaje tiene que ser muy suave, casi como caminar.", en: "A lunar landing has to be very gentle, almost like walking." },
+    },
+  ],
+  cancha: [
+    {
+      q: { es: "Con el mismo salto, ¿cuántas veces más alto llegas en la Luna?", en: "With the same jump, how many times higher do you go on the Moon?" },
+      // "Igual": no TR entry
+      options: [{ es: "≈ 6 veces", en: "≈ 6 times" }, { es: "≈ 2 veces", en: "≈ 2 times" }, { es: "Igual", en: "The same" }],
+      answer: 0,
+      explain: { es: "La gravedad lunar es ≈ 1/6 de la terrestre.", en: "Lunar gravity is ≈ 1/6 of Earth’s." },
+      hint: { es: "Recuerda la Cancha: la gravedad lunar es cerca de la sexta parte de la terrestre.", en: "Remember the Sports Court: lunar gravity is about one sixth of Earth’s." },
+    },
+    {
+      q: { es: "¿Por qué los astronautas entrenan unas 2 horas al día en el espacio?", en: "Why do astronauts train about 2 hours a day in space?" },
+      options: [
+        { es: "Para no aburrirse", en: "So they don’t get bored" },
+        { es: "Para ganar una competencia", en: "To win a competition" },
+        { es: "Para que sus huesos y músculos no se debiliten", en: "So their bones and muscles don’t get weaker" },
+      ],
+      answer: 2,
+      explain: {
+        es: "Sin ejercicio, en el espacio los huesos pierden densidad y los músculos se debilitan.",
+        en: "Without exercise, in space bones lose density and muscles get weaker.",
+      },
+      hint: { es: "Recuerda el entrenamiento de astronauta: con poca gravedad, el cuerpo casi no hace esfuerzo.", en: "Remember the astronaut training: with little gravity, the body hardly makes any effort." },
+    },
+  ],
+  verdes: [
+    {
+      q: { es: "¿Qué aportan las plantas en una colonia?", en: "What do plants provide in a colony?" },
+      options: [
+        { es: "Gravedad", en: "Gravity" }, // no TR entry
+        { es: "Oxígeno y parte del ciclo del aire", en: "Oxygen and part of the air cycle" },
+        { es: "Protección total contra radiación", en: "Total radiation protection" },
+      ],
+      answer: 1,
+      explain: { es: "Ayudan a cerrar el ciclo del aire junto con sistemas mecánicos.", en: "They help close the air cycle together with mechanical systems." },
+      hint: { es: "Recuerda las Zonas Verdes: con la fotosíntesis, las plantas toman CO₂ y liberan algo que respiramos.", en: "Remember the Green Zones: through photosynthesis, plants take in CO₂ and release something we breathe." },
+    },
+    {
+      q: { es: "¿Cuánto oxígeno respira una persona en un día, más o menos?", en: "About how much oxygen does one person breathe in a day?" },
+      options: [{ es: "≈ 0,84 kg", en: "≈ 0.84 kg" }, { es: "≈ 84 kg", en: "≈ 84 kg" }, { es: "≈ 8 g", en: "≈ 8 g" }],
+      answer: 0,
+      explain: {
+        es: "Cada persona usa unos 0,84 kg de O₂ al día: por eso el invernadero necesita muchas plantas por tripulante.",
+        en: "Each person uses about 0.84 kg of O₂ a day: that’s why the greenhouse needs many plants per crew member.",
+      },
+      hint: { es: "Recuerda el invernadero lunar: es menos de un kilo, pero más que una cucharita.", en: "Remember the lunar greenhouse: it’s less than a kilo, but more than a teaspoon." },
+    },
+    {
+      q: { es: "¿Cómo cambia la temperatura en el ecuador lunar entre el día y la noche?", en: "How does the temperature at the lunar equator change between day and night?" },
+      options: [
+        { es: "Siempre está a unos 20 °C", en: "It is always about 20 °C" },
+        { es: "Pasa de unos +120 °C a unos −130 °C", en: "It goes from about +120 °C to about −130 °C" },
+        { es: "Cambia solo 1 °C", en: "It only changes by 1 °C" },
+      ],
+      answer: 1,
+      explain: {
+        es: "Sin atmósfera que guarde el calor, el día lunar quema y la noche congela: la base necesita control térmico.",
+        en: "With no atmosphere to hold heat, the lunar day burns and the night freezes: the base needs thermal control.",
+      },
+      hint: { es: "Recuerda el control térmico: sin aire, los extremos son enormes.", en: "Remember thermal control: without air, the extremes are huge." },
+    },
+  ],
+  aud: [
+    {
+      q: { es: "¿Qué misión aterrizó primero en la cara oculta de la Luna?", en: "Which mission first landed on the far side of the Moon?" },
+      options: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Chang’e 4", en: "Chang’e 4" }, { es: "Luna 2", en: "Luna 2" }],
+      answer: 1,
+      explain: { es: "Chang’e 4 lo logró en 2019.", en: "Chang’e 4 did it in 2019." },
+      hint: { es: "Recuerda el Auditorio: fue en 2019, y la misión lleva el nombre de una diosa lunar china.", en: "Remember the Auditorium: it was in 2019, and the mission is named after a Chinese Moon goddess." },
+    },
+    {
+      q: { es: "¿Qué misión llevó a las primeras personas a caminar sobre la Luna?", en: "Which mission took the first people to walk on the Moon?" },
+      options: [{ es: "Luna 2 (1959)", en: "Luna 2 (1959)" }, { es: "Chandrayaan-3 (2023)", en: "Chandrayaan-3 (2023)" }, { es: "Apolo 11 (1969)", en: "Apollo 11 (1969)" }],
+      answer: 2,
+      explain: { es: "En 1969 el Apolo 11 llevó a las primeras personas a caminar sobre la Luna.", en: "In 1969 Apollo 11 took the first people to walk on the Moon." },
+      hint: { es: "Recuerda la línea del tiempo de Elen: Luna 2 solo fue un impacto, sin personas.", en: "Remember Elen’s timeline: Luna 2 was only a crash impact, with no people." },
+    },
+  ],
+  gistemp: [
+    {
+      q: { es: "Según NASA GISTEMP, ¿cuánto se calentó la Tierra desde fines del siglo XIX?", en: "According to NASA GISTEMP, how much has Earth warmed since the late 1800s?" },
+      options: [{ es: "Nada", en: "Not at all" }, { es: "Más de 1 °C", en: "More than 1 °C" }, { es: "Unos 10 °C", en: "About 10 °C" }],
+      answer: 1,
+      explain: {
+        es: "En 1880 la anomalía era −0,18 °C y en 2024 llegó a +1,28 °C: más de 1 °C de calentamiento.",
+        en: "In 1880 the anomaly was −0.18 °C and in 2024 it reached +1.28 °C: more than 1 °C of warming.",
+      },
+      hint: { es: "Ray dijo que es como si todo el planeta tuviera fiebre: poco, pero importante.", en: "Ray said it’s like the whole planet has a fever: small, but important." },
+    },
+    {
+      q: { es: "En la gráfica de GISTEMP, ¿qué significa una «anomalía» de +1 °C?", en: "On the GISTEMP chart, what does an “anomaly” of +1 °C mean?" },
+      options: [
+        { es: "Que ese año la Tierra estuvo a 1 °C", en: "That Earth was at 1 °C that year" },
+        { es: "Que el termómetro se equivocó", en: "That the thermometer was wrong" },
+        { es: "Que ese año fue 1 °C más caliente que el promedio de 1951–1980", en: "That the year was 1 °C hotter than the 1951–1980 average" },
+      ],
+      answer: 2,
+      explain: {
+        es: "La anomalía compara cada año con el promedio de 1951–1980: arriba de 0, más caliente; abajo de 0, más frío.",
+        en: "The anomaly compares each year with the 1951–1980 average: above 0 is hotter, below 0 is colder.",
+      },
+      hint: { es: "Recuerda el termómetro de la Tierra: la gráfica no muestra grados normales, sino una comparación.", en: "Remember Earth’s thermometer: the chart doesn’t show normal degrees, but a comparison." },
+    },
+    {
+      q: { es: "En los datos de NASA GISTEMP, ¿cuál fue el año más caluroso desde 1880?", en: "In the NASA GISTEMP data, which was the hottest year since 1880?" },
+      options: [{ es: "1998", en: "1998" }, { es: "2024", en: "2024" }, { es: "1880", en: "1880" }],
+      answer: 1,
+      explain: {
+        es: "2024 tuvo la anomalía más alta del registro: +1,28 °C. Los años más recientes casi siempre ganan.",
+        en: "2024 had the highest anomaly on record: +1.28 °C. The most recent years almost always win.",
+      },
+      hint: { es: "En el juego de Ray, ¿qué años solían ganar: los antiguos o los recientes?", en: "In Ray’s game, which years usually won: the old ones or the recent ones?" },
+    },
+  ],
+  firms: [
+    {
+      q: { es: "¿Cómo detectan los satélites de NASA FIRMS los incendios desde el espacio?", en: "How do NASA FIRMS satellites detect fires from space?" },
+      options: [
+        { es: "Escuchando el ruido del fuego", en: "By listening to the noise of the fire" },
+        { es: "«Sintiendo» el calor que emiten, con luz infrarroja", en: "By “feeling” the heat they give off, with infrared light" },
+        { es: "Preguntando a los bomberos", en: "By asking the firefighters" },
+      ],
+      answer: 1,
+      explain: {
+        es: "Su cámara especial detecta el calor (luz infrarroja) de los incendios, como tu mano cerca de una fogata.",
+        en: "Their special camera detects the heat (infrared light) of fires, like your hand near a campfire.",
+      },
+      hint: { es: "En el espacio no hay aire, así que el sonido no viaja. ¿Qué otra cosa sale de un fuego?", en: "There is no air in space, so sound doesn’t travel. What else comes out of a fire?" },
+    },
+    {
+      q: { es: "En el mapa de incendios de Ray, ¿qué es cada punto rojo?", en: "On Ray’s fire map, what is each red dot?" },
+      options: [
+        { es: "Un incendio visto por un satélite en 24 horas", en: "A fire seen by a satellite within 24 hours" },
+        { es: "Una ciudad iluminada de noche", en: "A city lit up at night" },
+        { es: "Un volcán", en: "A volcano" },
+      ],
+      answer: 0,
+      explain: {
+        es: "Cada punto es un incendio activo con confianza alta, detectado por el satélite en las últimas 24 horas.",
+        en: "Each dot is a high-confidence active fire, detected by the satellite in the last 24 hours.",
+      },
+      hint: { es: "El mapa se llama «mapa de incendios» por algo…", en: "It’s called the “fire map” for a reason…" },
+    },
+    {
+      q: { es: "¿Por qué el mapa de FIRMS muestra tantos incendios cada día?", en: "Why does the FIRMS map show so many fires every day?" },
+      options: [
+        { es: "Son errores del satélite", en: "They are satellite errors" },
+        { es: "Todos los causan los rayos", en: "They are all caused by lightning" },
+        { es: "Muchos son quemas de pastos o cultivos hechas por personas; otros, incendios forestales", en: "Many are grass or crop burns set by people; others are wildfires" },
+      ],
+      answer: 2,
+      explain: {
+        es: "Las quemas agrícolas y los incendios forestales se ven desde el espacio; por eso los científicos vigilan el planeta todos los días.",
+        en: "Farm burns and wildfires can be seen from space; that’s why scientists watch the planet every day.",
+      },
+      hint: { es: "Recuerda lo que explicó Ray al final del mapa: muchos fuegos los encienden las personas.", en: "Remember what Ray explained at the end of the map: people start many fires." },
+    },
+  ],
+  crew: [
+    {
+      q: { es: "Elen presentó Artemis II (2026). ¿Qué hizo esa misión?", en: "Elen presented Artemis II (2026). What did that mission do?" },
+      options: [
+        { es: "Cuatro astronautas viajaron alrededor de la Luna", en: "Four astronauts travelled around the Moon" },
+        { es: "Aterrizó en Marte", en: "It landed on Mars" },
+        { es: "Fue el primer impacto en la Luna", en: "It was the first impact on the Moon" },
+      ],
+      answer: 0,
+      explain: {
+        es: "En abril de 2026 la nave Orión llevó a cuatro astronautas alrededor de la Luna: las personas volvieron a viajar a la Luna.",
+        en: "In April 2026 the Orion spacecraft took four astronauts around the Moon: people travelled to the Moon again.",
+      },
+      hint: { es: "Elen dijo que era la misión más nueva de su línea del tiempo… y con tripulación.", en: "Elen said it was the newest mission on her timeline… and it had a crew." },
+    },
+    {
+      q: { es: "Greg diseñó un parche de misión. ¿Para qué sirve un parche de misión?", en: "Greg designed a mission patch. What is a mission patch for?" },
+      options: [
+        { es: "Para tapar agujeros del traje", en: "To cover holes in the suit" },
+        { es: "Es el emblema de cada misión, que la tripulación lleva cosido en el traje", en: "It’s each mission’s emblem, which the crew wears sewn onto their suits" },
+        { es: "Para protegerse de la radiación", en: "To protect against radiation" },
+      ],
+      answer: 1,
+      explain: { es: "Cada misión espacial tiene su propio parche, diseñado como un símbolo del equipo.", en: "Every space mission has its own patch, designed as a symbol of the team." },
+      hint: { es: "Greg dijo que cada misión tiene el suyo… como el escudo de un equipo de fútbol.", en: "Greg said every mission has its own… like a football team’s badge." },
+    },
+    {
+      q: { es: "En el ping pong lunar de Joseph, ¿por qué la pelota cae más lento en la Luna?", en: "In Joseph’s lunar ping pong, why does the ball fall more slowly on the Moon?" },
+      options: [
+        { es: "Porque en la Luna hay viento", en: "Because there is wind on the Moon" },
+        { es: "Porque la pelota pesa más", en: "Because the ball weighs more" },
+        { es: "Porque la gravedad lunar es unas 6 veces menor", en: "Because lunar gravity is about 6 times weaker" },
+      ],
+      answer: 2,
+      explain: {
+        es: "Con 1,62 m/s² en vez de 9,81 m/s², la pelota tarda unas 2,5 veces más en caer desde la misma altura.",
+        en: "With 1.62 m/s² instead of 9.81 m/s², the ball takes about 2.5 times longer to fall from the same height.",
+      },
+      hint: { es: "Joseph dijo que en la Luna la pelota «flota más». ¿Qué la hace caer?", en: "Joseph said that on the Moon the ball “floats more”. What makes it fall?" },
+    },
+    {
+      q: { es: "¿De dónde viene Ray, el Sin Raíz?", en: "Where does Ray, the Wanderer, come from?" },
+      options: [
+        { es: "De Marte", en: "From Mars" },
+        { es: "De Selene, la colonia de la Luna", en: "From Selene, the Moon colony" },
+        { es: "Del fondo del mar", en: "From the bottom of the sea" },
+      ],
+      answer: 1,
+      explain: {
+        es: "Ray cuidaba la gran antena de Selene y envió la señal NOX-Ω antes de escapar a la Tierra.",
+        en: "Ray looked after Selene’s great antenna and sent the NOX-Ω signal before escaping to Earth.",
+      },
+      hint: { es: "Recuerda sus fragmentos de memoria: una cúpula llena de plantas, con cielo negro y polvo gris.", en: "Remember his memory fragments: a dome full of plants, with a black sky and grey dust." },
+    },
+  ],
+};
+
+/** Shield segments (one per topic: the first round of the draw covers every topic), lives,
+ *  stars for the first win. */
+export const BOSS = { segments: 8, lives: 3, stars: 5 };
 /** Ally pool (prototype `[1,3,0].filter(x => x !== S.ch)`): first = hint, second = shield. */
 export const BOSS_ALLIES = [1, 3, 0];
 
+export type BossQuestion = QuizQuestion & { topic: BossTopic };
+
+/** Draw a boss quiz: topics in random order, one shuffled question from each topic per round
+ *  (so the first 8 questions cover all 8 topics), options shuffled too. `rnd` = Math.random. */
+export function drawBossQuiz(rnd: () => number = Math.random): BossQuestion[] {
+  const shuffle = <T,>(a: T[]) => a.map((v) => [rnd(), v] as const).sort((x, y) => x[0] - y[0]).map((x) => x[1]);
+  const topics = shuffle(Object.keys(BOSS_POOL) as BossTopic[]);
+  const decks = topics.map((k) => shuffle(BOSS_POOL[k]).map((q) => ({ ...q, topic: k })));
+  const out: BossQuestion[] = [];
+  for (let r = 0; decks.some((d) => r < d.length); r++) {
+    for (const d of decks) {
+      if (r >= d.length) continue;
+      const q = d[r];
+      const order = shuffle(q.options.map((_, i) => i));
+      out.push({ ...q, options: order.map((i) => q.options[i]), answer: order.indexOf(q.answer) });
+    }
+  }
+  return out;
+}
+
 export const BOSS_TXT = {
   title: { es: "👑 Reina Hueca", en: "👑 Hollow Queen" },
-  queen: { es: "Reina", en: "Queen" },
+  queen: { es: "Escudo de la Reina", en: "Queen’s shield" },
   art: { es: "La Reina Hueca", en: "The Hollow Queen" }, // new: image aria-label
+  segments: { es: "Escudo de la Reina: {k} de {total} segmentos", en: "Queen’s shield: {k} of {total} segments" },
+  lives: { es: "Tus vidas: {k} de {total}", en: "Your lives: {k} of {total}" },
+  rules: {
+    es: "Cada acierto rompe un segmento del escudo. Con 3 errores, la Reina gana esta ronda.",
+    en: "Every right answer breaks one shield segment. With 3 mistakes, the Queen wins this round.",
+  },
+  from: { es: "Pregunta {i} · {topic}", en: "Question {i} · {topic}" },
   remove: { es: "🦊 Orbi: quitar opción", en: "🦊 Orbi: remove option" },
   hint: { es: "💬 {name}: pista", en: "💬 {name}: hint" },
   shield: { es: "🛡️ {name}: escudo", en: "🛡️ {name}: shield" },
   hintMsg: { es: "💬 {text}", en: "💬 {text}" },
-  shieldReady: { es: "🛡️ Escudo listo para el próximo ataque.", en: "🛡️ Shield ready for the next attack." },
-  hitMsg: { es: "💥 ¡Golpe certero! −25 a la Reina.", en: "💥 Direct hit! −25 to the Queen." },
-  critMsg: { es: "⚡ ¡CRÍTICO! Racha de 3: −50 a la Reina.", en: "⚡ CRITICAL! 3-hit streak: −50 to the Queen." },
-  blocked: { es: "🛡️ ¡El escudo bloqueó el ataque!", en: "🛡️ The shield blocked the attack!" },
-  counter: { es: "👑 La Reina contraataca: −25 para ti.", en: "👑 The Queen strikes back: −25 for you." },
+  shieldReady: { es: "🛡️ Escudo listo: tu próximo error no te quitará una vida.", en: "🛡️ Shield ready: your next mistake won’t cost you a life." },
+  hitMsg: { es: "💥 ¡Acierto! Rompiste un segmento del escudo de la Reina.", en: "💥 Correct! You broke one segment of the Queen’s shield." },
+  lastMsg: { es: "💥 ¡El escudo de la Reina se hizo pedazos!", en: "💥 The Queen’s shield shattered!" },
+  blocked: { es: "🛡️ ¡El escudo de tu amigo bloqueó el ataque!", en: "🛡️ Your friend’s shield blocked the attack!" },
+  counter: { es: "👑 La Reina contraataca: pierdes una vida.", en: "👑 The Queen strikes back: you lose a life." },
   cont: { es: "Continuar", en: "Continue" },
-  winTitle: { es: "🏆 ¡Misión cumplida!", en: "🏆 Mission complete!" },
-  winText: {
-    es: "Descifraste NOX-Ω, derrotaste a la Reina Hueca y salvaste la Colonia Última.",
-    en: "You decoded NOX-Ω, defeated the Hollow Queen and saved the Last Colony.",
-  },
-  back: { es: "Volver al mapa", en: "Back to the map" },
   loseTitle: { es: "La Reina resiste", en: "The Queen resists" },
+  loseText: {
+    es: "Rompiste {k} de {total} segmentos. Repasa las zonas o usa las pistas de Orbi y de tus amigos.",
+    en: "You broke {k} of {total} segments. Review the zones or use the hints from Orbi and your friends.",
+  },
   retry: { es: "Reintentar combate", en: "Retry battle" },
   review: { es: "Repasar el mapa", en: "Review the map" },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Phase 6 · Certificate "Explorador/a de Selene"
+// The player's name is typed in the game and only kept on this device (localStorage).
+// ---------------------------------------------------------------------------
+
+/** Canvas size (px) of the certificate PNG. */
+export const CERT = { w: 1200, h: 850, maxName: 32 };
+
+export const CERT_TXT = {
+  title: { es: "📜 Tu certificado", en: "📜 Your certificate" },
+  locked: { es: "Derrota a la Reina Hueca para obtener tu certificado.", en: "Defeat the Hollow Queen to get your certificate." },
+  nameLabel: { es: "Escribe tu nombre para el certificado:", en: "Type your name for the certificate:" },
+  namePh: { es: "Tu nombre", en: "Your name" },
+  privacy: {
+    es: "🔒 Tu nombre solo se guarda en este dispositivo: nunca se envía a internet.",
+    en: "🔒 Your name is only kept on this device: it is never sent to the internet.",
+  },
+  canvas: { es: "Vista previa del certificado", en: "Certificate preview" },
+  download: { es: "⬇️ Descargar PNG", en: "⬇️ Download PNG" },
+  needName: { es: "Escribe tu nombre para poder descargarlo.", en: "Type your name to be able to download it." },
+  downloaded: { es: "✅ ¡Certificado descargado!", en: "✅ Certificate downloaded!" },
+  file: { es: "certificado-explorador-de-selene", en: "selene-explorer-certificate" },
+  // Drawn on the canvas:
+  heading: { es: "CERTIFICADO", en: "CERTIFICATE" },
+  award: { es: "Explorador/a de Selene", en: "Selene Explorer" },
+  certifies: { es: "Se certifica que", en: "This certifies that" },
+  noName: { es: "Tu nombre aquí", en: "Your name here" },
+  body1: {
+    es: "salvó la Colonia Última junto a {hero}, derrotó a la Reina Hueca",
+    en: "saved the Last Colony alongside {hero}, defeated the Hollow Queen",
+  },
+  body2: {
+    es: "y aprendió ciencia lunar leyendo datos reales de la NASA.",
+    en: "and learned lunar science by reading real NASA data.",
+  },
+  stars: { es: "{k} estrellas", en: "{k} stars" },
+  gems: { es: "{k} cristales", en: "{k} crystals" },
+  memories: { es: "{k}/{total} recuerdos de Ray", en: "{k}/{total} of Ray’s memories" },
+  date: { es: "Fecha: {date}", en: "Date: {date}" },
+  hero: { es: "Personaje: {hero}", en: "Character: {hero}" },
+  footer: {
+    es: "Greg y la Colonia Última · Space Apps Challenge 2026 · Cajamarca",
+    en: "Greg and the Last Colony · Space Apps Challenge 2026 · Cajamarca",
+  },
 } satisfies Record<string, Localized>;
 
 // ---------------------------------------------------------------------------

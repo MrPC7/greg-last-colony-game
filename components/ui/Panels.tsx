@@ -6,6 +6,7 @@ import {
   ACTIVITY_IDS,
   BOSS_INTRO,
   CL,
+  ENDING_TXT,
   FACTS,
   MEMORY_TXT,
   ORD,
@@ -18,7 +19,7 @@ import {
   type ZoneId,
 } from "@/lib/content/story";
 import { LANGS, useLang, useT } from "@/lib/i18n";
-import { useGame, useUI, type Theme } from "@/lib/store";
+import { useGame, useUI, type ModalSpec, type Theme } from "@/lib/store";
 
 const THEMES: Theme[] = ["auto", "light", "dark"];
 
@@ -152,6 +153,11 @@ export function MainMissionPanel() {
     const intro = memories.length >= RAY_MEMORIES.length ? [...RAY_BEFORE_BOSS, ...BOSS_INTRO] : BOSS_INTRO;
     ui.startTalk(intro, () => useUI.getState().openModal({ kind: "boss" }));
   };
+  const open = (m: ModalSpec) => {
+    const ui = useUI.getState();
+    ui.closeModal();
+    ui.openModal(m);
+  };
   return (
     <>
       <h3>{t("main.title")}</h3>
@@ -165,6 +171,13 @@ export function MainMissionPanel() {
           <b>{i + 1}</b>
         </div>
       ))}
+      {done.boss && (
+        // Phase 6: after the victory, replay the ending or get the certificate again.
+        <div className="st">
+          <button className="b o" onClick={() => open({ kind: "certificate" })}>{t(ENDING_TXT.cert)}</button>
+          <button className="b" onClick={() => open({ kind: "ending" })}>{t(ENDING_TXT.replay)}</button>
+        </div>
+      )}
       {d >= 5 ? (
         <><button className="b o" onClick={fight}>{t("main.fight")}</button>{" "}</>
       ) : (

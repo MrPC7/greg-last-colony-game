@@ -1,4 +1,4 @@
-import type { Line, Localized } from "./types";
+import type { Line, Localized, Speaker } from "./types";
 
 // Story & map data ported 1:1 from the prototype (P, ORD, HT, CL, IN, ZS, PO, ZI, ZXM, ZXS, BG).
 // Spanish = prototype original, English = prototype TR table (gaps translated and marked).
@@ -63,6 +63,11 @@ export const HT: Localized[] = [
   { es: "Por último, el Auditorio, abajo a la derecha.", en: "Finally, the Auditorium, bottom right." },
 ];
 export const HINT_SUFFIX: Localized = { es: "Te marqué el círculo dorado.", en: "I marked the golden circle for you." };
+/** Phase 6: Orbi's 💡 hint once the Hollow Queen is defeated. */
+export const HINT_FINISHED: Localized = {
+  es: "¡Salvaste la colonia, {n}! En la Misión principal puedes ver el final otra vez y descargar tu certificado.",
+  en: "You saved the colony, {n}! In the Main mission you can watch the ending again and download your certificate.",
+};
 export const HINT_DONE: Localized = {
   es: "¡Ya visitaste todo, {n}! Toca ¡Vamos! (Misión principal) y enfrenta a la Reina Hueca.",
   en: "You’ve visited everything, {n}! Tap Let’s go! (Main mission) and face the Hollow Queen.",
@@ -319,10 +324,7 @@ export const BOSS_WIN_TALK: Line[] = [
   [5, { es: "Imposible… mi voz ya no los confunde.", en: "Impossible… my voice no longer confuses them." }],
   [2, { es: "¡Lo lograron! La colonia está a salvo.", en: "You did it! The colony is safe." }],
   ["H", { es: "Aprendimos que la ciencia y el esfuerzo salvan al universo.", en: "We learned that science and effort save the universe." }],
-  [1, {
-    es: "Y esto es solo el comienzo: Capítulo 2, «Los que miran desde arriba».",
-    en: "And this is only the beginning: Chapter 2, “Those Who Watch from Above”.",
-  }],
+  // Phase 6: Elen's "Chapter 2" line moved to the last scene of the ENDING cutscene.
 ];
 
 /** `bend(0)`: dialogue after losing the boss fight. */
@@ -445,3 +447,77 @@ export const RAY_BEFORE_BOSS: Line[] = [
     en: "Now she wants to do the same to Earth, with fires and heat. Let’s not let her!",
   }],
 ];
+
+
+// ---------------------------------------------------------------------------
+// Phase 6 · Ending cutscene (after the boss): Ray's origin revealed, the colony saved
+// ---------------------------------------------------------------------------
+
+/** One scene of the ending: the portraits shown (CH index / "H" = hero) and lines that fade in. */
+export type EndingScene = { chars: Speaker[]; title: Localized; lines: Localized[] };
+
+export const ENDING: EndingScene[] = [
+  {
+    chars: [5],
+    title: { es: "La voz hueca se apaga", en: "The hollow voice fades" },
+    lines: [
+      { es: "Sin preguntas que la confundan, la voz de la Reina Hueca se deshace como polvo lunar.", en: "With no questions left to confuse anyone, the Hollow Queen’s voice crumbles like moon dust." },
+      { es: "En la cara oculta de la Luna, la señal NOX-Ω deja de sonar.", en: "On the far side of the Moon, the NOX-Ω signal falls silent." },
+    ],
+  },
+  {
+    chars: [RAY],
+    title: { es: "El origen de Ray", en: "Ray’s origin" },
+    lines: [
+      { es: "Ray: «Ahora lo recuerdo todo. Me llamo Ray y vengo de Selene, la Colonia Última de la Luna.»", en: "Ray: “Now I remember everything. My name is Ray and I come from Selene, the Last Colony on the Moon.”" },
+      { es: "«Yo cuidaba su gran antena. Cuando la Reina invadió la Luna, envié NOX-Ω y escapé a la Tierra en una cápsula.»", en: "“I looked after its great antenna. When the Queen invaded the Moon, I sent NOX-Ω and escaped to Earth in a capsule.”" },
+      { es: "«Su voz me borró la memoria… pero cada zona que completaste me devolvió un recuerdo.»", en: "“Her voice wiped my memory… but every zone you completed gave me back a memory.”" },
+    ],
+  },
+  {
+    chars: [4],
+    title: { es: "Los Sin Raíz vuelven a casa", en: "The Rootless go home" },
+    lines: [
+      { es: "Los Sin Raíz no eran monstruos: eran colonos de Selene que habían olvidado su hogar.", en: "The Rootless were not monsters: they were Selene colonists who had forgotten their home." },
+      { es: "Ahora recuerdan sus nombres y regresan a la Luna.", en: "Now they remember their names and return to the Moon." },
+    ],
+  },
+  {
+    chars: [2, "H"],
+    title: { es: "¡La colonia está a salvo!", en: "The colony is safe!" },
+    lines: [
+      { es: "Una por una, las cúpulas de Selene se vuelven a encender: luz, aire y plantas.", en: "One by one, Selene’s domes light up again: light, air and plants." },
+      { es: "Orbi: «Lo lograste con ciencia, {n}. Guardaré esta historia en mi archivo para siempre.»", en: "Orbi: “You did it with science, {n}. I’ll keep this story in my archive forever.”" },
+    ],
+  },
+  {
+    chars: [RAY],
+    title: { es: "Un mensaje para la Tierra", en: "A message for Earth" },
+    lines: [
+      { es: "Ray: «La Reina era parte de este cuento, pero el calor y los incendios que viste en los datos de la NASA son reales.»", en: "Ray: “The Queen was part of this story, but the heat and the fires you saw in the NASA data are real.”" },
+      { es: "«Los satélites siguen mirando la Tierra cada día. Entender sus datos es el primer paso para cuidarla.»", en: "“Satellites keep watching Earth every day. Understanding their data is the first step to looking after it.”" },
+    ],
+  },
+  {
+    chars: [1, 3, "H"],
+    title: { es: "Fin del Capítulo 1", en: "End of Chapter 1" },
+    lines: [
+      { es: "Elen: «¡Presentaré toda la aventura en el Auditorio!»", en: "Elen: “I’ll present the whole adventure in the Auditorium!”" },
+      { es: "Joseph: «Y después, revancha de ping pong… en la Luna.»", en: "Joseph: “And after that, a ping pong rematch… on the Moon.”" },
+      { es: "Continuará… Capítulo 2: «Los que miran desde arriba».", en: "To be continued… Chapter 2: “Those Who Watch from Above”." },
+    ],
+  },
+];
+
+export const ENDING_TXT = {
+  scene: { es: "🎬 Final · {i}/{total}", en: "🎬 Ending · {i}/{total}" },
+  next: { es: "Siguiente ▶", en: "Next ▶" },
+  skip: { es: "⏭ Saltar", en: "⏭ Skip" },
+  done: {
+    es: "🏆 ¡Misión cumplida! Descifraste NOX-Ω, derrotaste a la Reina Hueca y salvaste la Colonia Última.",
+    en: "🏆 Mission complete! You decoded NOX-Ω, defeated the Hollow Queen and saved the Last Colony.",
+  },
+  cert: { es: "📜 Obtener mi certificado", en: "📜 Get my certificate" },
+  back: { es: "Volver al mapa", en: "Back to the map" },
+  replay: { es: "🎬 Ver el final otra vez", en: "🎬 Watch the ending again" },
+} satisfies Record<string, Localized>;

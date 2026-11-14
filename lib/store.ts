@@ -39,6 +39,10 @@ type Progress = {
   rayMemories: number[];
   /** Phase 5: PNG data URL thumbnail of the last saved mission patch (shown in the inventory) */
   patch: string | null;
+  /** Phase 6: name typed for the certificate. Only kept on this device (localStorage), never sent anywhere. */
+  playerName: string;
+  /** Phase 6: ISO date of the first win against the Hollow Queen (shown on the certificate). */
+  finishedAt: string | null;
 };
 
 type Settings = {
@@ -65,6 +69,7 @@ type GameState = Progress &
     /** Unlock Ray's next memory fragment. Returns its index, or null when all are unlocked. */
     unlockMemory: () => number | null;
     setPatch: (dataUrl: string) => void;
+    setPlayerName: (name: string) => void;
     resetProgress: () => void;
   };
 
@@ -77,6 +82,8 @@ const freshProgress = (): Progress => ({
   shards: [],
   rayMemories: [],
   patch: null,
+  playerName: "",
+  finishedAt: null,
 });
 
 export const useGame = create<GameState>()(
@@ -97,6 +104,7 @@ export const useGame = create<GameState>()(
       win: (id, stars) => {
         if (get().done[id]) return false;
         set((s) => ({
+          ...(id === "boss" ? { finishedAt: new Date().toISOString() } : {}),
           done: { ...s.done, [id]: true },
           stars: s.stars + stars,
           gems: s.gems + 1,
@@ -118,11 +126,12 @@ export const useGame = create<GameState>()(
         return k;
       },
       setPatch: (patch) => set({ patch }),
+      setPlayerName: (playerName) => set({ playerName }),
       resetProgress: () => set(freshProgress()),
     }),
     {
       name: "colonia-v1",
-      version: 3,
+      version: 4,
       // v1 stored `shards` as a count (never collectable before v2): start the list empty.
       // v3 (Phase 5): saves from before Ray's memories get one per memory zone already completed.
       migrate: (persisted, version) => {
@@ -132,6 +141,11 @@ export const useGame = create<GameState>()(
           const k = Math.min(RAY_MEMORIES.length, MEMORY_ZONES.filter((z) => p.done?.[z]).length);
           p.rayMemories = Array.from({ length: k }, (_, i) => i);
           p.patch = null;
+        }
+        // v4 (Phase 6): certificate name + finish date.
+        if (version < 4) {
+          p.playerName = "";
+          p.finishedAt = null;
         }
         return p as unknown as GameState;
       },
@@ -147,6 +161,8 @@ export const useGame = create<GameState>()(
         shards: s.shards,
         rayMemories: s.rayMemories,
         patch: s.patch,
+        playerName: s.playerName,
+        finishedAt: s.finishedAt,
         character: s.character,
         lang: s.lang,
         theme: s.theme,
@@ -169,8 +185,11 @@ export type ModalSpec =
   | { kind: "achievements" }
   | { kind: "main" }
   | { kind: "boss" }
-  | { kind: "bossWin" }
-  | { kind: "bossLose" }
+  /** Phase 6: ending cutscene (after the first win, or replayed from the main mission) */
+  | { kind: "ending" }
+  /** Phase 6: "Explorador/a de Selene" certificate */
+  | { kind: "certificate" }
+  | { kind: "bossLose"; broke: number }
   | { kind: "ar" }
   /** Phase 5: Ray's memory cutscene (`fresh`: just unlocked, vs. replayed from the inventory) */
   | { kind: "memory"; i: number; fresh?: boolean }

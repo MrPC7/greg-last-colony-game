@@ -148,3 +148,19 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .memo{text-align:center;color:#26c6da}
 @keyframes memIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.memv p{animation:none;opacity:1}}
+
+/* ---- Phase 6: final boss, ending, certificate ---- */
+.segs{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:2px 0 6px}
+.segs i{display:block;height:14px;border-radius:4px;background:linear-gradient(180deg,#ce93d8,#8e24aa);box-shadow:0 0 6px #ab47bc88;transition:opacity .3s,transform .3s}
+.segs i.off{opacity:.18;transform:scaleY(.5);box-shadow:none}
+.lives{display:flex;gap:4px;font-size:20px;margin:2px 0 6px}
+.lives .off{opacity:.5}
+.btopic{margin:8px 0 0;font-weight:700;color:#7c4dff}
+.end .endc{display:flex;flex:none}
+.end .endc .pt{width:64px}
+.end .endc .wmp{margin:0 4px 10px}
+@media(max-width:480px){.end .memv{flex-direction:column}}
+.certn{display:grid;gap:6px;margin:8px 0}
+.certn input{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--fg)}
+.certc{display:block;width:100%;height:auto;aspect-ratio:1200/850;border-radius:10px;margin:8px 0}
+@media(prefers-reduced-motion:reduce){.segs i{transition:none}}
