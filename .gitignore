@@ -32,6 +32,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# production env holds only the public GitHub Pages base path
+!.env.production
 
 # vercel
 .vercel
