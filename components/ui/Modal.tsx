@@ -5,6 +5,7 @@ import { GAMES } from "@/components/games";
 import Achievements from "@/components/games/Achievements";
 import ARView from "@/components/games/ARView";
 import BossFight, { BossLose, BossWin } from "@/components/games/BossFight";
+import RayMemory from "@/components/games/RayMemory";
 import { useT } from "@/lib/i18n";
 import { useUI } from "@/lib/store";
 import {
@@ -51,7 +52,8 @@ export default function ModalHost() {
     case "bossLose": body = <BossLose />; break;
     case "ar": body = <ARView />; break;
     case "settings": body = <SettingsPanel />; break;
+    case "memory": body = <RayMemory i={m.i} fresh={m.fresh} />; break;
   }
   // key: remount when switching panels so local state (e.g. reset confirmation) resets
-  return <Modal key={m.kind + ("zone" in m ? m.zone : "id" in m ? m.id : "")}>{body}</Modal>;
+  return <Modal key={m.kind + ("zone" in m ? m.zone : "id" in m ? m.id : "i" in m ? m.i : "")}>{body}</Modal>;
 }

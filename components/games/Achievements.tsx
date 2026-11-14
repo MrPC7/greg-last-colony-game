@@ -5,13 +5,14 @@ import { BG } from "@/lib/content/story";
 import { useT } from "@/lib/i18n";
 import { useGame } from "@/lib/store";
 
-/** Prototype `logros()` with the `BG` table: 8 badges, progress bar and n/8 count.
+/** Prototype `logros()` with the `BG` table (+ Phase 4/5 badges), progress bar and n/8 count.
  *  Locked badges are greyed out (`.bd`). */
 export default function Achievements() {
   const t = useT();
   const done = useGame((s) => s.done);
   const shards = useGame((s) => s.shards);
-  const view = { done, shards };
+  const rayMemories = useGame((s) => s.rayMemories);
+  const view = { done, shards, rayMemories };
   const n = BG.filter((b) => b.ok(view)).length;
   return (
     <>

@@ -5,7 +5,9 @@ import { persist } from "zustand/middleware";
 import { sfx } from "./audio";
 import { CH, rival } from "./characters";
 import {
+  MEMORY_ZONES,
   ORD,
+  RAY_MEMORIES,
   SENAL_OPENED,
   SENAL_UNLOCK,
   SH,
@@ -33,8 +35,10 @@ type Progress = {
   factOrder: string[];
   /** indices into SH of the star fragments collected on the map */
   shards: number[];
-  /** Ray's memory fragments (Phase 5) */
+  /** Ray's memory fragments (Phase 5): indices into RAY_MEMORIES, in unlock order */
   rayMemories: number[];
+  /** Phase 5: PNG data URL thumbnail of the last saved mission patch (shown in the inventory) */
+  patch: string | null;
 };
 
 type Settings = {
@@ -58,6 +62,9 @@ type GameState = Progress &
     win: (id: string, stars: number) => boolean;
     /** Collect fragment `i` (+1 ⭐; the 8th also gives the +5 ⭐ bonus). Returns true when that completes the set. */
     addShard: (i: number) => boolean;
+    /** Unlock Ray's next memory fragment. Returns its index, or null when all are unlocked. */
+    unlockMemory: () => number | null;
+    setPatch: (dataUrl: string) => void;
     resetProgress: () => void;
   };
 
@@ -69,6 +76,7 @@ const freshProgress = (): Progress => ({
   factOrder: [],
   shards: [],
   rayMemories: [],
+  patch: null,
 });
 
 export const useGame = create<GameState>()(
@@ -103,15 +111,28 @@ export const useGame = create<GameState>()(
         set((s) => ({ shards: [...s.shards, i], stars: s.stars + 1 + (all ? SHARD_BONUS : 0) }));
         return all;
       },
+      unlockMemory: () => {
+        const k = get().rayMemories.length;
+        if (k >= RAY_MEMORIES.length) return null;
+        set((s) => ({ rayMemories: [...s.rayMemories, k] }));
+        return k;
+      },
+      setPatch: (patch) => set({ patch }),
       resetProgress: () => set(freshProgress()),
     }),
     {
       name: "colonia-v1",
-      version: 2,
+      version: 3,
       // v1 stored `shards` as a count (never collectable before v2): start the list empty.
+      // v3 (Phase 5): saves from before Ray's memories get one per memory zone already completed.
       migrate: (persisted, version) => {
         const p = persisted as Partial<Progress> & Record<string, unknown>;
         if (version < 2 && !Array.isArray(p.shards)) p.shards = [];
+        if (version < 3) {
+          const k = Math.min(RAY_MEMORIES.length, MEMORY_ZONES.filter((z) => p.done?.[z]).length);
+          p.rayMemories = Array.from({ length: k }, (_, i) => i);
+          p.patch = null;
+        }
         return p as unknown as GameState;
       },
       // Hydrated manually by AppShell after mount, so the static HTML and the first
@@ -125,6 +146,7 @@ export const useGame = create<GameState>()(
         factOrder: s.factOrder,
         shards: s.shards,
         rayMemories: s.rayMemories,
+        patch: s.patch,
         character: s.character,
         lang: s.lang,
         theme: s.theme,
@@ -150,6 +172,8 @@ export type ModalSpec =
   | { kind: "bossWin" }
   | { kind: "bossLose" }
   | { kind: "ar" }
+  /** Phase 5: Ray's memory cutscene (`fresh`: just unlocked, vs. replayed from the inventory) */
+  | { kind: "memory"; i: number; fresh?: boolean }
   | { kind: "settings" };
 
 type Talk = { lines: Line[]; i: number; done?: () => void };
@@ -237,7 +261,11 @@ export function awardWin(id: ActivityId | "boss", stars: number) {
     if ((ORD as string[]).includes(id) && ORD.filter((k) => done[k]).length === SENAL_UNLOCK && !done.senal) {
       outro = [...outro, ...SENAL_OPENED];
     }
-    if (outro.length) useUI.setState({ queued: () => useUI.getState().startTalk(outro) });
+    // Phase 5: every completed memory zone gives Ray back one memory (cutscene after the outro).
+    const mem = MEMORY_ZONES.includes(id) ? useGame.getState().unlockMemory() : null;
+    const showMemory = mem === null ? undefined : () => useUI.getState().openModal({ kind: "memory", i: mem, fresh: true });
+    if (outro.length) useUI.setState({ queued: () => useUI.getState().startTalk(outro, showMemory) });
+    else if (showMemory) useUI.setState({ queued: showMemory });
   }
   return first;
 }

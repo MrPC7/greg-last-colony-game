@@ -13,10 +13,11 @@ import {
 import { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { sfx } from "@/lib/audio";
-import { DATA_TXT, TEMP, TEMP_TXT } from "@/lib/content/games";
+import { DATA_HINTS, DATA_TXT, TEMP, TEMP_TXT } from "@/lib/content/games";
 import { useLang, useT } from "@/lib/i18n";
 import { fmtDate, fmtSigned, useNasaData, type Gistemp } from "@/lib/nasaData";
 import { awardWin, useGame } from "@/lib/store";
+import HintButton from "@/components/ui/HintButton";
 import { DataCaption, DataStatus, RayNote } from "./DataParts";
 
 ChartJS.register(LineController, LineElement, PointElement, LinearScale, Tooltip);
@@ -208,6 +209,7 @@ function TempGame({ g }: { g: Gistemp }) {
               </button>
             ))}
           </div>
+          <HintButton hint={DATA_HINTS.temp} disabled={pick !== null} />
         </>
       ) : (
         <p><b>{t(TEMP_TXT.score, { c: correct, total: TEMP.rounds })}</b></p>

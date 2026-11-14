@@ -7,7 +7,10 @@ import {
   BOSS_INTRO,
   CL,
   FACTS,
+  MEMORY_TXT,
   ORD,
+  RAY_BEFORE_BOSS,
+  RAY_MEMORIES,
   ZI,
   ZXM,
   ZXS,
@@ -79,13 +82,40 @@ export function MissionsPanel() {
   );
 }
 
-/** Prototype `inv()`: unlocked facts grid. */
+/** Prototype `inv()`: unlocked facts grid (+ Phase 5: the saved mission patch and Ray's memories). */
 export function InventoryPanel() {
   const t = useT();
   const factOrder = useGame((s) => s.factOrder);
+  const patch = useGame((s) => s.patch);
+  const memories = useGame((s) => s.rayMemories);
   const n = factOrder.filter((k) => k in ZI).length;
+  const replay = (i: number) => {
+    const ui = useUI.getState();
+    ui.closeModal();
+    ui.openModal({ kind: "memory", i }, () => useUI.getState().openModal({ kind: "inventory" }));
+  };
   return (
     <>
+      <h3>{t("inv.patch")}</h3>
+      <div className="invp">
+        {patch ? (
+          // eslint-disable-next-line @next/next/no-img-element -- local data URL thumbnail
+          <img src={patch} alt={t("inv.patchAlt")} width={96} height={96} />
+        ) : (
+          <p className="s">{t("inv.patchNone")}</p>
+        )}
+      </div>
+      <h3>{t(MEMORY_TXT.inv, { k: memories.length, total: RAY_MEMORIES.length })}</h3>
+      <p className="s">{t(MEMORY_TXT.invHelp)}</p>
+      <div className="st">
+        {RAY_MEMORIES.map((m, i) =>
+          memories.includes(i) ? (
+            <button key={i} className="b" onClick={() => replay(i)}>{m.icon} {i + 1}</button>
+          ) : (
+            <button key={i} className="b" disabled>🔒 {i + 1}</button>
+          ),
+        )}
+      </div>
       <h3>{t("inv.title")}</h3>
       <div className="pb"><i style={{ width: `${(n / ACTIVITY_IDS.length) * 100}%` }} /></div>
       <div className="gr">
@@ -113,17 +143,21 @@ export function InventoryPanel() {
 export function MainMissionPanel() {
   const t = useT();
   const done = useGame((s) => s.done);
+  const memories = useGame((s) => s.rayMemories);
   const d = ORD.filter((k) => done[k]).length;
   const fight = () => {
     const ui = useUI.getState();
     ui.closeModal();
-    ui.startTalk(BOSS_INTRO, () => useUI.getState().openModal({ kind: "boss" }));
+    // Phase 5: with all his memories back, Ray reveals his origin before the boss.
+    const intro = memories.length >= RAY_MEMORIES.length ? [...RAY_BEFORE_BOSS, ...BOSS_INTRO] : BOSS_INTRO;
+    ui.startTalk(intro, () => useUI.getState().openModal({ kind: "boss" }));
   };
   return (
     <>
       <h3>{t("main.title")}</h3>
       <div className="pb"><i style={{ width: `${d * 20}%` }} /></div>
       <p className="s">{t("main.progress", { d })}</p>
+      <p className="s">{t(MEMORY_TXT.inv, { k: memories.length, total: RAY_MEMORIES.length })}</p>
       {CL.map((c, i) => (
         <div key={i} className={"cd" + (done[ORD[i]] ? "" : " bd")}>
           <span className="ic">{done[ORD[i]] ? "📡" : "🔒"}</span>

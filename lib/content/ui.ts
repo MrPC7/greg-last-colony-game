@@ -65,6 +65,13 @@ export const UI = {
     en: "{d}/{total} completed. Tap one to go to its zone.",
   },
   "inv.title": { es: "🎒 Datos desbloqueados", en: "🎒 Unlocked facts" },
+  "inv.patch": { es: "🎨 Tu parche de misión", en: "🎨 Your mission patch" },
+  "inv.patchAlt": { es: "Parche de misión dibujado por ti", en: "Mission patch drawn by you" },
+  "inv.patchNone": {
+    es: "Aún no tienes parche. Diséñalo con Greg en el Laboratorio Digital.",
+    en: "No patch yet. Design it with Greg in the Digital Lab.",
+  },
+  "quiz.hint": { es: "💡 Pista de Orbi", en: "💡 Orbi’s hint" },
   "ach.title": { es: "🏆 Logros", en: "🏆 Achievements" },
   "main.title": { es: "🛰️ Misión principal: el origen de NOX-Ω", en: "🛰️ Main mission: the origin of NOX-Ω" },
   "main.progress": { es: "{d}/5 pistas reunidas", en: "{d}/5 clues gathered" },

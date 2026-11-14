@@ -7,7 +7,9 @@ import BodyTraining from "./BodyTraining";
 import FireMap from "./FireMap";
 import JumpSim from "./JumpSim";
 import LanderGame from "./LanderGame";
+import LunarPingPong from "./LunarPingPong";
 import Lessons from "./Lessons";
+import MissionPatch from "./MissionPatch";
 import MissionTimeline from "./MissionTimeline";
 import MoonQuiz from "./MoonQuiz";
 import OxygenBalance from "./OxygenBalance";
@@ -29,4 +31,6 @@ export const GAMES: Record<ActivityId, ComponentType> = {
   ar: ARView,
   senal: TempChart,
   fires: FireMap,
+  patch: MissionPatch,
+  pong: LunarPingPong,
 };

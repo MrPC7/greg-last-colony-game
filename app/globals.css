@@ -125,3 +125,26 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .cbr{display:grid;grid-template-columns:minmax(0,11em) 1fr auto;gap:8px;align-items:center;font-size:14px;padding:2px 6px;border-radius:8px;border:2px solid transparent}
 .cbr i{display:block;height:10px;min-width:2px;border-radius:0 4px 4px 0;background:#f03e3e}
 .cbr.ok{border-color:#2ecc71;background:#2ecc7122}.cbr.no{border-color:#e74c3c;background:#e74c3c22}
+
+/* ---- Phase 5: character features ---- */
+.host{position:relative;display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:10px;border:2px solid var(--bd);border-radius:16px 16px 16px 4px;background:color-mix(in srgb,var(--card) 85%,#7c4dff)}
+.host .pt{width:56px;flex:none}
+.host .wmp{margin:0 8px 10px}
+.host p{margin:0;font-size:14px}
+.b.hint{background:#ffd54a;color:#3b2a00;margin:6px 0}
+.patchw{position:relative;width:min(100%,320px);aspect-ratio:1;margin:8px auto}
+.patchw canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.patchw .patchg{background:none;pointer-events:none}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid var(--bd);cursor:pointer;padding:0}
+.sw.on{outline:3px solid #ffd54a;outline-offset:2px}
+.b.sz{display:inline-flex;align-items:center;justify-content:center;width:44px;height:40px;padding:0}
+.b.sz i{display:block;border-radius:50%;background:#fff}
+.invp{display:flex;gap:12px;align-items:center;margin:8px 0}
+.invp img{width:96px;height:96px;border-radius:12px}
+.memv{display:flex;gap:12px;align-items:center;margin:10px 0}
+.memv .pt{width:72px;flex:none;border-color:#26c6da}
+.memv .wmp{margin:0 8px 10px}
+.memv p{margin:4px 0;font-style:italic;opacity:0;animation:memIn .9s ease forwards}
+.memo{text-align:center;color:#26c6da}
+@keyframes memIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.memv p{animation:none;opacity:1}}

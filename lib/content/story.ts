@@ -7,7 +7,9 @@ export type ZoneId = "aulas" | "lab" | "cancha" | "verdes" | "aud" | "senal";
 export type ActivityId =
   | "course" | "aulas" | "lab" | "rad" | "cancha" | "body" | "verdes" | "therm" | "aud" | "ar"
   // Phase 4 — "La Señal de Ray" (NASA data zone)
-  | "senal" | "fires";
+  | "senal" | "fires"
+  // Phase 5 — character features
+  | "patch" | "pong";
 
 /** Speaker index of Ray (CH[6] in lib/characters.ts). A literal here because content files
  *  stay import-free for scripts/check_i18n.ts. */
@@ -106,10 +108,21 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
       en: "And something is wrong: the Hollow Queen wants to conquer Earth with fire and heat. Come, I’ll show you the real data.",
     }],
   ],
-  aud: [[2, {
-    es: "En el Auditorio cuentan la historia de las misiones. Ordénalas bien: la pista final está en el pasado.",
-    en: "The Auditorium tells the story of the missions. Put them in order: the final clue is in the past.",
-  }]],
+  aud: [
+    // Phase 5: Elen (class delegate) hosts the Auditorium.
+    [1, {
+      es: "¡Bienvenidos al Auditorio! Soy Elen, la delegada del salón, y hoy presento la historia de las misiones a la Luna.",
+      en: "Welcome to the Auditorium! I’m Elen, the class delegate, and today I’m presenting the history of the missions to the Moon.",
+    }],
+    [1, {
+      es: "Hasta agregué las misiones Artemis: ¡en 2026 cuatro astronautas volvieron a viajar alrededor de la Luna!",
+      en: "I even added the Artemis missions: in 2026 four astronauts travelled around the Moon again!",
+    }],
+    [2, {
+      es: "En el Auditorio cuentan la historia de las misiones. Ordénalas bien: la pista final está en el pasado.",
+      en: "The Auditorium tells the story of the missions. Put them in order: the final clue is in the past.",
+    }],
+  ],
 };
 
 /** `PO`: dialogue after completing a zone's main activity for the first time (used from Phase 2). */
@@ -197,19 +210,22 @@ export const ZI: Record<ActivityId, [string, Localized]> = {
   ar: ["📷", { es: "Realidad aumentada", en: "Augmented reality" }],
   senal: ["📈", { es: "El termómetro de la Tierra", en: "Earth’s thermometer" }],
   fires: ["🔥", { es: "Mapa de incendios", en: "Fire map" }],
+  patch: ["🎨", { es: "Parche de misión (Greg)", en: "Mission patch (Greg)" }],
+  pong: ["🏓", { es: "Ping pong lunar (Joseph)", en: "Lunar ping pong (Joseph)" }],
 };
 export const ACTIVITY_IDS = Object.keys(ZI) as ActivityId[];
 
 /** `ZXM`: activity → index in ZONES. */
 export const ZXM: Record<ActivityId, number> = {
   course: 0, aulas: 0, lab: 1, rad: 1, cancha: 2, body: 2, verdes: 3, therm: 3, aud: 4, ar: 4, senal: 5, fires: 5,
+  patch: 1, pong: 2,
 };
 
 /** `ZXS`: zone sub-menus (title + activities). */
 export const ZXS: Record<ZoneId, [Localized, ActivityId[]]> = {
   aulas: [{ es: "📚 Aulas", en: "📚 Classrooms" }, ["course", "aulas"]],
-  lab: [{ es: "🚀 Laboratorio Digital", en: "🚀 Digital Lab" }, ["lab", "rad"]],
-  cancha: [{ es: "🏀 Cancha Deportiva", en: "🏀 Sports Court" }, ["cancha", "body"]],
+  lab: [{ es: "🚀 Laboratorio Digital", en: "🚀 Digital Lab" }, ["lab", "rad", "patch"]],
+  cancha: [{ es: "🏀 Cancha Deportiva", en: "🏀 Sports Court" }, ["cancha", "body", "pong"]],
   verdes: [{ es: "🌱 Zonas Verdes", en: "🌱 Green Zones" }, ["verdes", "therm"]],
   aud: [{ es: "🎤 Auditorio", en: "🎤 Auditorium" }, ["aud", "ar"]],
   senal: [{ es: "📡 La Señal de Ray", en: "📡 Ray’s Signal" }, ["senal", "fires"]],
@@ -247,8 +263,8 @@ export const FACTS: Record<ActivityId | "boss", Localized> = {
     en: "At the lunar equator the temperature goes from about +120 °C by day to about −130 °C at night.",
   },
   aud: {
-    es: "Entre 1959 y 2023 la exploración lunar pasó de impactos a alunizajes suaves en zonas difíciles.",
-    en: "Between 1959 and 2023, lunar exploration went from crash impacts to soft landings in difficult areas.",
+    es: "Entre 1959 y 2026 la exploración lunar pasó de impactos a alunizajes suaves en zonas difíciles, y con Artemis II las personas volvieron a viajar a la Luna.",
+    en: "Between 1959 and 2026, lunar exploration went from crash impacts to soft landings in difficult areas, and with Artemis II people travelled to the Moon again.",
   },
   ar: {
     es: "Con realidad aumentada puedes explorar la Luna, la radiación y un traje de astronauta desde tu celular.",
@@ -261,6 +277,14 @@ export const FACTS: Record<ActivityId | "boss", Localized> = {
   fires: {
     es: "Los satélites de NASA FIRMS detectan incendios desde el espacio gracias al calor que emiten.",
     en: "NASA FIRMS satellites detect fires from space thanks to the heat they give off.",
+  },
+  patch: {
+    es: "Cada misión espacial tiene un parche propio que la tripulación lleva cosido en el traje.",
+    en: "Every space mission has its own patch, which the crew wears sewn onto their suits.",
+  },
+  pong: {
+    es: "La gravedad de la Luna es unas 6 veces menor que la de la Tierra: una pelota tarda unas 2,5 veces más en caer desde la misma altura.",
+    en: "The Moon’s gravity is about 6 times weaker than Earth’s: a ball takes about 2.5 times longer to fall from the same height.",
   },
   boss: {
     es: "La Reina Hueca cayó: la lógica y el esfuerzo salvan al universo.",
@@ -326,7 +350,7 @@ export const IN: { text: Localized; chars: number[] }[] = [
 /** Milliseconds each cinematic line stays on screen. */
 export const IN_MS = 3600;
 
-export type ProgressView = { done: Record<string, boolean>; shards: number[] };
+export type ProgressView = { done: Record<string, boolean>; shards: number[]; rayMemories: number[] };
 
 /** `BG`: achievements. */
 export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: ProgressView) => boolean }[] = [
@@ -338,5 +362,86 @@ export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: Progr
   { icon: "💪", name: { es: "Astronauta en forma", en: "Fit astronaut" }, desc: { es: "Supera el entrenamiento", en: "Pass the training" }, ok: (s) => !!s.done.body },
   { icon: "✨", name: { es: "Cazador de estrellas", en: "Star hunter" }, desc: { es: "Reúne los 8 fragmentos", en: "Collect all 8 fragments" }, ok: (s) => s.shards.length >= 8 },
   { icon: "📡", name: { es: "Lector de señales", en: "Signal reader" }, desc: { es: "Lee los datos de la NASA con Ray", en: "Read NASA data with Ray" }, ok: (s) => !!s.done.senal && !!s.done.fires },
+  { icon: "🎨", name: { es: "Artista espacial", en: "Space artist" }, desc: { es: "Diseña tu parche de misión con Greg", en: "Design your mission patch with Greg" }, ok: (s) => !!s.done.patch },
+  { icon: "🏓", name: { es: "Campeón de la cancha", en: "Court champion" }, desc: { es: "Gánale a Joseph al ping pong lunar", en: "Beat Joseph at lunar ping pong" }, ok: (s) => !!s.done.pong },
+  { icon: "🧠", name: { es: "Guardián de recuerdos", en: "Memory keeper" }, desc: { es: "Recupera los 6 recuerdos de Ray", en: "Recover Ray’s 6 memories" }, ok: (s) => s.rayMemories.length >= RAY_MEMORIES.length },
   { icon: "👑", name: { es: "Vencedor de la Reina", en: "Queen slayer" }, desc: { es: "Derrota a la Reina Hueca", en: "Defeat the Hollow Queen" }, ok: (s) => !!s.done.boss },
+];
+
+// ---------------------------------------------------------------------------
+// Phase 5 · Ray's memory fragments
+// ---------------------------------------------------------------------------
+
+/** Zones whose main activity unlocks one of Ray's memories the first time it is won
+ *  (the five ORD zones + the NASA data zone = 6 fragments). */
+export const MEMORY_ZONES: string[] = [...ORD, "senal"];
+
+/** Ray's 6 memories, unlocked in this order whatever the zone order. Together they reveal
+ *  his origin before the boss fight. */
+export const RAY_MEMORIES: { icon: string; lines: Localized[] }[] = [
+  {
+    icon: "🌍",
+    lines: [
+      { es: "Veo la Tierra… azul y pequeña, como una canica.", en: "I see Earth… blue and tiny, like a marble." },
+      { es: "No la miro desde abajo. La miro desde muy, muy lejos.", en: "I’m not looking up at it. I’m looking at it from very, very far away." },
+    ],
+  },
+  {
+    icon: "🌑",
+    lines: [
+      { es: "Un cielo negro aunque sea de día. Polvo gris que nunca se va.", en: "A black sky even in the daytime. Grey dust that never goes away." },
+      { es: "Y pasos que flotan… como si pesara seis veces menos.", en: "And steps that float… as if I weighed six times less." },
+    ],
+  },
+  {
+    icon: "🏡",
+    lines: [
+      { es: "Una cúpula llena de plantas y de gente que se reía.", en: "A dome full of plants and people laughing." },
+      { es: "La llamaban Selene… la Colonia Última, en la Luna.", en: "They called it Selene… the Last Colony, on the Moon." },
+    ],
+  },
+  {
+    icon: "📡",
+    lines: [
+      { es: "Yo cuidaba la gran antena de la colonia.", en: "I looked after the colony’s great antenna." },
+      { es: "Mi trabajo era escuchar a la Tierra y guardar los datos que enviaban sus satélites.", en: "My job was to listen to Earth and keep the data its satellites sent." },
+    ],
+  },
+  {
+    icon: "👑",
+    lines: [
+      { es: "Un día llegó una voz hueca. Quien la escuchaba olvidaba de dónde venía.", en: "One day a hollow voice arrived. Whoever heard it forgot where they came from." },
+      { es: "Así nacieron los Sin Raíz… y yo también la escuché.", en: "That is how the Rootless were born… and I heard it too." },
+    ],
+  },
+  {
+    icon: "🚀",
+    lines: [
+      { es: "Antes de olvidar, encendí la antena con un último mensaje: NOX-Ω. ¡Fui yo quien envió la señal!", en: "Before I forgot, I switched on the antenna with one last message: NOX-Ω. I was the one who sent the signal!" },
+      { es: "Luego escapé en una cápsula hacia la Tierra. Soy Ray, de Selene… y ya sé contra quién peleamos.", en: "Then I escaped in a capsule to Earth. I’m Ray, from Selene… and now I know who we are fighting." },
+    ],
+  },
+];
+
+export const MEMORY_TXT = {
+  title: { es: "{icon} Recuerdo de Ray {i}/{total}", en: "{icon} Ray’s memory {i}/{total}" },
+  unlocked: { es: "✨ Un fragmento de memoria volvió a Ray.", en: "✨ A memory fragment came back to Ray." },
+  origin: { es: "🌙 ¡Ray recuerda su origen!", en: "🌙 Ray remembers where he comes from!" },
+  inv: { es: "🧠 Recuerdos de Ray: {k}/{total}", en: "🧠 Ray’s memories: {k}/{total}" },
+  invHelp: {
+    es: "Cada zona completada le devuelve un recuerdo a Ray. Toca uno para volver a verlo.",
+    en: "Every completed zone gives Ray back one memory. Tap one to see it again.",
+  },
+} satisfies Record<string, Localized>;
+
+/** Before the boss, once all 6 memories are back (prepended to BOSS_INTRO). */
+export const RAY_BEFORE_BOSS: Line[] = [
+  [RAY, {
+    es: "{n}, espera. Ya lo recuerdo todo: vengo de Selene, la colonia de la Luna que la Reina Hueca invadió.",
+    en: "{n}, wait. I remember everything now: I come from Selene, the Moon colony the Hollow Queen invaded.",
+  }],
+  [RAY, {
+    es: "Ahora quiere hacerle lo mismo a la Tierra, con incendios y calor. ¡No la dejemos!",
+    en: "Now she wants to do the same to Earth, with fires and heat. Let’s not let her!",
+  }],
 ];

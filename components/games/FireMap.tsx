@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react";
 import { sfx } from "@/lib/audio";
-import { CONTINENTS, FIRE, FIRE_TXT } from "@/lib/content/games";
+import { CONTINENTS, DATA_HINTS, FIRE, FIRE_TXT } from "@/lib/content/games";
 import { useLang, useT } from "@/lib/i18n";
 import { fmtDate, fmtDateRange, fmtNum, useNasaData, type Firms } from "@/lib/nasaData";
 import { awardWin } from "@/lib/store";
 import { LAND, MAP_LAT, WATER, pathOf, px, py } from "@/lib/worldmap";
+import HintButton from "@/components/ui/HintButton";
 import { DataCaption, DataStatus, RayNote } from "./DataParts";
 
 /** Continent id of a point: the first CONTINENTS entry whose boxes contain it (or null: ocean / other). */
@@ -77,11 +78,14 @@ function FireGame({ f }: { f: Firms }) {
       </svg>
       <p><b>{t(FIRE_TXT.question)}</b></p>
       {!pick ? (
-        <div className="yrs">
+        <>
+          <div className="yrs">
           {CONTINENTS.map((c) => (
             <button key={c.id} className="op" onClick={() => choose(c.id)}>{t(c.name)}</button>
           ))}
-        </div>
+          </div>
+          <HintButton hint={DATA_HINTS.fire} />
+        </>
       ) : (
         <>
           <p className="s">

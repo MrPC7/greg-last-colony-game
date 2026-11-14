@@ -9,7 +9,14 @@ import type { Localized } from "./types";
 // Aulas · MoonQuiz (prototype `Q`, `quiz`)
 // ---------------------------------------------------------------------------
 
-export type QuizQuestion = { q: Localized; options: Localized[]; answer: number; explain: Localized };
+export type QuizQuestion = {
+  q: Localized;
+  options: Localized[];
+  answer: number;
+  explain: Localized;
+  /** Phase 5: Orbi's 💡 hint (a nudge, never the answer itself). */
+  hint: Localized;
+};
 
 /** `Q`: 4 questions, explanation after each answer. */
 export const Q: QuizQuestion[] = [
@@ -25,6 +32,10 @@ export const Q: QuizQuestion[] = [
       es: "Unos 1,62 m/s²: cerca de la sexta parte de la gravedad terrestre.",
       en: "About 1.62 m/s²: roughly one sixth of Earth’s gravity.",
     },
+    hint: {
+      es: "Piensa en los astronautas del Apolo: daban saltos enormes y parecían flotar al caminar.",
+      en: "Think of the Apollo astronauts: they made huge hops and seemed to float as they walked.",
+    },
   },
   {
     q: { es: "¿Por qué en la Luna no se escuchan sonidos?", en: "Why can’t you hear sounds on the Moon?" },
@@ -37,6 +48,10 @@ export const Q: QuizQuestion[] = [
     explain: {
       es: "El sonido necesita aire u otro medio para viajar; en la Luna casi no hay atmósfera.",
       en: "Sound needs air or another medium to travel; the Moon has almost no atmosphere.",
+    },
+    hint: {
+      es: "El sonido viaja como ondas a través del aire. ¿Qué le falta a la Luna?",
+      en: "Sound travels as waves through the air. What is the Moon missing?",
     },
   },
   {
@@ -51,6 +66,10 @@ export const Q: QuizQuestion[] = [
       es: "Por eso las noches lunares duran cerca de dos semanas: ¡un gran reto para la energía solar!",
       en: "That is why lunar nights last about two weeks: a huge challenge for solar power!",
     },
+    hint: {
+      es: "La Luna tarda casi un mes en mostrarnos todas sus fases… y su día dura casi lo mismo.",
+      en: "The Moon takes almost a month to show us all its phases… and its day lasts about as long.",
+    },
   },
   {
     q: { es: "¿Por qué una base lunar necesita protección contra la radiación?", en: "Why does a lunar base need protection from radiation?" },
@@ -63,6 +82,10 @@ export const Q: QuizQuestion[] = [
     explain: {
       es: "Sin atmósfera, la radiación solar y cósmica llega directa a la superficie.",
       en: "Without an atmosphere, solar and cosmic radiation reaches the surface directly.",
+    },
+    hint: {
+      es: "En la Tierra, el aire y el campo magnético nos sirven de escudo. ¿La Luna tiene eso?",
+      en: "On Earth, the air and the magnetic field act as our shield. Does the Moon have those?",
     },
   },
 ];
@@ -79,7 +102,16 @@ export const QUIZ = {
 // Aulas · Lessons (prototype `LS`, `course`)
 // ---------------------------------------------------------------------------
 
-export type Lesson = { icon: string; name: Localized; text: Localized; q: Localized; options: Localized[]; answer: number };
+export type Lesson = {
+  icon: string;
+  name: Localized;
+  text: Localized;
+  q: Localized;
+  options: Localized[];
+  answer: number;
+  /** Phase 5: Orbi's 💡 hint. */
+  hint: Localized;
+};
 
 /** `LS`: 5 mini lessons, each with a check question. */
 export const LS: Lesson[] = [
@@ -93,6 +125,7 @@ export const LS: Lesson[] = [
     q: { es: "¿Tiene atmósfera la Luna?", en: "Does the Moon have an atmosphere?" },
     options: [{ es: "Casi no", en: "Almost none" }, { es: "Sí, como la Tierra", en: "Yes, like Earth" }],
     answer: 0,
+    hint: { es: "Si la Luna tuviera aire, desde allá veríamos un cielo azul. ¿Lo ves en las fotos?", en: "If the Moon had air, we would see a blue sky from up there. Do you see one in the photos?" },
   },
   {
     icon: "☢️",
@@ -104,6 +137,7 @@ export const LS: Lesson[] = [
     q: { es: "¿Qué protege mejor una base?", en: "What protects a base best?" },
     options: [{ es: "Una capa de regolito o agua", en: "A layer of regolith or water" }, { es: "Una tela fina", en: "A thin cloth" }],
     answer: 0,
+    hint: { es: "Las partículas se frenan con capas gruesas y pesadas, no con algo delgado.", en: "Particles are slowed by thick, heavy layers, not by something thin." },
   },
   {
     icon: "🌡️",
@@ -118,6 +152,7 @@ export const LS: Lesson[] = [
       { es: "Porque la Luna está muy lejos del Sol", en: "Because the Moon is very far from the Sun" },
     ],
     answer: 0,
+    hint: { es: "En la Tierra, el aire funciona como una manta que guarda el calor por la noche.", en: "On Earth, the air works like a blanket that keeps the heat in at night." },
   },
   {
     icon: "🧑‍🚀",
@@ -129,6 +164,7 @@ export const LS: Lesson[] = [
     q: { es: "¿Qué ayuda a mantener fuertes los huesos?", en: "What helps keep bones strong?" },
     options: [{ es: "Ejercicio diario", en: "Daily exercise" }, { es: "Dormir todo el día", en: "Sleeping all day" }],
     answer: 0,
+    hint: { es: "Los músculos y los huesos se hacen fuertes cuando los usas.", en: "Muscles and bones get stronger when you use them." },
   },
   {
     icon: "🚀",
@@ -140,6 +176,7 @@ export const LS: Lesson[] = [
     q: { es: "¿Qué misión llevó a las primeras personas a caminar en la Luna?", en: "Which mission took the first people to walk on the Moon?" },
     options: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Luna 2", en: "Luna 2" }],
     answer: 0,
+    hint: { es: "Una de esas misiones no llevaba personas: solo llegó a chocar contra la Luna.", en: "One of those missions carried no people: it just crashed into the Moon." },
   },
 ];
 
@@ -357,10 +394,14 @@ export const TL: { year: number; text: Localized }[] = [
   { year: 1959, text: { es: "Luna 2: primer objeto humano en llegar a la Luna", en: "Luna 2: first human-made object to reach the Moon" } },
   { year: 1969, text: { es: "Apolo 11: primeras personas en caminar sobre la Luna", en: "Apollo 11: first people to walk on the Moon" } },
   { year: 2019, text: { es: "Chang’e 4: primer alunizaje en la cara oculta", en: "Chang’e 4: first landing on the far side" } },
+  // Phase 5. Artemis I: launched 16 Nov 2022, uncrewed Orion around the Moon.
+  { year: 2022, text: { es: "Artemis I: la nave Orión, sin tripulación, viaja alrededor de la Luna", en: "Artemis I: the Orion spacecraft, uncrewed, travels around the Moon" } },
   { year: 2023, text: { es: "Chandrayaan-3: alunizaje cerca del polo sur lunar", en: "Chandrayaan-3: landing near the lunar south pole" } },
+  // Phase 5. Artemis II: launched 1 Apr 2026, splashdown 10 Apr 2026 (verified before adding).
+  { year: 2026, text: { es: "Artemis II: cuatro astronautas viajan alrededor de la Luna", en: "Artemis II: four astronauts travel around the Moon" } },
 ];
-/** Order the TL entries are shown in (prototype `[2,0,3,1]`). */
-export const TL_SHOW = [2, 0, 3, 1];
+/** Order the TL entries are shown in (prototype `[2,0,3,1]`, extended with the two Artemis missions). */
+export const TL_SHOW = [2, 0, 4, 5, 1, 3];
 
 export const TL_TXT = {
   title: { es: "🎤 Auditorio · Línea de tiempo", en: "🎤 Auditorium · Timeline" },
@@ -369,6 +410,20 @@ export const TL_TXT = {
   win: { es: "✅ ¡Línea del tiempo completa! ⭐ +3", en: "✅ Timeline complete! ⭐ +3" },
   winReplay: { es: "✅ ¡Línea del tiempo completa!", en: "✅ Timeline complete!" },
   wrong: { es: "Esa misión no fue la siguiente. ¡Fíjate en el año!", en: "That mission was not next. Check the year!" },
+  // Phase 5: Elen hosts the timeline (speech bubbles inside the game).
+  elenStart: {
+    es: "Como delegada del salón me tocó presentar esta charla. Ordenar misiones es como mis juegos de mesa: piensa antes de mover la ficha.",
+    en: "As class delegate, I was asked to host this talk. Ordering missions is like my board games: think before you move your piece.",
+  },
+  elenRight: { es: "¡Bien! Esa va ahí. ¿Cuál sigue?", en: "Nice! That one goes there. What comes next?" },
+  elenWrong: {
+    es: "Mmm, no. Pista: las dos Artemis son las más nuevas, ¡la última es de este año!",
+    en: "Hmm, no. Tip: the two Artemis missions are the newest, the last one is from this year!",
+  },
+  elenWin: {
+    es: "¡Perfecto! De Luna 2 a Artemis II: 67 años de historia. Ojalá Joseph hubiera visto esto… digo, ¡todos! 😳",
+    en: "Perfect! From Luna 2 to Artemis II: 67 years of history. I wish Joseph had seen this… I mean, everyone! 😳",
+  },
 } satisfies Record<string, Localized>;
 
 // ---------------------------------------------------------------------------
@@ -383,18 +438,21 @@ export const BQ: QuizQuestion[] = Q.concat([
     options: [{ es: "≈ 6 veces", en: "≈ 6 times" }, { es: "≈ 2 veces", en: "≈ 2 times" }, { es: "Igual", en: "The same" }],
     answer: 0,
     explain: { es: "La gravedad lunar es ≈ 1/6 de la terrestre.", en: "Lunar gravity is ≈ 1/6 of Earth’s." },
+    hint: { es: "Recuerda la Cancha: la gravedad lunar es cerca de la sexta parte de la terrestre.", en: "Remember the Sports Court: lunar gravity is about one sixth of Earth’s." },
   },
   {
     q: { es: "¿Cómo frena un módulo lunar sin atmósfera?", en: "How does a lunar lander brake without an atmosphere?" },
     options: [{ es: "Con paracaídas", en: "With a parachute" }, { es: "Con su motor", en: "With its engine" }, { es: "Con alas", en: "With wings" }],
     answer: 1,
     explain: { es: "Sin aire no hay paracaídas ni alas: se usa el motor.", en: "With no air there are no parachutes or wings: you use the engine." },
+    hint: { es: "Recuerda el Laboratorio: sin aire, ¿qué cosas dejan de funcionar?", en: "Remember the Lab: with no air, which things stop working?" },
   },
   {
     q: { es: "¿Qué misión aterrizó primero en la cara oculta de la Luna?", en: "Which mission first landed on the far side of the Moon?" },
     options: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Chang’e 4", en: "Chang’e 4" }, { es: "Luna 2", en: "Luna 2" }],
     answer: 1,
     explain: { es: "Chang’e 4 lo logró en 2019.", en: "Chang’e 4 did it in 2019." },
+    hint: { es: "Recuerda el Auditorio: fue en 2019, y la misión lleva el nombre de una diosa lunar china.", en: "Remember the Auditorium: it was in 2019, and the mission is named after a Chinese Moon goddess." },
   },
   {
     q: { es: "¿Qué aportan las plantas en una colonia?", en: "What do plants provide in a colony?" },
@@ -405,6 +463,7 @@ export const BQ: QuizQuestion[] = Q.concat([
     ],
     answer: 1,
     explain: { es: "Ayudan a cerrar el ciclo del aire junto con sistemas mecánicos.", en: "They help close the air cycle together with mechanical systems." },
+    hint: { es: "Recuerda las Zonas Verdes: con la fotosíntesis, las plantas toman CO₂ y liberan algo que respiramos.", en: "Remember the Green Zones: through photosynthesis, plants take in CO₂ and release something we breathe." },
   },
 ]);
 
@@ -488,6 +547,18 @@ export const DATA_TXT = {
   },
   rayTitle: { es: "Ray explica:", en: "Ray explains:" },
   again: { es: "🔁 Jugar otra vez", en: "🔁 Play again" },
+} satisfies Record<string, Localized>;
+
+/** Phase 5: Orbi's 💡 hints for the generated questions of the NASA data games. */
+export const DATA_HINTS = {
+  temp: {
+    es: "Piensa en la tendencia: en las últimas décadas la Tierra se ha ido calentando. ¿Cuál de los dos años es más reciente?",
+    en: "Think about the trend: in recent decades Earth has been warming up. Which of the two years is more recent?",
+  },
+  fire: {
+    es: "No te fíes del tamaño del continente: busca dónde se amontonan más puntos rojos en el mapa.",
+    en: "Don’t go by the size of the continent: look for where the red dots pile up the most on the map.",
+  },
 } satisfies Record<string, Localized>;
 
 /** TempChart: 5 rounds of "which year was hotter?"; stars by correct answers. */
@@ -575,5 +646,92 @@ export const FIRE_TXT = {
   caption: {
     es: "Datos: NASA FIRMS (MODIS, 24 h) — {date}",
     en: "Data: NASA FIRMS (MODIS, 24 h) — {date}",
+  },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Phase 5 · Laboratorio · MissionPatch (Greg) — draw your own mission patch
+// ---------------------------------------------------------------------------
+
+/** Canvas size (px), thumbnail size saved in the inventory, stars for the first saved patch. */
+export const PATCH = { size: 320, thumb: 128, stars: 2, bg: "#0b1d4d", sizes: [4, 10, 20] };
+
+/** Brush colours (name used for the button's aria-label). */
+export const PATCH_COLORS: { c: string; name: Localized }[] = [
+  { c: "#ffffff", name: { es: "Blanco", en: "White" } },
+  { c: "#ffd54a", name: { es: "Amarillo", en: "Yellow" } },
+  { c: "#ff9800", name: { es: "Naranja", en: "Orange" } },
+  { c: "#e53935", name: { es: "Rojo", en: "Red" } },
+  { c: "#ab47bc", name: { es: "Morado", en: "Purple" } },
+  { c: "#22b8cf", name: { es: "Celeste", en: "Sky blue" } },
+  { c: "#2ecc71", name: { es: "Verde", en: "Green" } },
+  { c: "#8a8a96", name: { es: "Gris lunar", en: "Moon grey" } },
+];
+
+export const PATCH_TXT = {
+  title: { es: "🎨 Parche de misión", en: "🎨 Mission patch" },
+  greg: {
+    es: "Estoy en 5.º de secundaria y sueño con trabajar en la NASA. En matemáticas no me va tan bien… ¡pero dibujar es lo mío! Cada misión espacial tiene su propio parche, cosido en el traje. Diseñemos el de nuestra colonia.",
+    en: "I’m in my final year of secondary school and I dream of working at NASA. Maths isn’t my best subject… but drawing is my thing! Every space mission has its own patch, sewn onto the suit. Let’s design one for our colony.",
+  },
+  canvas: { es: "Lienzo de dibujo del parche de misión", en: "Mission patch drawing canvas" },
+  brush: { es: "🖌️ Pincel", en: "🖌️ Brush" },
+  eraser: { es: "🧽 Borrador", en: "🧽 Eraser" },
+  size: { es: "Grosor", en: "Size" },
+  sizeN: { es: "Grosor {k}", en: "Size {k}" },
+  colors: { es: "Colores", en: "Colours" },
+  template: { es: "⭕ Plantilla circular", en: "⭕ Circle template" },
+  clear: { es: "🗑️ Borrar todo", en: "🗑️ Clear all" },
+  save: { es: "💾 Guardar", en: "💾 Save" },
+  tip: {
+    es: "Con la plantilla activa, tu parche se guarda redondo y con borde, como los de verdad.",
+    en: "With the template on, your patch is saved round and with a border, just like real ones.",
+  },
+  saved: { es: "✅ ¡Parche guardado! Lo verás en tu Inventario. ⭐ +{s}", en: "✅ Patch saved! You’ll see it in your Inventory. ⭐ +{s}" },
+  savedReplay: { es: "✅ ¡Parche guardado! Lo verás en tu Inventario.", en: "✅ Patch saved! You’ll see it in your Inventory." },
+  file: { es: "mi-parche-de-mision", en: "my-mission-patch" },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Phase 5 · Cancha · LunarPingPong (Joseph) — pong with Earth / Moon gravity
+// ---------------------------------------------------------------------------
+
+/** Canvas units are px; gravity in px/s² = g (m/s²) × scale. First to `target` points wins.
+ *  Joseph aims up to ±aiError × paddle height off the ball on each return, so he can miss.
+ *  Stars: 3 if you won at least one point with Earth gravity, else 2. */
+export const PONG = {
+  w: 360, h: 240, scale: 30, gEarth: 9.81, gMoon: 1.62,
+  paddleH: 52, paddleW: 8, ball: 6, serveVx: 170, maxVx: 360, maxVy: 420,
+  playerSpeed: 280, aiSpeed: 135, aiError: 0.75, target: 3, starsEarth: 3, stars: 2,
+};
+
+export const PONG_TXT = {
+  title: { es: "🏓 Ping pong lunar", en: "🏓 Lunar ping pong" },
+  joseph: {
+    es: "¡La cancha es mi territorio! Juego fútbol y ping pong desde niño. Aquí la pelota cae por la gravedad: con el botón la cambias entre la Tierra y la Luna. ¡A ver si me ganas!",
+    en: "The court is my turf! I’ve played football and ping pong since I was little. Here the ball falls because of gravity: the button switches it between Earth and the Moon. Let’s see if you can beat me!",
+  },
+  desc: {
+    es: "Mueve tu paleta (izquierda) arrastrando en la mesa, o con ↑ ↓ / W S. Primero en llegar a {k} puntos gana. Tecla G: cambiar gravedad.",
+    en: "Move your paddle (left) by dragging on the table, or with ↑ ↓ / W S. First to {k} points wins. G key: switch gravity.",
+  },
+  canvas: { es: "Mesa de ping pong: tu paleta a la izquierda, la de Joseph a la derecha", en: "Ping pong table: your paddle on the left, Joseph’s on the right" },
+  earth: { es: "🌍 Gravedad: Tierra (9,81 m/s²)", en: "🌍 Gravity: Earth (9.81 m/s²)" },
+  moon: { es: "🌙 Gravedad: Luna (1,62 m/s²)", en: "🌙 Gravity: Moon (1.62 m/s²)" },
+  start: { es: "▶ Sacar", en: "▶ Serve" },
+  again: { es: "🔁 Otra partida", en: "🔁 Another match" },
+  score: { es: "Tú {a} – {b} Joseph", en: "You {a} – {b} Joseph" },
+  tip3: {
+    es: "Para 3 ⭐: gana al menos un punto con la gravedad de la Tierra.",
+    en: "For 3 ⭐: win at least one point with Earth’s gravity.",
+  },
+  point: { es: "¡Punto para ti!", en: "Point for you!" },
+  pointAi: { es: "Punto para Joseph.", en: "Point for Joseph." },
+  win: { es: "🏆 ¡Le ganaste a Joseph! ⭐ +{s}", en: "🏆 You beat Joseph! ⭐ +{s}" },
+  winReplay: { es: "🏆 ¡Le ganaste a Joseph otra vez!", en: "🏆 You beat Joseph again!" },
+  lose: { es: "Joseph ganó esta vez. ¡Prueba con la gravedad de la Luna: la pelota cae más lento!", en: "Joseph won this time. Try Moon gravity: the ball falls more slowly!" },
+  josephWin: {
+    es: "¡Buena partida! ¿Notaste? En la Luna la pelota flota más: tienes más tiempo para llegar.",
+    en: "Good game! Did you notice? On the Moon the ball floats more: you have more time to reach it.",
   },
 } satisfies Record<string, Localized>;

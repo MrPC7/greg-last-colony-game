@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import HintButton from "@/components/ui/HintButton";
 import { sfx } from "@/lib/audio";
 import { Q, QUIZ } from "@/lib/content/games";
 import { useT } from "@/lib/i18n";
@@ -61,6 +62,7 @@ export default function MoonQuiz() {
           {t(o)}
         </button>
       ))}
+      <HintButton hint={q.hint} disabled={picked !== null} />
       <div id="fb">
         {picked !== null && (
           <>

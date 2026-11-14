@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import HintButton from "@/components/ui/HintButton";
 import { sfx } from "@/lib/audio";
 import { COURSE, LS } from "@/lib/content/games";
 import { useT } from "@/lib/i18n";
@@ -46,6 +47,7 @@ export default function Lessons() {
       {l.options.map((o, j) => (
         <button key={j} className="op" onClick={() => answer(j)}>{t(o)}</button>
       ))}
+      <HintButton hint={l.hint} />
       <div id="fb">{wrong ? t(COURSE.wrong) : null}</div>
     </>
   );

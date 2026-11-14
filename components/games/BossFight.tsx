@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cropStyle } from "@/components/ui/Portrait";
+import HintButton from "@/components/ui/HintButton";
 import Watermark from "@/components/ui/Watermark";
 import { music, sfx } from "@/lib/audio";
 import { CH } from "@/lib/characters";
@@ -145,6 +146,8 @@ export default function BossFight() {
           {t(o)}
         </button>
       ))}
+      <HintButton hint={q.hint} disabled={locked} />
+      <br />
       <button className="b" id="al0" disabled={!f.a[0]} onClick={() => ally(0)}>{t(BOSS_TXT.remove)}</button>{" "}
       <button className="b" id="al1" disabled={!f.a[1]} onClick={() => ally(1)}>
         {t(BOSS_TXT.hint, { name: t(CH[al[0]].n) })}
