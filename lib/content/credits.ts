@@ -4,14 +4,22 @@ import type { Localized } from "./types";
 // open-source libraries. Every player-visible text is an {es, en} pair.
 
 // ---------------------------------------------------------------------------
-// TEAM — fill in before publishing. Proper names are shown as written.
+// Team — proper names are shown exactly as written (same in both languages).
 // ---------------------------------------------------------------------------
 
 /** Team members' names. */
-export const TEAM: string[] = ["<NAMES>"];
+export const TEAM: string[] = [
+  "Valeria Alexandra Villacorta Landeo",
+  "Pranshu Chaurasia",
+  "Elida Nuñez Vásquez",
+  "Miguel Angel Vilca Mamani",
+];
 
 /** AI tool used to generate the three images (map.jpg, keyart.jpg, cast.jpg). */
-export const AI_IMAGE_TOOL = "<TOOL NAME>";
+export const AI_IMAGE_TOOL: Localized = {
+  es: "Herramienta de generación de imágenes con IA (texto a imagen)",
+  en: "AI text-to-image generation tool",
+};
 
 // ---------------------------------------------------------------------------
 

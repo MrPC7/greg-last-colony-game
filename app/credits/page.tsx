@@ -61,7 +61,7 @@ export default function CreditsPage() {
 
         <h2>{t(C.aiTitle)}</h2>
         <ul>
-          <li>{t(C.aiImages, { tool: AI_IMAGE_TOOL })}</li>
+          <li>{t(C.aiImages, { tool: t(AI_IMAGE_TOOL) })}</li>
           <li>{t(C.aiCode)}</li>
           <li>{t(C.aiAudio)}</li>
         </ul>
