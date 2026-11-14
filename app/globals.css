@@ -44,7 +44,10 @@ input[type=range]{width:100%}
 @keyframes fi{from{opacity:0;transform:translateY(14px)}}
 @keyframes pop{from{opacity:0;transform:scale(.3)}}
 /* Own row above the content (not floating), so it never covers the map HUD. */
-#cfg{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:1180px;margin:0 auto;padding:6px 8px 0}
+#cfg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:flex-end;max-width:1180px;margin:0 auto;padding:6px 8px 0}
+#cfg .cfgb{display:flex;gap:6px;margin-left:auto}
+/* Narrow: if the HUD and the buttons don't fit on one line, buttons go on top and the HUD sits right above the map. */
+@media(max-width:820px){#cfg{flex-wrap:wrap-reverse}}
 #cfg button{background:#140c32cc;color:#fff;border:1px solid #4f6bff;border-radius:8px;padding:4px 8px;font:inherit;font-size:13px;cursor:pointer}
 .shk{animation:sk .35s}@keyframes sk{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @media(prefers-reduced-motion:reduce){.art,#cin *,.shk{animation:none!important}}
