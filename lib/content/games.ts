@@ -177,6 +177,8 @@ export const LANDER_TXT = {
   engine: { es: "🔥 Mantener motor (Espacio)", en: "🔥 Hold engine (Space)" },
   retry: { es: "Reintentar", en: "Retry" },
   win: { es: "✅ ¡Alunizaje suave a {v} m/s! ⭐ +{s}", en: "✅ Soft landing at {v} m/s! ⭐ +{s}" },
+  /** replay of an already-completed landing: no stars added, so no "⭐ +N" */
+  winReplay: { es: "✅ ¡Alunizaje suave a {v} m/s!", en: "✅ Soft landing at {v} m/s!" },
   crash: {
     es: "💥 Impacto a {v} m/s. Enciende el motor antes y con más constancia.",
     en: "💥 Impact at {v} m/s. Fire the engine earlier and keep it steady.",

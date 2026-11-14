@@ -92,8 +92,8 @@ function Flight({ t, onRetry }: { t: ReturnType<typeof useT>; onRetry: () => voi
         const v = l.v;
         if (v <= LANDER.winV) {
           const s = v <= LANDER.threeStarV ? 3 : 2;
-          awardWin("lab", s);
-          setResult({ ok: true, v, s });
+          // s = 0 on a replay (already completed): no "⭐ +N" in the message
+          setResult({ ok: true, v, s: awardWin("lab", s) ? s : 0 });
         } else setResult({ ok: false, v, s: 0 });
         sfx(v <= LANDER.winV ? "ok" : "qhit");
         return;
@@ -137,7 +137,9 @@ function Flight({ t, onRetry }: { t: ReturnType<typeof useT>; onRetry: () => voi
       <div id="tm" className="s">
         {result
           ? result.ok
-            ? t(LANDER_TXT.win, { v: result.v.toFixed(1), s: result.s })
+            ? result.s > 0
+              ? t(LANDER_TXT.win, { v: result.v.toFixed(1), s: result.s })
+              : t(LANDER_TXT.winReplay, { v: result.v.toFixed(1) })
             : t(LANDER_TXT.crash, { v: result.v.toFixed(1) })
           : drawn
             ? t(LANDER_TXT.status, { y: hud.y.toFixed(0), v: hud.v.toFixed(1), f: hud.f.toFixed(0) })

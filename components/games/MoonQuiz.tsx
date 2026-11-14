@@ -4,24 +4,25 @@ import { useState } from "react";
 import { sfx } from "@/lib/audio";
 import { Q, QUIZ } from "@/lib/content/games";
 import { useT } from "@/lib/i18n";
-import { awardWin, useGame, useUI } from "@/lib/store";
+import { awardWin, useUI } from "@/lib/store";
 
 /** Prototype `quiz` / `qq` / `qa`: 4 questions, explanation after each answer.
- *  Stars = max(1, correct answers), awarded once (zone "aulas"). */
+ *  Stars = max(1, correct answers), awarded once (zone "aulas"); "⭐ +N" only when awarded. */
 export default function MoonQuiz() {
   const t = useT();
-  const doneAulas = useGame((s) => !!s.done.aulas);
   const [qi, setQi] = useState(0);
   const [qs, setQs] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
+  /** stars actually added at the end (0 on a replay: the zone was already completed) */
+  const [gained, setGained] = useState(0);
 
   if (qi >= Q.length) {
-    const s = Math.max(1, qs);
     return (
       <>
         <h3>{t(QUIZ.end)}</h3>
         <p>
-          {t(QUIZ.score)} <b>{qs}/{Q.length}</b> · ⭐ {doneAulas ? "+" + s : ""}
+          {t(QUIZ.score)} <b>{qs}/{Q.length}</b>
+          {gained > 0 && <> · ⭐ +{gained}</>}
         </p>
         <button className="b" onClick={() => useUI.getState().closeModal()}>{t(QUIZ.keepExploring)}</button>
       </>
@@ -39,7 +40,10 @@ export default function MoonQuiz() {
   const next = () => {
     sfx("click"); // prototype re-opens the modal for each question
     // Prototype awards the win when the result screen opens.
-    if (qi + 1 >= Q.length) awardWin("aulas", Math.max(1, qs));
+    if (qi + 1 >= Q.length) {
+      const s = Math.max(1, qs);
+      setGained(awardWin("aulas", s) ? s : 0);
+    }
     setPicked(null);
     setQi(qi + 1);
   };
