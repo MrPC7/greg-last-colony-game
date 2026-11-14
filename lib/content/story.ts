@@ -216,6 +216,29 @@ export const BOSS_INTRO: Line[] = [
   }],
 ];
 
+/** `bend(1)`: dialogue after defeating the Hollow Queen. */
+export const BOSS_WIN_TALK: Line[] = [
+  [5, { es: "Imposible… mi voz ya no los confunde.", en: "Impossible… my voice no longer confuses them." }],
+  [2, { es: "¡Lo lograron! La colonia está a salvo.", en: "You did it! The colony is safe." }],
+  ["H", { es: "Aprendimos que la ciencia y el esfuerzo salvan al universo.", en: "We learned that science and effort save the universe." }],
+  [1, {
+    es: "Y esto es solo el comienzo: Capítulo 2, «Los que miran desde arriba».",
+    en: "And this is only the beginning: Chapter 2, “Those Who Watch from Above”.",
+  }],
+];
+
+/** `bend(0)`: dialogue after losing the boss fight. */
+export const BOSS_LOSE_TALK: Line[] = [
+  [2, { es: "No te rindas, {n}. Repasa las zonas y vuelve a intentarlo.", en: "Don’t give up, {n}. Review the zones and try again." }],
+];
+
+/** `SH`: the 8 star fragments on the map (% coordinates). Each gives +1 ⭐; all 8 → +5 ⭐ bonus. */
+export const SH: [number, number][] = [[12, 36], [40, 31], [58, 57], [34, 52], [70, 52], [93, 50], [62, 88], [26, 84]];
+export const SHARD_BONUS = 5;
+export const SHARDS_DONE: Line[] = [
+  [2, { es: "¡Reuniste los 8 fragmentos de estrella, {n}! Bonus: +5 ⭐.", en: "You gathered all 8 star fragments, {n}! Bonus: +5 ⭐." }],
+];
+
 /** `IN`: intro cinematic lines with the CH portraits that pop in. */
 export const IN: { text: Localized; chars: number[] }[] = [
   { text: { es: "Año 2087. Una señal misteriosa llega desde la Luna…", en: "Year 2087. A mysterious signal arrives from the Moon…" }, chars: [] },
@@ -229,7 +252,7 @@ export const IN: { text: Localized; chars: number[] }[] = [
 /** Milliseconds each cinematic line stays on screen. */
 export const IN_MS = 3600;
 
-export type ProgressView = { done: Record<string, boolean>; shards: number };
+export type ProgressView = { done: Record<string, boolean>; shards: number[] };
 
 /** `BG`: achievements. */
 export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: ProgressView) => boolean }[] = [
@@ -239,6 +262,6 @@ export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: Progr
   { icon: "🛡️", name: { es: "Escudo antirradiación", en: "Radiation shield" }, desc: { es: "Supera la tormenta solar", en: "Survive the solar storm" }, ok: (s) => !!s.done.rad },
   { icon: "🌡️", name: { es: "Ingeniero térmico", en: "Thermal engineer" }, desc: { es: "Domina el control térmico", en: "Master thermal control" }, ok: (s) => !!s.done.therm },
   { icon: "💪", name: { es: "Astronauta en forma", en: "Fit astronaut" }, desc: { es: "Supera el entrenamiento", en: "Pass the training" }, ok: (s) => !!s.done.body },
-  { icon: "✨", name: { es: "Cazador de estrellas", en: "Star hunter" }, desc: { es: "Reúne los 8 fragmentos", en: "Collect all 8 fragments" }, ok: (s) => s.shards >= 8 },
+  { icon: "✨", name: { es: "Cazador de estrellas", en: "Star hunter" }, desc: { es: "Reúne los 8 fragmentos", en: "Collect all 8 fragments" }, ok: (s) => s.shards.length >= 8 },
   { icon: "👑", name: { es: "Vencedor de la Reina", en: "Queen slayer" }, desc: { es: "Derrota a la Reina Hueca", en: "Defeat the Hollow Queen" }, ok: (s) => !!s.done.boss },
 ];

@@ -38,4 +38,8 @@
    square-enough corners and covers the painted corners (e.g. the gear) of the art. */
 @media(max-width:820px){.hud{border-radius:1.2vw}.hud>*{display:none}.barHud{display:flex}}
 
-@media(prefers-reduced-motion:reduce){.hs{animation:none}}
+/* Star fragments (prototype .sh) */
+.sh{position:absolute;color:#ffd54a;font-size:clamp(14px,2.6vw,26px);text-shadow:0 0 10px #ffd54a;transform:translate(-50%,-50%);z-index:2;pointer-events:none;animation:fl 1.6s ease-in-out infinite}
+@keyframes fl{50%{transform:translate(-50%,-70%)}}
+
+@media(prefers-reduced-motion:reduce){.hs,.sh{animation:none}}

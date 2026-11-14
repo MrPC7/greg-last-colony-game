@@ -55,12 +55,8 @@ export const UI = {
   "common.close": { es: "Cerrar", en: "Close" },
   "common.continue": { es: "Seguir", en: "Continue" },
 
-  // Zone menu + placeholder activity (mini-games arrive in Phase 2)
+  // Zone menu
   "zone.choose": { es: "Elige una actividad:", en: "Choose an activity:" },
-  "activity.wip": {
-    es: "🚧 Esta actividad está en construcción. ¡Muy pronto podrás jugarla!",
-    en: "🚧 This activity is under construction. You will be able to play it very soon!",
-  },
 
   // Panels
   "missions.title": { es: "⭐ Misiones", en: "⭐ Missions" },
@@ -77,8 +73,6 @@ export const UI = {
     es: "Completa las cinco zonas para descifrar NOX-Ω.",
     en: "Complete all five zones to decode NOX-Ω.",
   },
-  "ar.title": { es: "📷 Realidad aumentada de bajo costo", en: "📷 Low-cost augmented reality" },
-  "boss.title": { es: "👑 Reina Hueca", en: "👑 Hollow Queen" },
 
   // Settings
   "settings.title": { es: "⚙️ Ajustes", en: "⚙️ Settings" },

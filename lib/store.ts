@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { sfx } from "./audio";
 import { CH, rival } from "./characters";
-import { START_POS, ZONE_OUTRO, type ActivityId, type ZoneId } from "./content/story";
+import { SH, SHARD_BONUS, START_POS, ZONE_OUTRO, type ActivityId, type ZoneId } from "./content/story";
 import type { Lang, Line, Speaker } from "./content/types";
 
 export type Theme = "auto" | "light" | "dark";
@@ -21,8 +21,8 @@ type Progress = {
   done: Record<string, boolean>;
   /** activity ids in the order they were first won (prototype `S.fi`, for the inventory) */
   factOrder: string[];
-  /** star fragments collected on the map (Phase 2) */
-  shards: number;
+  /** indices into SH of the star fragments collected on the map */
+  shards: number[];
   /** Ray's memory fragments (Phase 5) */
   rayMemories: number[];
 };
@@ -46,7 +46,8 @@ type GameState = Progress &
     setPos: (x: number, y: number) => void;
     /** Prototype `win()`. Returns true the first time `id` is completed. */
     win: (id: string, stars: number) => boolean;
-    addShard: () => void;
+    /** Collect fragment `i` (+1 ⭐; the 8th also gives the +5 ⭐ bonus). Returns true when that completes the set. */
+    addShard: (i: number) => boolean;
     resetProgress: () => void;
   };
 
@@ -56,7 +57,7 @@ const freshProgress = (): Progress => ({
   gems: 0,
   done: {},
   factOrder: [],
-  shards: 0,
+  shards: [],
   rayMemories: [],
 });
 
@@ -85,12 +86,24 @@ export const useGame = create<GameState>()(
         }));
         return true;
       },
-      addShard: () => set((s) => ({ shards: s.shards + 1, stars: s.stars + 1 })),
+      addShard: (i) => {
+        const { shards } = get();
+        if (shards.includes(i)) return false;
+        const all = shards.length + 1 === SH.length;
+        set((s) => ({ shards: [...s.shards, i], stars: s.stars + 1 + (all ? SHARD_BONUS : 0) }));
+        return all;
+      },
       resetProgress: () => set(freshProgress()),
     }),
     {
       name: "colonia-v1",
-      version: 1,
+      version: 2,
+      // v1 stored `shards` as a count (never collectable before v2): start the list empty.
+      migrate: (persisted, version) => {
+        const p = persisted as Partial<Progress> & Record<string, unknown>;
+        if (version < 2 && !Array.isArray(p.shards)) p.shards = [];
+        return p as unknown as GameState;
+      },
       // Hydrated manually by AppShell after mount, so the static HTML and the first
       // client render match.
       skipHydration: true,
@@ -124,6 +137,8 @@ export type ModalSpec =
   | { kind: "achievements" }
   | { kind: "main" }
   | { kind: "boss" }
+  | { kind: "bossWin" }
+  | { kind: "bossLose" }
   | { kind: "ar" }
   | { kind: "settings" };
 

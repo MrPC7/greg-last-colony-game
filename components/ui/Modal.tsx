@@ -2,13 +2,12 @@
 
 import type { ReactNode } from "react";
 import { GAMES } from "@/components/games";
+import Achievements from "@/components/games/Achievements";
+import ARView from "@/components/games/ARView";
+import BossFight, { BossLose, BossWin } from "@/components/games/BossFight";
 import { useT } from "@/lib/i18n";
 import { useUI } from "@/lib/store";
 import {
-  AchievementsPanel,
-  ActivityPlaceholder,
-  ArPlaceholder,
-  BossPlaceholder,
   InventoryPanel,
   MainMissionPanel,
   MissionsPanel,
@@ -40,15 +39,17 @@ export default function ModalHost() {
     case "zone": body = <ZoneMenu zone={m.zone} />; break;
     case "activity": {
       const Game = GAMES[m.id];
-      body = Game ? <Game /> : <ActivityPlaceholder id={m.id} />;
+      body = <Game />;
       break;
     }
     case "missions": body = <MissionsPanel />; break;
     case "inventory": body = <InventoryPanel />; break;
-    case "achievements": body = <AchievementsPanel />; break;
+    case "achievements": body = <Achievements />; break;
     case "main": body = <MainMissionPanel />; break;
-    case "boss": body = <BossPlaceholder />; break;
-    case "ar": body = <ArPlaceholder />; break;
+    case "boss": body = <BossFight />; break;
+    case "bossWin": body = <BossWin />; break;
+    case "bossLose": body = <BossLose />; break;
+    case "ar": body = <ARView />; break;
     case "settings": body = <SettingsPanel />; break;
   }
   // key: remount when switching panels so local state (e.g. reset confirmation) resets

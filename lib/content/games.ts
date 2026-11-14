@@ -306,3 +306,170 @@ export const BODY_TXT = {
     en: "⚠️ Adjust the plan: take care of sleep, exercise and free time.",
   },
 } satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Zonas Verdes · OxygenBalance (prototype `verd`)
+// ---------------------------------------------------------------------------
+
+/** O₂ balance: each person uses 0.84 kg/day, plants make 0.08 kg per m² per day (simplified);
+ *  win if production ÷ consumption is in 0.95–1.2 → 3 ★. */
+export const VERD = {
+  o2PerPerson: 0.84,
+  o2PerM2: 0.08,
+  lo: 0.95,
+  hi: 1.2,
+  crew: { min: 2, max: 8, v0: 4 },
+  plants: { min: 0, max: 80, v0: 20 },
+};
+
+export const VERD_TXT = {
+  title: { es: "🌱 Zonas Verdes · Invernadero lunar", en: "🌱 Green Zones · Lunar greenhouse" },
+  desc: {
+    es: "Equilibra el oxígeno. Cada persona consume ≈ 0,84 kg de O₂ al día. Las plantas lo producen (valor simplificado para jugar: 0,08 kg por m² y día).",
+    en: "Balance the oxygen. Each person uses ≈ 0.84 kg of O₂ per day. Plants produce it (simplified game value: 0.08 kg per m² per day).",
+  },
+  crew: { es: "Tripulación:", en: "Crew:" },
+  plants: { es: "Plantas (m²):", en: "Plants (m²):" },
+  flow: {
+    es: "Consumo {c} kg/día · Producción {p} kg/día",
+    en: "Usage {c} kg/day · Output {p} kg/day",
+  },
+  confirm: { es: "Confirmar diseño", en: "Confirm design" },
+  win: { es: "✅ ¡Aire equilibrado! ⭐ +3", en: "✅ Air balanced! ⭐ +3" },
+  /** replay of an already-completed design: no stars added, so no "⭐ +3" */
+  winReplay: { es: "✅ ¡Aire equilibrado!", en: "✅ Air balanced!" },
+  low: {
+    es: "⚠️ Falta oxígeno: añade plantas o reduce la tripulación.",
+    en: "⚠️ Not enough oxygen: add plants or reduce the crew.",
+  },
+  high: {
+    es: "⚠️ Sobra oxígeno: gastas espacio y agua de más.",
+    en: "⚠️ Too much oxygen: you are wasting space and water.",
+  },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Auditorio · MissionTimeline (prototype `TL`, `aud`)
+// ---------------------------------------------------------------------------
+
+/** `TL`: missions, oldest → newest. */
+export const TL: { year: number; text: Localized }[] = [
+  { year: 1959, text: { es: "Luna 2: primer objeto humano en llegar a la Luna", en: "Luna 2: first human-made object to reach the Moon" } },
+  { year: 1969, text: { es: "Apolo 11: primeras personas en caminar sobre la Luna", en: "Apollo 11: first people to walk on the Moon" } },
+  { year: 2019, text: { es: "Chang’e 4: primer alunizaje en la cara oculta", en: "Chang’e 4: first landing on the far side" } },
+  { year: 2023, text: { es: "Chandrayaan-3: alunizaje cerca del polo sur lunar", en: "Chandrayaan-3: landing near the lunar south pole" } },
+];
+/** Order the TL entries are shown in (prototype `[2,0,3,1]`). */
+export const TL_SHOW = [2, 0, 3, 1];
+
+export const TL_TXT = {
+  title: { es: "🎤 Auditorio · Línea de tiempo", en: "🎤 Auditorium · Timeline" },
+  desc: { es: "Toca las misiones de la más antigua a la más reciente.", en: "Tap the missions from oldest to most recent." },
+  placed: { es: "{year} · {text}", en: "{year} · {text}" },
+  win: { es: "✅ ¡Línea del tiempo completa! ⭐ +3", en: "✅ Timeline complete! ⭐ +3" },
+  winReplay: { es: "✅ ¡Línea del tiempo completa!", en: "✅ Timeline complete!" },
+  wrong: { es: "Esa misión no fue la siguiente. ¡Fíjate en el año!", en: "That mission was not next. Check the year!" },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Final · BossFight (prototype `BQ`, `fight`, `bturn`, `ba`, `ally`, `bend`)
+// ---------------------------------------------------------------------------
+
+/** `BQ`: the boss quiz = the 4 Aulas questions + 4 from the other zones (shuffled each fight). */
+export const BQ: QuizQuestion[] = Q.concat([
+  {
+    q: { es: "Con el mismo salto, ¿cuántas veces más alto llegas en la Luna?", en: "With the same jump, how many times higher do you go on the Moon?" },
+    // "Igual": no TR entry
+    options: [{ es: "≈ 6 veces", en: "≈ 6 times" }, { es: "≈ 2 veces", en: "≈ 2 times" }, { es: "Igual", en: "The same" }],
+    answer: 0,
+    explain: { es: "La gravedad lunar es ≈ 1/6 de la terrestre.", en: "Lunar gravity is ≈ 1/6 of Earth’s." },
+  },
+  {
+    q: { es: "¿Cómo frena un módulo lunar sin atmósfera?", en: "How does a lunar lander brake without an atmosphere?" },
+    options: [{ es: "Con paracaídas", en: "With a parachute" }, { es: "Con su motor", en: "With its engine" }, { es: "Con alas", en: "With wings" }],
+    answer: 1,
+    explain: { es: "Sin aire no hay paracaídas ni alas: se usa el motor.", en: "With no air there are no parachutes or wings: you use the engine." },
+  },
+  {
+    q: { es: "¿Qué misión aterrizó primero en la cara oculta de la Luna?", en: "Which mission first landed on the far side of the Moon?" },
+    options: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Chang’e 4", en: "Chang’e 4" }, { es: "Luna 2", en: "Luna 2" }],
+    answer: 1,
+    explain: { es: "Chang’e 4 lo logró en 2019.", en: "Chang’e 4 did it in 2019." },
+  },
+  {
+    q: { es: "¿Qué aportan las plantas en una colonia?", en: "What do plants provide in a colony?" },
+    options: [
+      { es: "Gravedad", en: "Gravity" }, // no TR entry
+      { es: "Oxígeno y parte del ciclo del aire", en: "Oxygen and part of the air cycle" },
+      { es: "Protección total contra radiación", en: "Total radiation protection" },
+    ],
+    answer: 1,
+    explain: { es: "Ayudan a cerrar el ciclo del aire junto con sistemas mecánicos.", en: "They help close the air cycle together with mechanical systems." },
+  },
+]);
+
+/** Both sides start at 100; a hit takes 25, every 3rd correct answer in a row is a critical −50. */
+export const BOSS = { hp: 100, hit: 25, crit: 50, streak: 3, stars: 5 };
+/** Ally pool (prototype `[1,3,0].filter(x => x !== S.ch)`): first = hint, second = shield. */
+export const BOSS_ALLIES = [1, 3, 0];
+
+export const BOSS_TXT = {
+  title: { es: "👑 Reina Hueca", en: "👑 Hollow Queen" },
+  queen: { es: "Reina", en: "Queen" },
+  art: { es: "La Reina Hueca", en: "The Hollow Queen" }, // new: image aria-label
+  remove: { es: "🦊 Orbi: quitar opción", en: "🦊 Orbi: remove option" },
+  hint: { es: "💬 {name}: pista", en: "💬 {name}: hint" },
+  shield: { es: "🛡️ {name}: escudo", en: "🛡️ {name}: shield" },
+  hintMsg: { es: "💬 {text}", en: "💬 {text}" },
+  shieldReady: { es: "🛡️ Escudo listo para el próximo ataque.", en: "🛡️ Shield ready for the next attack." },
+  hitMsg: { es: "💥 ¡Golpe certero! −25 a la Reina.", en: "💥 Direct hit! −25 to the Queen." },
+  critMsg: { es: "⚡ ¡CRÍTICO! Racha de 3: −50 a la Reina.", en: "⚡ CRITICAL! 3-hit streak: −50 to the Queen." },
+  blocked: { es: "🛡️ ¡El escudo bloqueó el ataque!", en: "🛡️ The shield blocked the attack!" },
+  counter: { es: "👑 La Reina contraataca: −25 para ti.", en: "👑 The Queen strikes back: −25 for you." },
+  cont: { es: "Continuar", en: "Continue" },
+  winTitle: { es: "🏆 ¡Misión cumplida!", en: "🏆 Mission complete!" },
+  winText: {
+    es: "Descifraste NOX-Ω, derrotaste a la Reina Hueca y salvaste la Colonia Última.",
+    en: "You decoded NOX-Ω, defeated the Hollow Queen and saved the Last Colony.",
+  },
+  back: { es: "Volver al mapa", en: "Back to the map" },
+  loseTitle: { es: "La Reina resiste", en: "The Queen resists" },
+  retry: { es: "Reintentar combate", en: "Retry battle" },
+  review: { es: "Repasar el mapa", en: "Review the map" },
+} satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Auditorio / menu · ARView (prototype `ar`, `ars`, `arl`, `arm`)
+// ---------------------------------------------------------------------------
+
+/** Canvas size, start position of the model, size slider, number of models (all 4 seen → 2 ★). */
+export const AR = { w: 640, h: 420, x0: 320, y0: 230, zMin: 0.5, zMax: 2, zStep: 0.1, models: 4, stars: 2 };
+
+export const AR_TXT = {
+  title: { es: "📷 Realidad aumentada de bajo costo", en: "📷 Low-cost augmented reality" },
+  opening: { es: "Abriendo cámara…", en: "Opening camera…" },
+  live: { es: "Cámara activa: arrastra el modelo para colocarlo.", en: "Camera on: drag the model to place it." },
+  fail: {
+    es: "No pude abrir la cámara (permiso o navegador). Verás el modelo sobre un fondo espacial; en tu celular, permite el acceso a la cámara.",
+    en: "I couldn’t open the camera (permission or browser). You will see the model over a space background; on your phone, allow camera access.",
+  },
+  size: { es: "Tamaño", en: "Size" },
+  change: { es: "Cambiar modelo", en: "Change model" },
+  how: {
+    es: "Cómo funciona: la cámara del celular más un modelo dibujado en pantalla. Arrástralo sobre una mesa o una hoja con un dibujo. No necesita app, marcadores ni equipo especial.",
+    en: "How it works: your phone camera plus a model drawn on screen. Drag it over a table or a sheet with a drawing. No app, markers or special equipment needed.",
+  },
+  canvas: { es: "Vista de realidad aumentada", en: "Augmented reality view" }, // new: canvas aria-label
+  // Canvas captions per model (0 Moon, 1 lander, 2 radiation, 3 suit)
+  moon: { es: "Luna: ~+120 °C de día y ~−130 °C de noche", en: "Moon: ~+120 °C by day and ~−130 °C at night" },
+  day: { es: "☀️ Día: ~+120 °C", en: "☀️ Day: ~+120 °C" },
+  night: { es: "🌑 Noche: ~−130 °C", en: "🌑 Night: ~−130 °C" },
+  lander: { es: "Módulo lunar (modelo ilustrativo)", en: "Lunar module (illustrative model)" },
+  rad: { es: "Radiación: más grosor del escudo (Tamaño) = menos dosis", en: "Radiation: a thicker shield (Size) = less dose" },
+  dose: { es: "Dosis dentro: {p} %", en: "Dose inside: {p} %" },
+  suit: { es: "Traje de astronauta (modelo ilustrativo)", en: "Astronaut suit (illustrative model)" },
+  visor: { es: "Visor dorado: filtra el Sol", en: "Gold visor: filters the Sun" },
+  pack: { es: "Mochila: aire, agua y energía", en: "Backpack: air, water and power" },
+  layers: { es: "Capas: frío y calor extremos", en: "Layers: extreme cold and heat" },
+  boots: { es: "Botas: caminar con 1/6 de gravedad", en: "Boots: walking at 1/6 gravity" },
+} satisfies Record<string, Localized>;

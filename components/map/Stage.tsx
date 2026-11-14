@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from "react";
+import StarShards, { collectShards } from "@/components/games/StarShards";
 import { sfx } from "@/lib/audio";
 import { ORBI } from "@/lib/characters";
 import { HINT_DONE, HINT_SUFFIX, HT, ORD, START_POS, ZONES, ZONE_INTRO } from "@/lib/content/story";
@@ -146,6 +147,7 @@ export default function Stage() {
         o.style.setProperty("--fl", s.x > s.ox ? "1" : "-1");
         o.style.setProperty("--by", Math.sin(tm / 260) * 4 + "px");
       }
+      collectShards(s.x, s.y);
       const np = busy ? -1 : ZONES.findIndex((p) => Math.hypot(p.x - s.x, (p.y - s.y) * 0.56) < 4);
       if (np !== s.np) {
         s.np = np;
@@ -213,6 +215,7 @@ export default function Stage() {
       {ZONES.map((p, i) => (
         <Hotspot key={p.id} x={p.x} y={p.y} label={t(p.n)} next={i === next} onSelect={() => ctrl.current?.visit(i)} />
       ))}
+      <StarShards />
       <PlayerToken ref={tokenRef} ch={character} />
       <PlayerToken ref={orbiRef} ch={ORBI} orbi />
       <Hud />

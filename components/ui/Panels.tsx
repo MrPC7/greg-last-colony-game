@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ACTIVITY_IDS,
-  BG,
   BOSS_INTRO,
   CL,
   FACTS,
@@ -20,7 +19,7 @@ import { useGame, useUI, type Theme } from "@/lib/store";
 
 const THEMES: Theme[] = ["auto", "light", "dark"];
 
-function CloseButton() {
+export function CloseButton() {
   const t = useT();
   const close = useUI((s) => s.closeModal);
   return <button className="b" onClick={close}>{t("common.close")}</button>;
@@ -47,40 +46,6 @@ export function ZoneMenu({ zone }: { zone: ZoneId }) {
           <span>{done[a] ? "✅" : "▶"}</span>
         </button>
       ))}
-      <CloseButton />
-    </>
-  );
-}
-
-/** Phase 1 stand-in for each mini-game (ported in Phase 2). */
-export function ActivityPlaceholder({ id }: { id: ActivityId }) {
-  const t = useT();
-  return (
-    <>
-      <h3>{ZI[id][0]} {t(ZI[id][1])}</h3>
-      <p className="s">{t("activity.wip")}</p>
-      <CloseButton />
-    </>
-  );
-}
-
-export function ArPlaceholder() {
-  const t = useT();
-  return (
-    <>
-      <h3>{t("ar.title")}</h3>
-      <p className="s">{t("activity.wip")}</p>
-      <CloseButton />
-    </>
-  );
-}
-
-export function BossPlaceholder() {
-  const t = useT();
-  return (
-    <>
-      <h3>{t("boss.title")}</h3>
-      <p className="s">{t("activity.wip")}</p>
       <CloseButton />
     </>
   );
@@ -143,32 +108,6 @@ export function InventoryPanel() {
   );
 }
 
-/** Prototype `logros()` with the `BG` table. */
-export function AchievementsPanel() {
-  const t = useT();
-  const done = useGame((s) => s.done);
-  const shards = useGame((s) => s.shards);
-  const view = { done, shards };
-  const n = BG.filter((b) => b.ok(view)).length;
-  return (
-    <>
-      <h3>{t("ach.title")}</h3>
-      <div className="pb"><i style={{ width: `${(n / BG.length) * 100}%` }} /></div>
-      <p className="s">{n}/{BG.length}</p>
-      <div className="gr">
-        {BG.map((b) => (
-          <div key={b.icon} className={"sl" + (b.ok(view) ? "" : " bd")}>
-            <div className="ic">{b.icon}</div>
-            <b>{t(b.name)}</b>
-            <small>{t(b.desc)}</small>
-          </div>
-        ))}
-      </div>
-      <CloseButton />
-    </>
-  );
-}
-
 /** Prototype `main()` (redesigned version): the 5 clues of NOX-Ω. */
 export function MainMissionPanel() {
   const t = useT();
@@ -177,7 +116,6 @@ export function MainMissionPanel() {
   const fight = () => {
     const ui = useUI.getState();
     ui.closeModal();
-    // Phase 2 replaces the placeholder with the BossFight.
     ui.startTalk(BOSS_INTRO, () => useUI.getState().openModal({ kind: "boss" }));
   };
   return (
