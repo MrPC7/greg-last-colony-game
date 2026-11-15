@@ -27,6 +27,8 @@ export default function PlayScreen() {
     <div id="app">
       <div id="hub">
         <Stage />
+        {/* Narrow screens only (CSS): the label burned into map.jpg is too small to read there. */}
+        <p className="mapcap">{t("ai.watermark")}</p>
         <p className="s">{t("hub.help")}</p>
       </div>
     </div>
