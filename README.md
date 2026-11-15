@@ -85,9 +85,9 @@ This game does not use NASA logos, insignia or branding, and it is not endorsed 
 
 ### Team
 
-- Valeria Alexandra Villacorta Landeo
-- Pranshu Chaurasia
-- Elida Nuñez Vásquez
+- Valeria Alexandra Villacorta Landeo @vale34villa1
+- Pranshu Chaurasia @MrPC7
+- Elida Nuñez Vásquez 
 - Miguel Angel Vilca Mamani
 
 ### Tech stack
@@ -212,8 +212,8 @@ Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respalda
 
 ### Equipo
 
-- Valeria Alexandra Villacorta Landeo
-- Pranshu Chaurasia
+- Valeria Alexandra Villacorta Landeo @vale34villa1
+- Pranshu Chaurasia @MrPC7
 - Elida Nuñez Vásquez
 - Miguel Angel Vilca Mamani
 
