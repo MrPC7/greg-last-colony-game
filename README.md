@@ -110,8 +110,8 @@ This web game is the **MVP** of the team's Game Design Document (GDD v2). The pl
 
 - Valeria Alexandra Villacorta Landeo — [@vale34villa1](https://github.com/vale34villa1)
 - Pranshu Chaurasia — [@MrPC7](https://github.com/MrPC7)
-- Elida Nuñez Vásquez
-- Miguel Angel Vilca Mamani
+- Elida Nuñez Vásquez — [@EliNuvas](https://github.com/EliNuvas)
+- Miguel Angel Vilca Mamani — [@darmiguel01-jpg](https://github.com/darmiguelm01-jpg).
 
 ### Tech stack
 
