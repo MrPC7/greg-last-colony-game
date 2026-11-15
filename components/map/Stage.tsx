@@ -26,7 +26,6 @@ import Hud from "./Hud";
 import NavBar from "./NavBar";
 import PlayerToken from "./PlayerToken";
 import styles from "./map.module.css";
-import Watermark from "@/components/ui/Watermark";
 
 type Target = { x: number; y: number; after?: () => void };
 type Controller = {
@@ -91,10 +90,11 @@ export default function Stage() {
     const p0 = useGame.getState().pos;
     const s = {
       x: p0.x, y: p0.y, vx: 0, vy: 0, fl: 1, stride: 0, lstep: 0,
-      ox: p0.x - 6, oy: p0.y + 1.5, last: 0, np: -1, moving: false,
+      ox: p0.x - 5.5, oy: p0.y + 1.2, ovx: 0, ovy: 0, ofl: 1, last: 0, np: -1, moving: false,
       tgt: null as Target | null,
     };
     const K = new Set<string>();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     const save = () => useGame.getState().setPos(+s.x.toFixed(2), +s.y.toFixed(2));
 
     const go = (x: number, y: number, after?: () => void) => {
@@ -168,17 +168,30 @@ export default function Stage() {
       tk.style.top = s.y + "%";
       tk.style.zIndex = String(3 + Math.round(s.y));
       tk.style.setProperty("--fl", String(s.fl));
-      tk.style.setProperty("--by", (mv ? -Math.abs(Math.sin(s.stride * 3.1)) * 5 : 0) + "px");
-      tk.style.setProperty("--sq", String(1 + (mv ? Math.sin(s.stride * 6.2) * 0.03 : 0)));
+      // Walk bob (in % of the sprite height) + slight squash; none with reduced motion.
+      const bob = mv && !reduce.matches;
+      tk.style.setProperty("--by", (bob ? Math.abs(Math.sin(s.stride * 3.1)) * 3 : 0).toFixed(2));
+      tk.style.setProperty("--sq", (1 + (bob ? Math.sin(s.stride * 6.2) * 0.025 : 0)).toFixed(4));
       const o = orbiRef.current;
       if (o) {
-        s.ox += (s.x - 6 * s.fl - s.ox) * Math.min(1, dt * 3);
-        s.oy += (s.y + 1.5 - s.oy) * Math.min(1, dt * 3);
+        // Orbi follows a spot just behind the hero on a critically damped spring (eases in and out).
+        const fx = s.x - 5.5 * s.fl;
+        const fy = s.y + 1.2;
+        const k = 10;
+        const c = 2 * Math.sqrt(k);
+        s.ovx += ((fx - s.ox) * k - s.ovx * c) * dt;
+        s.ovy += ((fy - s.oy) * k - s.ovy * c) * dt;
+        s.ox += s.ovx * dt;
+        s.oy += s.ovy * dt;
         o.style.left = s.ox + "%";
         o.style.top = s.oy + "%";
         o.style.zIndex = String(3 + Math.round(s.oy));
-        o.style.setProperty("--fl", s.x > s.ox ? "1" : "-1");
-        o.style.setProperty("--by", Math.sin(tm / 260) * 4 + "px");
+        if (Math.abs(s.x - s.ox) > 0.6) s.ofl = s.x > s.ox ? 1 : -1;
+        o.style.setProperty("--fl", String(s.ofl));
+        // Gentle hover above its shadow; the shadow shrinks and fades as it rises.
+        const lift = 14 + (reduce.matches ? 0 : Math.sin(tm / 650) * 5);
+        o.style.setProperty("--by", lift.toFixed(2));
+        o.style.setProperty("--ss", (1.25 - lift / 40).toFixed(3));
       }
       collectShards(s.x, s.y);
       const np = busy ? -1 : ZONES.findIndex((_, i) => {
@@ -270,7 +283,8 @@ export default function Stage() {
       <button data-ui className={`b o ${styles.tool} ${styles.tool2}`} onClick={hint}>
         {t("hub.hint")}
       </button>
-      <Watermark />
+      {/* No overlay AI label here: map.jpg carries its own burned-in label along the bottom
+          edge (scripts/extract_assets.py), placed clear of the painted buttons. */}
       {near >= 0 && (
         <button data-ui className={`b o ${styles.pr}`} onClick={() => ctrl.current?.enter(near)}>
           {t("hub.enter", { zone: t(ZONES[near].n) })}

@@ -17,7 +17,10 @@ prototype HTML (the clean originals) — never on already-watermarked files.
 
 The label geometry is defined as fractions of the image width (WM_* below); the
 in-game label (components/ui/Watermark.tsx, .wm in app/globals.css) sits just
-above it.
+above it on the key art. The map is the exception (WM_PLACEMENT): its label is a
+bit smaller and centred in the thin free strip at the very bottom edge, under the
+painted nav bar, so it never covers a painted button (e.g. "¡Vamos!"); the game
+does not draw the overlay label on the map, so this burned label is the only one.
 
 Requires Pillow (pip install Pillow).
 
@@ -64,6 +67,12 @@ WM_FONT = 0.011  # text height (font size)
 WM_MARGIN = 0.006  # distance from the right and bottom edges
 WM_FILL = (255, 255, 255, 160)  # ~63% opaque white
 WM_STROKE = (0, 0, 0, 110)  # faint outline so the text reads on light areas
+# Per-image overrides: (font, centre x as a fraction of the width or None = right-aligned,
+# bottom margin as a fraction of the width). The map's free strip under the painted nav
+# bar spans x ≈ 36%–66% and the bottom ~2% of the height.
+WM_PLACEMENT = {
+    "map": (0.0088, 0.509, 0.0016),
+}
 WM_FONTS = [
     "arialbd.ttf",  # Windows
     "Arial Bold.ttf",  # macOS
@@ -83,20 +92,22 @@ def load_font(size: int):
     return ImageFont.load_default(size=size)
 
 
-def watermark(jpeg: bytes) -> tuple[bytes, tuple[float, float]]:
+def watermark(jpeg: bytes, var: str = "") -> tuple[bytes, tuple[float, float]]:
     """Burn WM_TEXT into the bottom-right corner (text only, no box). Returns the
     new JPEG bytes and the label size (width, height) as fractions of the image width."""
     from PIL import Image, ImageDraw
 
     src = Image.open(io.BytesIO(jpeg))
     w, h = src.size
-    size = max(10, round(WM_FONT * w))
+    fs, cx, mb = WM_PLACEMENT.get(var, (WM_FONT, None, WM_MARGIN))
+    size = max(10, round(fs * w))
     font = load_font(size)
     stroke = max(1, round(size / 14))
     margin = round(WM_MARGIN * w)
     l, t, r, b = font.getbbox(WM_TEXT, stroke_width=stroke)
     box_w, box_h = r - l, b - t
-    x0, y0 = w - margin - box_w, h - margin - box_h
+    x0 = w - margin - box_w if cx is None else round(cx * w - box_w / 2)
+    y0 = h - round(mb * w) - box_h
 
     overlay = Image.new("RGBA", src.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(overlay)
@@ -157,7 +168,7 @@ def main() -> int:
         data = found[var]
         note = ""
         if not args.no_watermark:
-            data, (bw, bh) = watermark(data)
+            data, (bw, bh) = watermark(data, var)
             note = f", AI label {bw * 100:.2f}cqw x {bh * 100:.2f}cqw"
         dest.write_bytes(data)
         print(f"--{var:<4} -> {dest} ({len(found[var]):,} -> {len(data):,} bytes{note})")

@@ -119,6 +119,7 @@ export const LIBRARIES: Library[] = [
   { name: "TypeScript", license: "Apache-2.0", url: "https://github.com/microsoft/TypeScript", use: { es: "Lenguaje de programación", en: "Programming language" } },
   { name: "ESLint", license: "MIT", url: "https://github.com/eslint/eslint", use: { es: "Revisión de código", en: "Code linting" } },
   { name: "Pillow", license: "MIT-CMU", url: "https://github.com/python-pillow/Pillow", use: { es: "Marca de agua en las imágenes (script)", en: "Image watermarking (script)" } },
+  { name: "rembg", license: "MIT", url: "https://github.com/danielgatis/rembg", use: { es: "Quitar el fondo a los personajes (script)", en: "Character background removal (script)" } },
 ];
 
 /** Texts of the credits page. */
@@ -149,8 +150,8 @@ export const CREDITS = {
 
   aiTitle: { es: "🤖 Uso de inteligencia artificial (IA)", en: "🤖 Use of artificial intelligence (AI)" },
   aiImages: {
-    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes y llevan una pequeña marca «IA».",
-    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). They carry the label “AI-generated image” inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images and carry a small “AI” mark.",
+    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Llevan la marca «Imagen generada con IA» dentro del propio archivo (en el mapa, en el borde inferior) y la portada también encima de la imagen en el juego. Los personajes del mapa y los retratos son recortes de la lámina de personajes con el fondo quitado; los retratos llevan una pequeña marca «IA».",
+    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). They carry the label “AI-generated image” inside the file itself (on the map, along the bottom edge), and the key art also on top of the image in the game. The map characters and the portraits are cut-outs of the character sheet with the background removed; the portraits carry a small “AI” mark.",
   },
   aiCode: {
     es: "Código: desarrollado por el equipo con herramientas de programación asistida por IA.",

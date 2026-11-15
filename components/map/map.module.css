@@ -21,8 +21,22 @@
 .nav button,.mn{background:transparent;border:0;cursor:pointer}
 .mn{position:absolute;z-index:4}
 
-.sp{position:absolute;height:26%;transform:translate(-50%,-92%) translateY(var(--by,0px)) scaleX(var(--fl,1)) scaleY(var(--sq,1));z-index:3;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 52% 52% at 50% 50%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 52% 52% at 50% 50%,#000 58%,transparent 100%)}
-.orbi{height:14%;transition:left .7s,top .7s}
+/* Map characters (PlayerToken.tsx). .sp is a zero-width anchor at the feet; .bod holds the
+   transparent sprite (17% of the map height for the kids, 11% for Orbi) and takes the walk bob /
+   float (--by, % of its own height), facing flip (--fl) and squash (--sq); .shd is the ground
+   shadow, which stays on the ground and shrinks while Orbi floats up (--ss). */
+.sp{position:absolute;width:0;height:17%;z-index:3;pointer-events:none}
+.orbi{height:11%}
+.bod{position:absolute;left:0;bottom:0;height:100%;transform:translate(-50%,calc(var(--by,0) * -1%)) scaleX(var(--fl,1)) scaleY(var(--sq,1));transform-origin:50% 100%;will-change:transform}
+.bod picture{display:block;height:100%}
+.img{display:block;height:100%;width:auto;max-width:none;user-select:none;transform-origin:50% 100%;animation:br 3.4s ease-in-out infinite}
+/* Idle breathing: a tiny vertical stretch from the feet. */
+@keyframes br{50%{transform:scaleY(1.018) scaleX(.994)}}
+.orbi .img{animation-duration:2.6s}
+.shd{display:block;position:absolute;left:0;bottom:0;width:calc(var(--sw,7.5) * 1cqw);aspect-ratio:3.2;border-radius:50%;transform:translate(-50%,45%) scale(var(--ss,1));background:radial-gradient(#0a0420f2,#0a0420a6 35%,#0a042000 70%);opacity:calc(.35 + .65 * var(--ss,1))}
+.orbi .shd{--sw:5}
+
+@media(prefers-reduced-motion:reduce){.img{animation:none}}
 
 .pr{position:absolute;left:50%;bottom:13%;transform:translateX(-50%);z-index:5}
 /* Scoped under .stage so these beat the global .b (font:inherit, padding) regardless of stylesheet order. */
