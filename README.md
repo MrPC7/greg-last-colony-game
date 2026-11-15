@@ -1,6 +1,6 @@
 # Greg and the Last Colony · Greg y la Colonia Última
 
-**▶ Play now / Juega ahora: https://abatsigame.pranshuchaurasia.dev/**
+**▶ Play now, have fun, and learn about lunar missions realistically while earning achievements and a mission completion certificate./ Juega ahora, diviértete y aprende sobre las misiones lunares de forma realista mientras consigues logros y un certificado de finalización de la misión.: https://abatsigame.pranshuchaurasia.dev/**
 
 [English](#english) · [Español](#español)
 
@@ -10,9 +10,10 @@
 
 ### About the game
 
-A free, bilingual (Spanish / English), story-driven browser game for students aged 10+. Kids from Cajamarca, Peru recover 5 energy cores, travel to the Moon and defeat the Queen of the Void.
-Along the way: hands-on lunar physics mini-games, real NASA GISTEMP and FIRMS data, a NASA fact in every game, an AR camera mode and phone-friendly controls.
-It takes about **20–30 minutes** to finish.
+A free, bilingual (Spanish / English), story-driven browser game for students aged 15+. High school students from Cajamarca (Peru) recover 5 energy cores, travel to the Moon and defeat the Queen of the Void.
+Along the way: Hands-on lunar physics mini-games, real NASA GISTEMP and FIRMS data, a NASA fact in every game, an AR camera mode and phone-friendly controls.
+
+It takes about **20–30 minutes** to finish. Explore. Learn. Play. Save the Moon!
 
 ### What it is
 
