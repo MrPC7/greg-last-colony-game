@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import HostNote from "@/components/ui/HostNote";
 import { sfx } from "@/lib/audio";
@@ -194,7 +195,7 @@ export default function LunarPingPong() {
 
   return (
     <>
-      <h3>{t(PONG_TXT.title)}</h3>
+      <GameTitle fact="pong">{t(PONG_TXT.title)}</GameTitle>
       <HostNote ch={JOSEPH} text={josephLine} />
       <p className="s">{t(PONG_TXT.desc, { k: PONG.target })}</p>
       <canvas
@@ -224,6 +225,7 @@ export default function LunarPingPong() {
           ? gained > 0 ? t(PONG_TXT.win, { s: gained }) : t(PONG_TXT.winReplay)
           : phase === "lost" ? t(PONG_TXT.lose) : t(PONG_TXT.tip3)}
       </p>
+      {(phase === "won" || phase === "lost") && <NasaFactCard fact="pong" />}
     </>
   );
 }

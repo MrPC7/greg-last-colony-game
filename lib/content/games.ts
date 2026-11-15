@@ -906,8 +906,8 @@ export const TEMP_TXT = {
     en: "Line chart: global temperature anomaly from {from} to {to}, from {min} °C to {max} °C.",
   },
   caption: {
-    es: "Datos: NASA GISTEMP v4 ({from}–{to}) — descargados el {date}",
-    en: "Data: NASA GISTEMP v4 ({from}–{to}) — downloaded {date}",
+    es: "NASA — GISTEMP v4, temperatura global ({from}–{to}), datos descargados el {date}",
+    en: "NASA — GISTEMP v4, global temperature ({from}–{to}), data downloaded {date}",
   },
 } satisfies Record<string, Localized>;
 
@@ -951,8 +951,8 @@ export const FIRE_TXT = {
   },
   dot: { es: "Incendio: {lat}°, {lon}° · {b} K · {d}", en: "Fire: {lat}°, {lon}° · {b} K · {d}" },
   caption: {
-    es: "Datos: NASA FIRMS (MODIS, 24 h) — {date}",
-    en: "Data: NASA FIRMS (MODIS, 24 h) — {date}",
+    es: "NASA — FIRMS, incendios activos MODIS de 24 h ({date})",
+    en: "NASA — FIRMS, MODIS active fires, 24 h ({date})",
   },
 } satisfies Record<string, Localized>;
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import HostNote from "@/components/ui/HostNote";
 import { sfx } from "@/lib/audio";
@@ -132,7 +133,7 @@ export default function MissionPatch() {
 
   return (
     <>
-      <h3>{t(PATCH_TXT.title)}</h3>
+      <GameTitle fact="patch">{t(PATCH_TXT.title)}</GameTitle>
       <HostNote ch={GREG} text={PATCH_TXT.greg} />
       <div className="patchw">
         <canvas
@@ -193,6 +194,7 @@ export default function MissionPatch() {
       <div className="s" role="status">
         {saved !== null && (saved > 0 ? t(PATCH_TXT.saved, { s: saved }) : t(PATCH_TXT.savedReplay))}
       </div>
+      {saved !== null && <NasaFactCard fact="patch" />}
     </>
   );
 }

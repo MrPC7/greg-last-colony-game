@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { sfx } from "@/lib/audio";
 import { AR, AR_TXT } from "@/lib/content/games";
@@ -157,6 +158,8 @@ export default function ARView() {
   const seen = useRef(new Set([0]));
   const langRef = useRef(lang);
   const [cam, setCam] = useState<"opening" | "live" | "fail">("opening");
+  /** UI only: show the NASA Fact card once all the models have been seen */
+  const [allSeen, setAllSeen] = useState(false);
 
   useEffect(() => {
     langRef.current = lang;
@@ -209,11 +212,12 @@ export default function ARView() {
     seen.current.add(s.m);
     sfx("click");
     if (seen.current.size >= AR.models) awardWin("ar", AR.stars);
+    if (seen.current.size >= AR.models) setAllSeen(true);
   };
 
   return (
     <>
-      <h3>{t(AR_TXT.title)}</h3>
+      <GameTitle fact="ar">{t(AR_TXT.title)}</GameTitle>
       <div className="arw">
         <video ref={video} playsInline muted autoPlay style={cam === "live" ? { display: "block" } : undefined} />
         <canvas
@@ -233,6 +237,7 @@ export default function ARView() {
       </label>
       <button className="b" onClick={change}>{t(AR_TXT.change)}</button>
       <p className="s">{t(AR_TXT.how)}</p>
+      {allSeen && <NasaFactCard fact="ar" />}
     </>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState } from "react";
 import { sfx } from "@/lib/audio";
 import { LANDER, LANDER_TXT } from "@/lib/content/games";
@@ -131,7 +132,7 @@ function Flight({ t, onRetry }: { t: ReturnType<typeof useT>; onRetry: () => voi
 
   return (
     <>
-      <h3>{t(LANDER_TXT.title)}</h3>
+      <GameTitle fact="lander">{t(LANDER_TXT.title)}</GameTitle>
       <p className="s">{t(LANDER_TXT.desc)}</p>
       <canvas ref={cv} width={W} height={H} aria-label={t(LANDER_TXT.canvas)} />
       <div id="tm" className="s">
@@ -158,6 +159,7 @@ function Flight({ t, onRetry }: { t: ReturnType<typeof useT>; onRetry: () => voi
         {t(LANDER_TXT.engine)}
       </button>{" "}
       <button className="b o" onClick={onRetry}>{t(LANDER_TXT.retry)}</button>
+      {result && <NasaFactCard fact="lander" />}
     </>
   );
 }

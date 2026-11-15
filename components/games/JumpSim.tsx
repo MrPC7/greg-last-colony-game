@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState } from "react";
 import { sfx } from "@/lib/audio";
 import { JUMP, JUMP_TXT } from "@/lib/content/games";
@@ -11,6 +12,8 @@ import { awardWin } from "@/lib/store";
 export default function JumpSim() {
   const t = useT();
   const [v, setV] = useState(JUMP.v0);
+  /** UI only: show the NASA Fact card once the player has jumped */
+  const [jumped, setJumped] = useState(false);
   const earth = useRef<HTMLElement>(null);
   const moon = useRef<HTMLElement>(null);
   const raf = useRef(0);
@@ -37,11 +40,12 @@ export default function JumpSim() {
     };
     f(t0);
     awardWin("cancha", 2);
+    setJumped(true);
   };
 
   return (
     <>
-      <h3>{t(JUMP_TXT.title)}</h3>
+      <GameTitle fact="jump">{t(JUMP_TXT.title)}</GameTitle>
       <p className="s">{t(JUMP_TXT.desc)}</p>
       <label>
         {t(JUMP_TXT.speed)} <b id="jv">{v.toFixed(1)}</b> {t(JUMP_TXT.unit)}
@@ -64,6 +68,7 @@ export default function JumpSim() {
         <div className="jc"><i id="jm" ref={moon} /><span>{t(JUMP_TXT.moon)}</span></div>
       </div>
       <button className="b" onClick={go}>{t(JUMP_TXT.go)}</button>
+      {jumped && <NasaFactCard fact="jump" />}
     </>
   );
 }

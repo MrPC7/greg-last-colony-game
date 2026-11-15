@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState } from "react";
 import { cropStyle } from "@/components/ui/Portrait";
 import HintButton from "@/components/ui/HintButton";
@@ -119,7 +120,7 @@ export default function BossFight() {
 
   return (
     <div ref={shake}>
-      <h3>{t(BOSS_TXT.title)}</h3>
+      <GameTitle fact="boss">{t(BOSS_TXT.title)}</GameTitle>
       <div
         className="wmb"
         role="img"
@@ -169,6 +170,7 @@ export default function BossFight() {
           <>
             <p>{t(BOSS_TXT[turn.msg])}</p>
             <p className="s">{t(q.explain)}</p>
+            {(f.seg <= 0 || f.lives <= 0) && <NasaFactCard fact="boss" />}
             <button className="b" id="bnext" onClick={next}>{t(BOSS_TXT.cont)}</button>
           </>
         ) : turn.ally === "hint" ? (
@@ -191,8 +193,9 @@ export function BossLose({ broke }: { broke: number }) {
   };
   return (
     <>
-      <h3>{t(BOSS_TXT.loseTitle)}</h3>
+      <GameTitle fact="boss">{t(BOSS_TXT.loseTitle)}</GameTitle>
       <p className="s">{t(BOSS_TXT.loseText, { k: broke, total: BOSS.segments })}</p>
+      <NasaFactCard fact="boss" />
       <button className="b" onClick={retry}>{t(BOSS_TXT.retry)}</button>{" "}
       <button className="b o" onClick={() => useUI.getState().closeModal()}>{t(BOSS_TXT.review)}</button>
     </>

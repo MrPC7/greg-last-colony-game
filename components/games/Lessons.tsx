@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useState } from "react";
 import HintButton from "@/components/ui/HintButton";
 import { sfx } from "@/lib/audio";
@@ -17,8 +18,9 @@ export default function Lessons() {
   if (li >= LS.length) {
     return (
       <>
-        <h3>{t(COURSE.doneTitle)}</h3>
+        <GameTitle fact="lessons">{t(COURSE.doneTitle)}</GameTitle>
         <p>{t(COURSE.doneText)}</p>
+        <NasaFactCard fact="lessons" />
         <button className="b" onClick={() => useUI.getState().closeModal()}>{t("common.continue")}</button>
       </>
     );
@@ -40,7 +42,7 @@ export default function Lessons() {
 
   return (
     <>
-      <h3>{t(COURSE.head, { icon: l.icon, name: t(l.name), i: li + 1 })}</h3>
+      <GameTitle fact="lessons">{t(COURSE.head, { icon: l.icon, name: t(l.name), i: li + 1 })}</GameTitle>
       <div className="pb"><i style={{ width: `${li * 20}%` }} /></div>
       <p>{t(l.text)}</p>
       <p><b>{t(l.q)}</b></p>

@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState } from "react";
 import { sfx } from "@/lib/audio";
 import { MT, STORM, STORM_TXT } from "@/lib/content/games";
@@ -53,7 +54,7 @@ export default function RadiationShield() {
 
   return (
     <>
-      <h3>{t(STORM_TXT.title)}</h3>
+      <GameTitle fact="radiation">{t(STORM_TXT.title)}</GameTitle>
       <p className="s">{t(STORM_TXT.desc, { free: STORM.budget - used, budget: STORM.budget })}</p>
       <div style={{ minHeight: 40, fontSize: 26 }}>{layers.map((i) => MT[i].icon).join("") || "…"}</div>
       <div className="s">{t(STORM_TXT.dose, { d: Math.round(p * 100) })}</div>
@@ -78,6 +79,7 @@ export default function RadiationShield() {
       <p id="fb" className="s">
         {msg ? (msg.ok ? t(STORM_TXT.safe) : t(STORM_TXT.tooHigh, { d: msg.d })) : null}
       </p>
+      {msg && <NasaFactCard fact="radiation" />}
     </>
   );
 }

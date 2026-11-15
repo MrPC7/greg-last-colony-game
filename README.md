@@ -56,6 +56,25 @@ The science facts in the quizzes, lessons and mini-games come from these NASA pa
 - NASA Science — Earth's Moon: https://science.nasa.gov/moon/
 - NASA — Apollo 11 mission: https://www.nasa.gov/mission/apollo-11/
 
+#### "🚀 NASA Fact" cards (one per mini-game)
+
+Every mini-game has a **🚀 NASA Fact** button in its header, and the card also appears on its result screen. Orbi presents one real fact, written in our own kid-friendly words, with a text link to the NASA page it comes from (no logos). Facts and links live in [`lib/content/nasaFacts.ts`](lib/content/nasaFacts.ts); all links checked (HTTP 200) on 15 Nov 2026.
+
+- **Lunar quiz** — Moon Facts: https://science.nasa.gov/moon/facts/
+- **Course: the Moon from zero** — Earth's Moon: https://science.nasa.gov/moon/
+- **Lunar landing** — Apollo 11: https://www.nasa.gov/mission/apollo-11/
+- **Solar storm** — Positive, Negative or Neutral, It All Matters: NASA Explains Space Radiation: https://www.nasa.gov/humans-in-space/positive-negative-or-neutral-it-all-matters-nasa-explains-space-radiation/
+- **Thermal control** — Moon Facts: https://science.nasa.gov/moon/facts/
+- **Lunar jump** — Top Moon Questions: https://science.nasa.gov/moon/top-moon-questions/
+- **Astronaut training** — Counteracting Bone and Muscle Loss in Microgravity: https://www.nasa.gov/missions/station/iss-research/counteracting-bone-and-muscle-loss-in-microgravity/
+- **Lunar greenhouse** — Advanced Oxygen Generation: https://www.nasa.gov/podcasts/houston-we-have-a-podcast/advanced-oxygen-generation/
+- **Timeline** — Artemis II: NASA's First Crewed Lunar Flyby in 50 Years: https://www.nasa.gov/mission/artemis-ii/
+- **Mission patch** — Apollo Mission Patches: https://science.nasa.gov/resource/apollo-mission-patches/
+- **Lunar ping pong** — 50 Years Ago: Apollo 14 Lands at Fra Mauro: https://www.nasa.gov/history/50-years-ago-apollo-14-lands-at-fra-mauro/
+- **Augmented reality** — What Is a Spacesuit? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-spacesuit-grades-k-4/
+- **Final battle: the Hollow Queen** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
+- *Earth's thermometer* and *Fire map* show their NASA dataset (GISTEMP, FIRMS, above) in the same "Source: NASA — …" line.
+
 This game does not use NASA logos, insignia or branding, and it is not endorsed by NASA.
 
 ### Use of artificial intelligence (AI)
@@ -163,6 +182,25 @@ Los datos científicos de los quizzes, lecciones y mini-juegos provienen de esta
 - NASA Science — La Luna: datos: https://science.nasa.gov/moon/facts/
 - NASA Science — La Luna: https://science.nasa.gov/moon/
 - NASA — Misión Apolo 11: https://www.nasa.gov/mission/apollo-11/
+
+#### Tarjetas «🚀 Dato NASA» (una por mini-juego)
+
+Cada mini-juego tiene un botón **🚀 Dato NASA** en su encabezado, y la tarjeta también aparece en su pantalla de resultado. Orbi presenta un dato real, contado con nuestras propias palabras para niños, con un enlace de texto a la página de la NASA de donde viene (sin logotipos). Los datos y enlaces están en [`lib/content/nasaFacts.ts`](lib/content/nasaFacts.ts); todos los enlaces se comprobaron (HTTP 200) el 15 nov 2026.
+
+- **Quiz lunar** — Moon Facts: https://science.nasa.gov/moon/facts/
+- **Curso: la Luna desde cero** — Earth's Moon: https://science.nasa.gov/moon/
+- **Aterrizaje lunar** — Apollo 11: https://www.nasa.gov/mission/apollo-11/
+- **Tormenta solar** — Positive, Negative or Neutral, It All Matters: NASA Explains Space Radiation: https://www.nasa.gov/humans-in-space/positive-negative-or-neutral-it-all-matters-nasa-explains-space-radiation/
+- **Control térmico** — Moon Facts: https://science.nasa.gov/moon/facts/
+- **Salto lunar** — Top Moon Questions: https://science.nasa.gov/moon/top-moon-questions/
+- **Entrenamiento de astronauta** — Counteracting Bone and Muscle Loss in Microgravity: https://www.nasa.gov/missions/station/iss-research/counteracting-bone-and-muscle-loss-in-microgravity/
+- **Invernadero lunar** — Advanced Oxygen Generation: https://www.nasa.gov/podcasts/houston-we-have-a-podcast/advanced-oxygen-generation/
+- **Línea del tiempo** — Artemis II: NASA's First Crewed Lunar Flyby in 50 Years: https://www.nasa.gov/mission/artemis-ii/
+- **Parche de misión** — Apollo Mission Patches: https://science.nasa.gov/resource/apollo-mission-patches/
+- **Ping pong lunar** — 50 Years Ago: Apollo 14 Lands at Fra Mauro: https://www.nasa.gov/history/50-years-ago-apollo-14-lands-at-fra-mauro/
+- **Realidad aumentada** — What Is a Spacesuit? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-spacesuit-grades-k-4/
+- **Batalla final: la Reina Hueca** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
+- *El termómetro de la Tierra* y el *Mapa de incendios* muestran su conjunto de datos de la NASA (GISTEMP, FIRMS, arriba) en la misma línea «Fuente: NASA — …».
 
 Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respaldado por la NASA.
 

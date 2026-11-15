@@ -1,5 +1,6 @@
 "use client";
 
+import { NasaSource } from "@/components/ui/NasaFact";
 import { Portrait } from "@/components/ui/Portrait";
 import Watermark from "@/components/ui/Watermark";
 import { RAY } from "@/lib/characters";
@@ -23,14 +24,11 @@ export function RayNote({ text, vars }: { text: Localized; vars?: Vars }) {
   );
 }
 
-/** "Datos: NASA … — fecha" line under every NASA data screen. */
+/** "Fuente: NASA — … (fecha)" line under every NASA data screen, in the same style as the
+ *  source line of the NASA Fact cards. */
 export function DataCaption({ text, vars, href }: { text: Localized; vars: Vars; href: string }) {
   const t = useT();
-  return (
-    <p className="cap">
-      <a href={href} target="_blank" rel="noopener noreferrer">{t(text, vars)}</a>
-    </p>
-  );
+  return <NasaSource href={href}>{t(text, vars)}</NasaSource>;
 }
 
 /** Loading / error state while the JSON file arrives. */

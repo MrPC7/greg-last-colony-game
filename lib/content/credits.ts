@@ -1,3 +1,4 @@
+import { NASA_FACTS } from "./nasaFacts.ts";
 import type { Localized } from "./types";
 
 // Credits page content (app/credits/page.tsx): team, NASA resources, AI (SI) disclosure,
@@ -55,6 +56,13 @@ export const NASA_RESOURCES: Source[] = [
     },
   },
 ];
+
+/** NASA resources of the "🚀 Dato NASA / NASA Fact" card of every mini-game, grouped by game.
+ *  Built from lib/content/nasaFacts.ts (one source of truth for the fact, its page and its URL);
+ *  every URL was checked (HTTP 200) on 2026-11-15. */
+export const NASA_FACT_RESOURCES: { game: Localized; title: string; url: string }[] = Object.values(NASA_FACTS).map(
+  (f) => ({ game: f.game, title: f.title, url: f.url }),
+);
 
 /** NASA Earth data used in the "La Señal de Ray" zone (Phase 4). The files in public/data/ are
  *  built by scripts/build_data.py from these exact URLs; snapshot downloaded 2026-11-14 (UTC). */
@@ -141,6 +149,11 @@ export const CREDITS = {
   nasaIntro: {
     es: "Los datos científicos del juego provienen de estas páginas públicas de la NASA:",
     en: "The game’s science facts come from these public NASA pages:",
+  },
+  factsTitle: { es: "🚀 Dato NASA de cada mini-juego", en: "🚀 NASA Fact of every mini-game" },
+  factsIntro: {
+    es: "Cada mini-juego muestra un dato real de la NASA, contado con nuestras palabras. Esta es la página de la NASA de cada uno:",
+    en: "Every mini-game shows one real NASA fact, told in our own words. This is the NASA page behind each one:",
   },
   dataTitle: { es: "🛰️ Datos de la Tierra (NASA)", en: "🛰️ Earth data (NASA)" },
   dataIntro: {

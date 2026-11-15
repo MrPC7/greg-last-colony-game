@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useEffect, useRef, useState } from "react";
 import { sfx } from "@/lib/audio";
 import { THERM, THERM_TXT } from "@/lib/content/games";
@@ -55,7 +56,7 @@ export default function ThermalControl() {
 
   return (
     <>
-      <h3>{t(THERM_TXT.title)}</h3>
+      <GameTitle fact="thermal">{t(THERM_TXT.title)}</GameTitle>
       <p className="s">{t(THERM_TXT.desc)}</p>
       <div id="ex">{view && t(THERM_TXT.temps, { te: view.te.toFixed(0), ti: view.ti.toFixed(1) })}</div>
       <div className="pb"><i id="tb" style={bar} /></div>
@@ -74,6 +75,7 @@ export default function ThermalControl() {
             : t(THERM_TXT.lose, { p: end.p })
           : view && t(THERM_TXT.timer, { s: Math.max(0, THERM.seconds - view.t).toFixed(0) })}
       </div>
+      {end && <NasaFactCard fact="thermal" />}
     </>
   );
 }

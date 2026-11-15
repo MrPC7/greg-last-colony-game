@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useState } from "react";
 import HintButton from "@/components/ui/HintButton";
 import { sfx } from "@/lib/audio";
@@ -20,11 +21,12 @@ export default function MoonQuiz() {
   if (qi >= Q.length) {
     return (
       <>
-        <h3>{t(QUIZ.end)}</h3>
+        <GameTitle fact="quiz">{t(QUIZ.end)}</GameTitle>
         <p>
           {t(QUIZ.score)} <b>{qs}/{Q.length}</b>
           {gained > 0 && <> · ⭐ +{gained}</>}
         </p>
+        <NasaFactCard fact="quiz" />
         <button className="b" onClick={() => useUI.getState().closeModal()}>{t(QUIZ.keepExploring)}</button>
       </>
     );
@@ -51,7 +53,7 @@ export default function MoonQuiz() {
 
   return (
     <>
-      <h3>{t(QUIZ.head, { i: qi + 1, n: Q.length })}</h3>
+      <GameTitle fact="quiz">{t(QUIZ.head, { i: qi + 1, n: Q.length })}</GameTitle>
       <p>{t(q.q)}</p>
       {q.options.map((o, i) => (
         <button

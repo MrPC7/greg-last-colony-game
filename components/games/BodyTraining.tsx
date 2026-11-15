@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useState } from "react";
 import { sfx } from "@/lib/audio";
 import { BODY, BODY_TXT } from "@/lib/content/games";
@@ -44,7 +45,7 @@ export default function BodyTraining() {
 
   return (
     <>
-      <h3>{t(BODY_TXT.title)}</h3>
+      <GameTitle fact="body">{t(BODY_TXT.title)}</GameTitle>
       <p className="s">{t(BODY_TXT.desc)}</p>
       {slider(BODY_TXT.sleep, "bs1", BODY.sleep, s, setS)}
       {slider(BODY_TXT.exercise, "be", BODY.exercise, e, setE)}
@@ -60,6 +61,7 @@ export default function BodyTraining() {
       </div>
       <button className="b" onClick={confirm}>{t(BODY_TXT.confirm)}</button>
       <p id="fb">{msg === null ? null : t(msg ? BODY_TXT.ok : BODY_TXT.bad)}</p>
+      {msg !== null && <NasaFactCard fact="body" />}
     </>
   );
 }

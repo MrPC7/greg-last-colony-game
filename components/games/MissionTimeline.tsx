@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useState } from "react";
 import HostNote from "@/components/ui/HostNote";
 import { sfx } from "@/lib/audio";
@@ -33,7 +34,7 @@ export default function MissionTimeline() {
 
   return (
     <>
-      <h3>{t(TL_TXT.title)}</h3>
+      <GameTitle fact="timeline">{t(TL_TXT.title)}</GameTitle>
       <HostNote
         ch={ELEN}
         text={ord >= TL.length ? TL_TXT.elenWin : msg === "wrong" ? TL_TXT.elenWrong : ord > 0 ? TL_TXT.elenRight : TL_TXT.elenStart}
@@ -45,6 +46,7 @@ export default function MissionTimeline() {
         </button>
       ))}
       <div id="tm2" className="s">{msg && t(TL_TXT[msg])}</div>
+      {ord >= TL.length && <NasaFactCard fact="timeline" />}
     </>
   );
 }

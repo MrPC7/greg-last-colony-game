@@ -8,6 +8,7 @@ import {
   CREDITS as C,
   LIBRARIES,
   NASA_DATA,
+  NASA_FACT_RESOURCES,
   NASA_RESOURCES,
   SITE_URL,
   TEAM,
@@ -57,6 +58,20 @@ export default function CreditsPage() {
         <h2>{t(C.nasaTitle)}</h2>
         <p className="s">{t(C.nasaIntro)}</p>
         <SourceList items={NASA_RESOURCES} />
+
+        <h2>{t(C.factsTitle)}</h2>
+        <p className="s">{t(C.factsIntro)}</p>
+        <ul>
+          {NASA_FACT_RESOURCES.map((f) => (
+            <li key={f.url + f.title + t(f.game)}>
+              <b>{t(f.game)}</b>
+              <br />
+              <span className="s">{f.title}</span>
+              <br />
+              <a href={f.url} target="_blank" rel="noopener noreferrer">{f.url}</a>
+            </li>
+          ))}
+        </ul>
 
         <h2>{t(C.dataTitle)}</h2>
         <p className="s">{t(C.dataIntro)}</p>

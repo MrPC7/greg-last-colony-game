@@ -149,8 +149,6 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .yrs .op{text-align:center;font-weight:700}
 .tc{position:relative;height:clamp(200px,42vw,260px);margin:8px 0}
 .tch{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;border-radius:10px;background:color-mix(in srgb,var(--card) 70%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-weight:700}
-.cap{margin:10px 0 0;font-size:12px;opacity:.85}
-.cap a{color:inherit}
 .fm{display:block;width:100%;height:auto;margin:8px 0;border-radius:10px;border:2px solid var(--bd)}
 .fmw{fill:#cfe3f7}.fml{fill:#e9e2c9;stroke:#a89c75;stroke-width:.3}
 .fmd{fill:#f03e3e;stroke:#fff;stroke-width:.4}
@@ -200,3 +198,23 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .certn input{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--fg)}
 .certc{display:block;width:100%;height:auto;aspect-ratio:1200/850;border-radius:10px;margin:8px 0}
 @media(prefers-reduced-motion:reduce){.segs i{transition:none}}
+
+/* ---- "🚀 Dato NASA / NASA Fact" cards (components/ui/NasaFact.tsx) ---- */
+:root{--nfa:#b77900;--nfl:#0b4fb3}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--nfa:#ffc93c;--nfl:#9cc4ff}}
+:root[data-theme="dark"]{--nfa:#ffc93c;--nfl:#9cc4ff}
+/* The title stays a normal block (a flex/BFC box would shrink beside the floated ✕ and leave a gap
+   in the sticky header's background); the button flows after the text and wraps under it. */
+.gt>span{margin-right:10px}
+.b.nfb{display:inline-block;vertical-align:middle;font-size:13px;padding:6px 10px;border-radius:999px;background:#0b4fb3;color:#fff;margin:2px 0;white-space:nowrap}
+.nf{display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:10px;border:2px solid var(--nfa);border-radius:12px;background:color-mix(in srgb,var(--card) 88%,#ffc93c)}
+.nf .pt{width:56px;flex:none;border-color:var(--nfa)}
+.nf .wmp{margin:0 8px;flex:none}
+.nf>div{min-width:0}
+.nf p{margin:0 0 4px;font-size:14px;line-height:1.4}
+.nf .nfh{font-size:15px}
+.nfs{margin:4px 0 0;font-size:13px;overflow-wrap:anywhere}
+.nfs a{color:var(--nfl);font-weight:700}
+.nf+.nfs,.ray~.nfs{margin-top:10px}
+@media(max-width:420px){.nf{gap:8px}.nf .pt{width:44px}.nf .wmp{margin:0 4px}}
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

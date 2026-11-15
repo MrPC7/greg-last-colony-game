@@ -1,5 +1,6 @@
 "use client";
 
+import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
 import { useState } from "react";
 import { sfx } from "@/lib/audio";
 import { VERD, VERD_TXT } from "@/lib/content/games";
@@ -33,7 +34,7 @@ export default function OxygenBalance() {
 
   return (
     <>
-      <h3>{t(VERD_TXT.title)}</h3>
+      <GameTitle fact="oxygen">{t(VERD_TXT.title)}</GameTitle>
       <p className="s">{t(VERD_TXT.desc)}</p>
       <label>
         {t(VERD_TXT.crew)} <b id="c1">{crew}</b>
@@ -62,6 +63,7 @@ export default function OxygenBalance() {
       <br />
       <button className="b" onClick={confirm}>{t(VERD_TXT.confirm)}</button>
       <p id="vm">{result && t(VERD_TXT[result])}</p>
+      {result && <NasaFactCard fact="oxygen" />}
     </>
   );
 }
