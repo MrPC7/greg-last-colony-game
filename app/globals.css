@@ -46,6 +46,12 @@ body::after{
 #md{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 44px) 10px 10px;z-index:9;overflow:auto}
 .card{background:var(--card);color:var(--fg);border:2px solid var(--bd);border-radius:14px;padding:16px;max-width:560px;width:100%;max-height:min(92vh,calc(100vh - 54px - env(safe-area-inset-top,0px)));overflow:auto}
 .card h3{margin:0 0 6px}.x{float:right}
+/* Tall modals scroll inside .card: the ✕ and the panel title stay pinned at the top of the card
+   (which itself starts below the fixed settings bar, see #md padding). */
+/* Sticky offsets count from the card's content edge (16px padding): the title band is pulled over the
+   padding (negative margins) so it reaches the card's border and nothing scrolls into view above it. */
+.card>.x{position:sticky;top:0;z-index:3}
+#mb>h3:first-child,#mb>div:first-child>h3:first-child{position:sticky;top:-16px;z-index:2;background:var(--card);margin:-16px -16px 6px;padding:16px 72px 6px 16px}
 .s{font-size:14px;opacity:.85}
 .op{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border-radius:10px;border:2px solid var(--bd);background:transparent;color:inherit;font:inherit;cursor:pointer}
 .op.ok{border-color:#2ecc71;background:#2ecc7133}.op.no{border-color:#e74c3c;background:#e74c3c33}
@@ -107,10 +113,13 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .st>span{min-width:140px;font-weight:700}
 .st .b.on{outline:3px solid #ffd54a}
 /* AI-image watermark (components/ui/Watermark.tsx). .wmc = position:relative size container
-   around an AI image. .wm is the small in-game label; it sits just above the subtle label burned
-   into the JPEG by scripts/extract_assets.py (0.6 cqw margin, 1.14 cqw tall; cqw = % of image width). */
+   around an AI image. .wm is the small in-game label, the only one on the image (the .webp files
+   the game shows carry no burned label, see scripts/extract_assets.py CLEAN_WEBP). Its spot is
+   unchanged from when it sat above the burned label, clear of the painted name plates. */
 .wmc{position:relative;container-type:inline-size}
 .wm{position:absolute;right:max(4px,.6cqw);bottom:calc(2.1cqw + 2px);z-index:200;color:#fff;opacity:.6;font:600 11px/1.2 system-ui,sans-serif;text-shadow:0 0 3px #000,0 1px 2px #000;white-space:nowrap;pointer-events:none;user-select:none}
+/* Caption variant under the image (credits map thumbnail). */
+.wm.wmu{position:static;display:block;margin-top:3px;text-align:right;color:inherit;opacity:.75;text-shadow:none}
 /* Tiny corner mark for small crops of the AI images (portraits, sprites, boss art). */
 .wms{position:absolute;right:0;bottom:0;z-index:1;padding:1px 3px;border-radius:4px;background:#0000004d;color:#fff;opacity:.75;font:700 8px/1.1 system-ui,sans-serif;pointer-events:none;user-select:none}
 .wmp{position:relative;flex:none;display:inline-block}

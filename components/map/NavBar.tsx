@@ -27,7 +27,7 @@ export default function NavBar({ onMap }: { onMap: () => void }) {
   const open = useUI((s) => s.openModal);
   return (
     <>
-      <div data-ui className={`${styles.pn} ${styles.nav}`} style={place(NAV)}>
+      <div data-ui className={styles.pn} style={place(NAV)}>
         {TABS.map((b, i) => (
           <button
             key={b.key}

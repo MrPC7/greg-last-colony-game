@@ -71,20 +71,28 @@ export default function CreditsPage() {
         </ul>
         <p className="s">{t(C.aiGallery)}</p>
         <div className="gal">
-          {AI_IMAGES.map((im) => (
+          {AI_IMAGES.map((im) => {
+            const [w, h] = im.ratio.split("/").map(Number);
+            const keep = 1 - (im.crop ?? 0);
+            return (
             <figure key={im.file}>
               <div className="wmc">
                 <div
                   className="th"
                   role="img"
                   aria-label={t(im.name)}
-                  style={{ aspectRatio: im.ratio, backgroundImage: `var(${im.cssVar})` }}
+                  style={{
+                    aspectRatio: `${w}/${+(h * keep).toFixed(2)}`,
+                    backgroundImage: `var(${im.cssVar})`,
+                    ...(im.crop ? { backgroundSize: `100% ${+(100 / keep).toFixed(3)}%`, backgroundPosition: "top" } : {}),
+                  }}
                 />
-                <Watermark />
+                <Watermark below={!!im.crop} />
               </div>
               <figcaption>{t(im.name)}</figcaption>
             </figure>
-          ))}
+            );
+          })}
         </div>
 
         <h2>{t(C.libsTitle)}</h2>

@@ -296,6 +296,7 @@ export default function Stage() {
       {near >= 0 && (
         <button data-ui className={`b o ${styles.pr}`} onClick={() => ctrl.current?.enter(near)}>
           {t("hub.enter", { zone: t(ZONES[near].n) })}
+          <span className={styles.kh}> {t("hub.enterKey")}</span>
         </button>
       )}
     </div>

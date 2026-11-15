@@ -100,8 +100,12 @@ export const NASA_DATA: Source[] = [
 ];
 
 /** The three AI-generated images, shown as thumbnails on the credits page. */
-export const AI_IMAGES: { file: string; cssVar: string; ratio: string; name: Localized }[] = [
-  { file: "img/map.jpg", cssVar: "--map", ratio: "1172/657", name: { es: "Mapa del colegio", en: "School map" } },
+/** `crop`: fraction of the image height hidden at the bottom of the thumbnail. The map's in-game
+ *  image keeps its burned-in AI label in the thin strip under the painted nav bar (unreadable at
+ *  thumbnail size), so that strip is cropped and the label is shown once, under the thumbnail,
+ *  where it covers no painted button. */
+export const AI_IMAGES: { file: string; cssVar: string; ratio: string; crop?: number; name: Localized }[] = [
+  { file: "img/map.jpg", cssVar: "--map", ratio: "1172/657", crop: 0.022, name: { es: "Mapa del colegio", en: "School map" } },
   { file: "img/keyart.jpg", cssVar: "--key", ratio: "1170/651", name: { es: "Portada", en: "Key art" } },
   { file: "img/cast.jpg", cssVar: "--cast", ratio: "1476/777", name: { es: "Personajes", en: "Characters" } },
 ];
@@ -150,8 +154,8 @@ export const CREDITS = {
 
   aiTitle: { es: "🤖 Uso de inteligencia artificial (IA)", en: "🤖 Use of artificial intelligence (AI)" },
   aiImages: {
-    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Llevan la marca «Imagen generada con IA» dentro del propio archivo (en el mapa, en el borde inferior) y la portada también encima de la imagen en el juego. Los personajes del mapa y los retratos son recortes de la lámina de personajes con el fondo quitado; los retratos llevan una pequeña marca «IA».",
-    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). They carry the label “AI-generated image” inside the file itself (on the map, along the bottom edge), and the key art also on top of the image in the game. The map characters and the portraits are cut-outs of the character sheet with the background removed; the portraits carry a small “AI” mark.",
+    es: "Imágenes: el mapa del colegio, la portada y la lámina de personajes fueron generados con IA ({tool}). Los archivos descargables (.jpg) llevan la marca «Imagen generada con IA» dentro de la imagen; en el juego, el mapa la lleva en su borde inferior y la portada y la lámina de personajes la muestran encima de la imagen. Los personajes del mapa y los retratos son recortes de la lámina de personajes con el fondo quitado; los retratos llevan una pequeña marca «IA».",
+    en: "Images: the school map, the key art and the character sheet were generated with AI ({tool}). The downloadable files (.jpg) carry the label “AI-generated image” inside the image; in the game, the map carries it along its bottom edge and the key art and character sheet show it on top of the image. The map characters and the portraits are cut-outs of the character sheet with the background removed; the portraits carry a small “AI” mark.",
   },
   aiCode: {
     es: "Código: desarrollado por el equipo con herramientas de programación asistida por IA.",

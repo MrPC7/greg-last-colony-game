@@ -333,8 +333,10 @@ export const BOSS_LOSE_TALK: Line[] = [
   [2, { es: "No te rindas, {n}. Repasa las zonas y vuelve a intentarlo.", en: "Don’t give up, {n}. Review the zones and try again." }],
 ];
 
-/** `SH`: the 8 star fragments on the map (% coordinates). Each gives +1 ⭐; all 8 → +5 ⭐ bonus. */
-export const SH: [number, number][] = [[12, 36], [40, 31], [58, 57], [34, 52], [70, 52], [93, 50], [62, 88], [26, 84]];
+/** `SH`: the 8 star fragments on the map (% coordinates). Each gives +1 ⭐; all 8 → +5 ⭐ bonus.
+ *  Every spot is open map at all widths (not under a label, the nav/mission panels, the HUD,
+ *  the AR/Orbi buttons or the "Enter" prompt), so it can be reached by tapping it. */
+export const SH: [number, number][] = [[16, 35], [40, 31], [58, 57], [34, 52], [70, 52], [93, 50], [68, 80], [26, 84]];
 export const SHARD_BONUS = 5;
 export const SHARDS_DONE: Line[] = [
   [2, { es: "¡Reuniste los 8 fragmentos de estrella, {n}! Bonus: +5 ⭐.", en: "You gathered all 8 star fragments, {n}! Bonus: +5 ⭐." }],

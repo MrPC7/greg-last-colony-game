@@ -16,7 +16,7 @@ import { sfx } from "@/lib/audio";
 import { DATA_HINTS, DATA_TXT, TEMP, TEMP_TXT } from "@/lib/content/games";
 import { useLang, useT } from "@/lib/i18n";
 import { fmtDate, fmtSigned, useNasaData, type Gistemp } from "@/lib/nasaData";
-import { awardWin, useGame } from "@/lib/store";
+import { awardWin } from "@/lib/store";
 import HintButton from "@/components/ui/HintButton";
 import { DataCaption, DataStatus, RayNote } from "./DataParts";
 
@@ -41,44 +41,51 @@ function makeRounds(data: Year[]): Round[] {
 }
 
 // Colours: one series (warm line on a recessive grid); revealed points: hotter = red, cooler = blue,
-// each also labelled with its year and value, so identity is never colour alone.
+// each also named in a key with its year and value, so identity is never colour alone.
+// The chart canvas always has the dark surface (global `canvas` style, SURFACE) in both themes, so
+// its text and grid use fixed light tokens instead of the page's --fg (dark in the light theme).
 const LINE = "#e8590c";
 const HOT = "#c92a2a";
 const COLD = "#1971c2";
+const SURFACE = "#05031a";
+const INK = "#ece8ff"; // axis titles and the key
+const INK2 = "#c9c2f2"; // tick labels
+const GRID = "rgba(201,194,242,.2)";
+const ZERO = "rgba(236,232,255,.6)";
 
-/** Draws "year: +x.xx °C" next to the two revealed points (direct labels): the hotter one
- *  (index 0, always the higher point) above its point, the cooler one below, so they never overlap. */
-const labelsPlugin = (color: string): Plugin<"line"> => ({
-  id: "yearLabels",
+/** Key for the two revealed points ("● 2017: +0.91 °C" hotter first), drawn in the top-left corner
+ *  of the plot. That corner is always empty: before ~1940 the anomaly stays far below the top of
+ *  the scale, so the key never overlaps the line or the points. */
+const keyPlugin: Plugin<"line"> = {
+  id: "yearKey",
   afterDatasetsDraw(chart) {
     const meta = chart.getDatasetMeta(1);
     const ds = chart.data.datasets[1] as unknown as { labels?: string[] } | undefined;
-    if (!meta || meta.hidden || !ds?.labels) return;
+    if (!meta || meta.hidden || !ds?.labels || !meta.data.length) return;
     const { ctx, chartArea } = chart;
     ctx.save();
     ctx.font = "700 12px system-ui, sans-serif";
-    ctx.fillStyle = color;
-    meta.data.forEach((pt, i) => {
-      const text = ds.labels![i];
-      const w = ctx.measureText(text).width;
-      const x = Math.min(Math.max(pt.x - w / 2, chartArea.left), chartArea.right - w);
-      const above = i === 0 ? pt.y - 12 >= chartArea.top + 12 : pt.y + 22 > chartArea.bottom;
-      const y = above ? pt.y - 12 : pt.y + 22;
-      ctx.fillText(text, x, y);
+    ctx.textBaseline = "middle";
+    [HOT, COLD].forEach((col, i) => {
+      const x = chartArea.left + 10;
+      const y = chartArea.top + 12 + i * 18;
+      ctx.beginPath();
+      ctx.arc(x + 4, y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = INK;
+      ctx.stroke();
+      ctx.fillStyle = INK;
+      ctx.fillText(ds.labels![i], x + 14, y);
     });
     ctx.restore();
   },
-});
-
-function cssVar(name: string, fallback: string) {
-  if (typeof window === "undefined") return fallback;
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
-}
+};
 
 function TempGame({ g }: { g: Gistemp }) {
   const t = useT();
   const lang = useLang();
-  useGame((s) => s.theme); // re-render (and re-read the CSS colours) on theme change
   const [rounds, setRounds] = useState(() => makeRounds(g.data));
   const [r, setR] = useState(0);
   const [pick, setPick] = useState<number | null>(null);
@@ -91,7 +98,6 @@ function TempGame({ g }: { g: Gistemp }) {
   const revealed = pick !== null || result !== null;
   const first = g.data[0].year;
   const last = g.data[g.data.length - 1].year;
-  const fg = cssVar("--fg", "#1d1640");
   const fmt = (v: number) => fmtSigned(v, lang);
 
   const choose = (year: number) => {
@@ -143,7 +149,7 @@ function TempGame({ g }: { g: Gistemp }) {
           pointRadius: 6,
           pointHoverRadius: 7,
           pointBackgroundColor: [HOT, COLD],
-          pointBorderColor: cssVar("--card", "#fff"),
+          pointBorderColor: SURFACE,
           pointBorderWidth: 2,
         },
       ],
@@ -163,15 +169,17 @@ function TempGame({ g }: { g: Gistemp }) {
         type: "linear",
         min: first,
         max: last,
-        title: { display: true, text: t(TEMP_TXT.axisX), color: fg },
-        ticks: { color: fg, stepSize: 20, callback: (v) => String(v) },
+        title: { display: true, text: t(TEMP_TXT.axisX), color: INK, font: { weight: "bold" } },
+        ticks: { color: INK2, stepSize: 20, callback: (v) => String(v) },
         grid: { display: false },
+        border: { color: GRID },
       },
       y: {
         type: "linear",
-        title: { display: true, text: t(TEMP_TXT.axisY), color: fg },
-        ticks: { color: fg, callback: (v) => fmtSigned(Number(v), lang, 1) },
-        grid: { color: (c) => (c.tick.value === 0 ? "rgba(128,128,160,.7)" : "rgba(128,128,160,.18)") },
+        title: { display: true, text: t(TEMP_TXT.axisY), color: INK, font: { weight: "bold" } },
+        ticks: { color: INK2, callback: (v) => fmtSigned(Number(v), lang, 1) },
+        grid: { color: (c) => (c.tick.value === 0 ? ZERO : GRID) },
+        border: { color: GRID },
       },
     },
     plugins: {
@@ -215,7 +223,7 @@ function TempGame({ g }: { g: Gistemp }) {
         <p><b>{t(TEMP_TXT.score, { c: correct, total: TEMP.rounds })}</b></p>
       )}
       <div className="tc" aria-label={t(TEMP_TXT.chartLabel, { from: first, to: last, min: fmt(min), max: fmt(max) })} role="img">
-        <Line key={fg} data={chartData} options={options} plugins={[labelsPlugin(fg)]} />
+        <Line data={chartData} options={options} plugins={[keyPlugin]} />
         {!revealed && <div className="tch">{t(TEMP_TXT.hidden)}</div>}
       </div>
       {pick !== null && result === null && (

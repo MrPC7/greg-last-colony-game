@@ -42,7 +42,9 @@ export const UI = {
     es: "Toca el mapa o usa las flechas o WASD para mover a tu personaje. Entra a las zonas con círculo celeste.",
     en: "Tap the map or use the arrow keys or WASD to move your character. Enter the zones marked with a cyan circle.",
   },
-  "hub.enter": { es: "Entrar: {zone} [E]", en: "Enter: {zone} [E]" },
+  "hub.enter": { es: "Entrar: {zone}", en: "Enter: {zone}" },
+  // Keyboard hint after the "Enter" prompt; hidden on touch devices (map.module.css .kh).
+  "hub.enterKey": { es: "[E]", en: "[E]" },
   "hub.ar": { es: "📷 RA", en: "📷 AR" },
   "hub.hint": { es: "💡 Orbi", en: "💡 Orbi" },
   "hud.level": { es: "Nivel {lv}", en: "Level {lv}" },

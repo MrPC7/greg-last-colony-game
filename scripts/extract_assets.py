@@ -15,12 +15,16 @@ quality="keep" / subsampling="keep", i.e. the original quantisation tables and
 chroma subsampling, so quality matches the source. Always run this on the
 prototype HTML (the clean originals) — never on already-watermarked files.
 
-The label geometry is defined as fractions of the image width (WM_* below); the
-in-game label (components/ui/Watermark.tsx, .wm in app/globals.css) sits just
-above it on the key art. The map is the exception (WM_PLACEMENT): its label is a
-bit smaller and centred in the thin free strip at the very bottom edge, under the
-painted nav bar, so it never covers a painted button (e.g. "¡Vamos!"); the game
-does not draw the overlay label on the map, so this burned label is the only one.
+The label geometry is defined as fractions of the image width (WM_* below). The
+map's label (WM_PLACEMENT) is a bit smaller and centred in the thin free strip at
+the very bottom edge, under the painted nav bar, so it never covers a painted
+button (e.g. "¡Vamos!"); the game does not draw the overlay label on the map, so
+this burned label is the only one there.
+
+The key art and the character sheet are shown in the game with the translated HTML
+label on top (components/ui/Watermark.tsx, .wm in app/globals.css), so their .webp
+copies (CLEAN_WEBP) are written WITHOUT the burned label, otherwise the label would
+show twice. Their .jpg files (Open Graph previews, downloads) keep it.
 
 Requires Pillow (pip install Pillow).
 
@@ -57,6 +61,8 @@ WEBP_QUALITY = 80
 # The map (the /play LCP image) also gets a SMALL_WIDTH px "-sm.webp" for phones.
 # Not the key art / cast: their sheets are also cropped for character faces.
 SMALL_VARIANTS = {"map"}
+# Images whose in-game .webp copy carries no burned label: the game overlays the HTML label instead.
+CLEAN_WEBP = {"key", "cast"}
 SMALL_WIDTH = 800
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -172,13 +178,14 @@ def main() -> int:
             note = f", AI label {bw * 100:.2f}cqw x {bh * 100:.2f}cqw"
         dest.write_bytes(data)
         print(f"--{var:<4} -> {dest} ({len(found[var]):,} -> {len(data):,} bytes{note})")
-        # WebP copy (same pixels, watermark included) for the in-game CSS backgrounds:
-        # roughly half the bytes, which keeps Lighthouse mobile LCP in budget.
-        # The .jpg stays for Open Graph previews and the certificate canvas.
+        # WebP copy for the in-game CSS backgrounds: roughly half the bytes, which keeps
+        # Lighthouse mobile LCP in budget. Same pixels as the .jpg (burned label included),
+        # except CLEAN_WEBP images, which use the clean original (the game overlays the label).
+        # The .jpg stays for Open Graph previews.
         from PIL import Image
 
         webp = dest.with_suffix(".webp")
-        img = Image.open(io.BytesIO(data))
+        img = Image.open(io.BytesIO(found[var] if var in CLEAN_WEBP else data))
         img.save(webp, "WEBP", quality=WEBP_QUALITY, method=6)
         print(f"         -> {webp} ({webp.stat().st_size:,} bytes)")
         if var in SMALL_VARIANTS:
