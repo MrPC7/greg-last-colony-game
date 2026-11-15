@@ -26,6 +26,7 @@ import Hotspot from "./Hotspot";
 import Hud from "./Hud";
 import { ZONE_LABELS, ZoneLabel } from "./MapLabel";
 import NavBar from "./NavBar";
+import ObjectiveBox from "./Objective";
 import PlayerToken from "./PlayerToken";
 import styles from "./map.module.css";
 
@@ -305,6 +306,7 @@ export default function Stage() {
       <button data-ui className={`b o ${styles.tool} ${styles.tool2}`} onClick={hint}>
         {t("hub.hint")}
       </button>
+      <ObjectiveBox className={styles.obj} cls={{ steps: styles.objSteps, on: styles.objOn, ok: styles.objOk, next: styles.objNext }} />
       {/* No overlay AI label here: map.jpg carries its own burned-in label along the bottom
           edge (scripts/extract_assets.py), placed clear of the painted buttons. */}
       {near >= 0 && (

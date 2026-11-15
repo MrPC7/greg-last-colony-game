@@ -94,6 +94,8 @@ input[type=range]{width:100%}
 #bub .pt{width:76px}#bub p{margin:2px 0}
 #title{position:relative}
 #title .bar{display:none}#title.rdy .bar{display:flex}
+/* One-line mission goal under the key art (TitleScreen.tsx). */
+#title .mis{margin:10px auto 0;max-width:62ch;padding:0 12px;text-align:center;font-weight:700;font-size:clamp(14px,1.6vw,18px);line-height:1.35;color:#ffd54a;text-shadow:0 1px 4px #0008}
 .art{animation:kb 22s ease-in-out infinite alternate}
 @keyframes kb{from{background-size:100% 100%;background-position:50% 50%}to{background-size:122% 122%;background-position:35% 25%}}
 #cin{position:absolute;left:0;right:0;top:0;aspect-ratio:1170/651;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:12px;padding:3%;border-radius:12px;background:linear-gradient(transparent 35%,#000c);color:#fff;text-align:center}

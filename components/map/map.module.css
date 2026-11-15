@@ -82,7 +82,23 @@ button.pn{cursor:pointer}
    1164px desktop map), with a small readable floor on phones. */
 .stage .tool{position:absolute;left:1%;z-index:4;padding:max(1px,.34cqw) max(4px,.69cqw);font-size:max(8px,1.03cqw);line-height:1.5;border-radius:max(5px,.86cqw);white-space:nowrap}
 .tool1{top:13%}
-.tool2{top:21%}
+/* Desktop: Orbi sits beside AR so the objective tracker fits under both, above the Sports Court label. */
+.stage .tool2{top:13%;left:7.2%}
+/* Objective tracker (Objective.tsx), top-left under the AR / Orbi buttons, same panel style as the
+   painted labels; sized in cqw so it scales with the map. Phones show it in the Info panel instead. */
+.obj{position:absolute;left:1%;top:19%;width:20cqw;z-index:4;padding:.55cqw .8cqw;color:#fff;
+  font-size:max(8px,.98cqw);line-height:1.35;background:linear-gradient(#0f1d52f2,#08102ff2);
+  border:max(1px,.15cqw) solid #4cb8ff;border-radius:1.1cqw;box-shadow:0 0 .45cqw #2f9bffcc;cursor:default}
+.obj p{margin:0}
+.objSteps{font-weight:700}
+.objSteps>span{white-space:nowrap}
+.objSteps i{font-style:normal;opacity:.75}
+.objOn{color:#ffd54a;text-shadow:0 0 .5cqw #ffd54a99}
+.objOk{color:#7df9a8;opacity:.85}
+.objSteps>span:not(.objOn):not(.objOk){opacity:.75}
+.objNext{margin-top:.3cqw!important;opacity:.95}
+.objNext b{color:#ffd54a}
+@media (max-width:820px),(orientation:landscape) and (max-height:520px) and (pointer:coarse){.obj{display:none}.stage .tool2{top:21%;left:1%}}
 
 /* Top-bar HUD (rendered in #cfg on /play), replaces the map overlay HUD on narrow screens. */
 .barHud{display:none;align-items:center;gap:8px;margin-right:auto;min-width:0;background:#140c32;border:2px solid #4f6bff;border-radius:12px;padding:3px 10px 3px 3px;color:#fff;font-weight:700;font-size:14px;line-height:1.2}

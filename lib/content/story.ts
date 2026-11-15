@@ -631,6 +631,11 @@ export const BRIEF_TXT = {
     en: "Complete the modules to prepare the lunar mission from Earth.",
   },
   start: { es: "¡Comenzar!", en: "Let’s go!" },
+  /** Orbi's summary of the 3-step goal after ¡Comenzar!, before the map opens. */
+  goal: {
+    es: "¡Listos, {n}! Nuestra misión tiene 3 pasos: 1) recupera los 5 núcleos de energía en las zonas de la escuela, 2) viaja a la Luna y 3) derrota a la Reina del Vacío. ¡Al mapa!",
+    en: "Ready, {n}! Our mission has 3 steps: 1) recover the 5 energy cores in the school zones, 2) travel to the Moon and 3) defeat the Queen of the Void. To the map!",
+  },
   tap: { es: "Toca un panel para saber dónde se aprende.", en: "Tap a panel to see where you learn it." },
   /** Orbi's line when a side panel is tapped. {topic}, {where} filled in Briefing.tsx. */
   learn: { es: "{topic}: lo practicas en {where}.", en: "{topic}: you practice it in {where}." },

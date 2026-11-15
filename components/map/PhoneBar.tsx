@@ -4,12 +4,11 @@ import { useEffect, useRef, useState, type KeyboardEvent as RKeyboardEvent, type
 import { Portrait } from "@/components/ui/Portrait";
 import Watermark from "@/components/ui/Watermark";
 import { CH } from "@/lib/characters";
-import { HINT_DONE, HINT_FINISHED, HINT_SENAL, HT, ORD, senalUnlocked } from "@/lib/content/story";
-import type { Localized } from "@/lib/content/types";
 import { haptic } from "@/lib/haptics";
 import { useT, type UIKey } from "@/lib/i18n";
 import { padClear, padEnter, padKeys, padSet, usePadNear } from "@/lib/pad";
 import { resolveSpeaker, useGame, useUI } from "@/lib/store";
+import { ObjectiveTracker } from "./Objective";
 import { hint } from "./Stage";
 import styles from "./phone.module.css";
 
@@ -43,7 +42,6 @@ function readInfoOpen() {
 
 function Info() {
   const t = useT();
-  const done = useGame((s) => s.done);
   const [open, setOpen] = useState(readInfoOpen);
   const toggle = () => {
     setOpen(!open);
@@ -53,10 +51,6 @@ function Info() {
       // per-device convenience only
     }
   };
-  // Same goal Orbi's 💡 hint gives (Stage.tsx `hint`), shown without opening a dialogue.
-  const n = ORD.findIndex((k) => !done[k]);
-  const goal: Localized[] = [done.boss ? HINT_FINISHED : n < 0 ? HINT_DONE : HT[n]];
-  if (senalUnlocked(done) && !done.senal) goal.push(HINT_SENAL);
   return (
     <section className={`${styles.panel} ${styles.info}`} aria-label={t("pad.info")}>
       <button className={styles.head} onClick={toggle} aria-expanded={open} aria-label={`${t("pad.info")} · ${t("pad.infoToggle")}`}>
@@ -65,9 +59,8 @@ function Info() {
       </button>
       {open && (
         <div className={styles.body}>
-          <p className={styles.goal}>
-            <b>🎯 {t("pad.next")}</b> {t(goal)}
-          </p>
+          {/* 5 cores → Moon → Queen, then the same goal Orbi's 💡 hint gives (Objective.tsx). */}
+          <ObjectiveTracker cls={{ steps: styles.steps, on: styles.on, ok: styles.ok, next: styles.goal }} />
           <p className={styles.help}>{t("pad.help")}</p>
         </div>
       )}

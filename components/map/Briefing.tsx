@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { ORBI } from "@/lib/characters";
 import { BRIEF_PANELS, BRIEF_TXT, ZI, ZONES, ZXM } from "@/lib/content/story";
 import type { Lang, Localized } from "@/lib/content/types";
@@ -59,10 +59,19 @@ export default function Briefing({ onStart }: { onStart: () => void }) {
   const t = useT();
   const [sel, setSel] = useState<string | null>(null);
 
-  useEffect(() => {
-    setPadEnter(onStart);
-    return () => setPadEnter(null);
+  // ¡Comenzar!: Orbi first sums up the 3-step goal; the map opens when that line is closed.
+  // Pressing ¡Comenzar! again while Orbi talks just continues.
+  const begin = useCallback(() => {
+    const ui = useUI.getState();
+    if (ui.talk?.lines[0]?.[1] === BRIEF_TXT.goal) return ui.advanceTalk();
+    useUI.setState({ talk: null });
+    ui.startTalk([[ORBI, BRIEF_TXT.goal]], onStart);
   }, [onStart]);
+
+  useEffect(() => {
+    setPadEnter(begin);
+    return () => setPadEnter(null);
+  }, [begin]);
 
   const tell = (id: string) => {
     const p = BRIEF_PANELS.find((x) => x.id === id);
@@ -162,7 +171,7 @@ export default function Briefing({ onStart }: { onStart: () => void }) {
           <span>{t(BRIEF_TXT.bottom)}</span>
           <small>{t(BRIEF_TXT.tap)}</small>
         </FitText>
-        <button className={styles.go} style={place(GO, BOTTOM)} onClick={onStart}>
+        <button className={styles.go} style={place(GO, BOTTOM)} onClick={begin}>
           <FitText at={[GO[0] + 14, GO[1] + 8, GO[2] - 14, GO[3] - 8]} panel={GO}>
             <b>{t(BRIEF_TXT.start)}</b>
           </FitText>

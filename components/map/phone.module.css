@@ -23,6 +23,13 @@ button.head{cursor:pointer}
 .body{flex:1 1 auto;padding:6px 10px 8px;font-size:13px;line-height:1.35;min-height:0;overflow:auto;overscroll-behavior:contain}
 .body p{margin:0}
 .goal b{color:#ffd54a}
+/* Objective tracker (Objective.tsx): 5 cores → Moon → Queen, current step highlighted. */
+.steps{font-weight:700;margin-bottom:3px!important}
+.steps>span{white-space:nowrap}
+.steps i{font-style:normal;opacity:.7}
+.steps>span:not(.on):not(.ok){opacity:.7}
+.on{color:#ffd54a}
+.ok{color:#7df9a8}
 .help{margin-top:4px!important;opacity:.85}
 
 .info{grid-area:info}

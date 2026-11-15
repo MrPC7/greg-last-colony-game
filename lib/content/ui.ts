@@ -37,6 +37,16 @@ export const UI = {
   "title.play": { es: "¡Jugar!", en: "Play!" },
   "title.tryAr": { es: "📷 Probar realidad aumentada", en: "📷 Try augmented reality" },
   "title.stat": { es: "{stat}: {v} de 5", en: "{stat}: {v} of 5" },
+  "title.mission": {
+    es: "Misión: recupera los 5 núcleos de energía, viaja a la Luna y derrota a la Reina del Vacío.",
+    en: "Mission: recover the 5 energy cores, travel to the Moon and defeat the Queen of the Void.",
+  },
+
+  // Objective tracker (components/map/Objective.tsx): map overlay on desktop, Info panel on phones
+  "obj.label": { es: "Objetivo de la misión", en: "Mission objective" },
+  "obj.cores": { es: "Núcleos {d}/{total}", en: "Cores {d}/{total}" },
+  "obj.moon": { es: "Viaje a la Luna", en: "Trip to the Moon" },
+  "obj.queen": { es: "Reina del Vacío", en: "Queen of the Void" },
 
   // Map / hub
   "hub.help": {

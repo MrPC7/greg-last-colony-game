@@ -74,6 +74,8 @@ export default function TitleScreen() {
         </div>
         <Watermark />
         </div>
+        {/* The whole goal in one line, right under the key art and its logo. */}
+        <p className="mis">{t("title.mission")}</p>
         <div className="bar">
           <span>{t("title.choose")}</span>
           <span id="pks">
