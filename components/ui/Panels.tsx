@@ -4,13 +4,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ACTIVITY_IDS,
-  BOSS_INTRO,
   CL,
   ENDING_TXT,
   FACTS,
+  JOURNEY_TXT,
   MEMORY_TXT,
   ORD,
-  RAY_BEFORE_BOSS,
   RAY_MEMORIES,
   ZI,
   ZXM,
@@ -146,12 +145,11 @@ export function MainMissionPanel() {
   const done = useGame((s) => s.done);
   const memories = useGame((s) => s.rayMemories);
   const d = ORD.filter((k) => done[k]).length;
+  // The Journey to the Moon cutscene plays first; it then starts the boss intro (startBossIntro).
   const fight = () => {
     const ui = useUI.getState();
     ui.closeModal();
-    // Phase 5: with all his memories back, Ray reveals his origin before the boss.
-    const intro = memories.length >= RAY_MEMORIES.length ? [...RAY_BEFORE_BOSS, ...BOSS_INTRO] : BOSS_INTRO;
-    ui.startTalk(intro, () => useUI.getState().openModal({ kind: "boss" }));
+    ui.openModal({ kind: "journey", toBoss: true });
   };
   const open = (m: ModalSpec) => {
     const ui = useUI.getState();
@@ -179,7 +177,10 @@ export function MainMissionPanel() {
         </div>
       )}
       {d >= 5 ? (
-        <><button className="b o" onClick={fight}>{t("main.fight")}</button>{" "}</>
+        <>
+          <button className="b o" onClick={fight}>{t("main.fight")}</button>{" "}
+          <button className="b" onClick={() => open({ kind: "journey" })}>{t(JOURNEY_TXT.replay)}</button>{" "}
+        </>
       ) : (
         <p className="s">{t("main.locked")}</p>
       )}

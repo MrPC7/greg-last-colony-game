@@ -12,7 +12,7 @@
 
 *Greg and the Last Colony* is a free, bilingual (Spanish / English) educational browser game about the Moon and about our own planet, made for the **NASA Space Apps Challenge 2026 — Cajamarca (Peru) local event**.
 
-It is the year 2087 and a mysterious signal, **NOX-Ω**, arrives from the Moon. Greg, a student who dreams of becoming an astronaut, explores his school, *I.E. Aula Estelar*, with Orbi (an alien archivist and guide), Elen and Joseph. Each area of the school teaches a piece of real science, and each lesson is a clue for facing the Hollow Queen, who wants to devour the colony. Along the way, Ray shows Greg real NASA satellite data about Earth's temperature and fires.
+It is the year 2087 and a mysterious signal, **NOX-Ω**, travels from the Moon to Earth. Greg, a student who dreams of becoming an astronaut, explores his school, *I.E. Aula Estelar* in Cajamarca, Peru, with Orbi (an alien archivist and guide), Elen and Joseph. Each area of the school teaches a piece of real science, and each lesson is a clue for facing the Hollow Queen, who wants to devour **Selene**, the Last Colony on the Moon. Along the way, Ray shows Greg real NASA satellite data about Earth's temperature and fires. With all five clues, the Last Explorers fly from Cajamarca to the Moon to save Selene.
 
 It runs in any modern browser, on phones and computers, with no installation and no account. Progress is saved in the browser.
 
@@ -23,7 +23,7 @@ It runs in any modern browser, on phones and computers, with no installation and
 3. Walk into a zone marked with a **cyan circle** to open its activities. The **golden circle** marks the recommended next zone; tap **💡** for a hint from Orbi.
 4. Each activity gives **⭐ stars** and unlocks facts (🎒) and achievements (🏆). Pick up the **8 star fragments ✦** hidden on the map for bonus stars.
 5. After completing **two zones**, the observatory dome opens: **Ray's Signal**, with real NASA data.
-6. Once you have the 5 clues from the five main zones, open the **Main mission** and **face the Hollow Queen** in a quiz battle, helped by your friends.
+6. Once you have the 5 clues from the five main zones, open the **Main mission** and **face the Hollow Queen**: a short *Journey to the Moon* cutscene (skippable, and replayable from the Main mission) takes the Last Explorers from Cajamarca to Selene, then comes a quiz battle where your friends help you.
 
 ⚙️ Settings: language, theme, music and sound effects, reset progress, back to the title screen. The **📜 Credits** page lists the team, sources and AI use.
 
@@ -37,7 +37,7 @@ It runs in any modern browser, on phones and computers, with no installation and
 | 🌱 **Green Zones** | 🌱 Lunar greenhouse · 🌡️ Thermal control | Balancing oxygen between plants and crew; keeping a habitat between 15 and 25 °C |
 | 🎤 **Auditorium** | 🎤 Timeline · 📷 Augmented reality | Ordering Moon missions (Luna 2, Apollo 11…); low-cost AR with the phone camera (Moon, lander, radiation, suit) |
 | 📡 **Ray's Signal** | 📈 Earth's thermometer · 🔥 Fire map | Reading a real global temperature chart; reading a real satellite fire map |
-| 🛰️ **Final** | ⚔️ Hollow Queen battle | Review quiz of everything learned |
+| 🛰️ **Final** (on the Moon) | 🚀 Journey to the Moon · ⚔️ Hollow Queen battle | Escape velocity, the trip to the Moon, landing without parachutes; review quiz of everything learned |
 
 ### NASA data used
 
@@ -139,7 +139,7 @@ The script saves the raw CSVs to `scripts/raw/` and writes the snapshot date int
 
 *Greg y la Colonia Última* es un juego educativo gratuito y bilingüe (español / inglés) para el navegador, sobre la Luna y sobre nuestro propio planeta, hecho para el **NASA Space Apps Challenge 2026 — sede Cajamarca (Perú)**.
 
-Es el año 2087 y una señal misteriosa, **NOX-Ω**, llega desde la Luna. Greg, un estudiante que sueña con ser astronauta, explora su colegio, la *I.E. Aula Estelar*, junto a Orbi (un archivista alienígena y su guía), Elen y Joseph. Cada zona del colegio enseña algo de ciencia real, y cada lección es una pista para enfrentar a la Reina Hueca, que quiere devorar la colonia. En el camino, Ray le muestra a Greg datos reales de satélites de la NASA sobre la temperatura y los incendios de la Tierra.
+Es el año 2087 y una señal misteriosa, **NOX-Ω**, viaja desde la Luna hasta la Tierra. Greg, un estudiante que sueña con ser astronauta, explora su colegio, la *I.E. Aula Estelar* de Cajamarca (Perú), junto a Orbi (un archivista alienígena y su guía), Elen y Joseph. Cada zona del colegio enseña algo de ciencia real, y cada lección es una pista para enfrentar a la Reina Hueca, que quiere devorar **Selene**, la Colonia Última de la Luna. En el camino, Ray le muestra a Greg datos reales de satélites de la NASA sobre la temperatura y los incendios de la Tierra. Con las cinco pistas, los Últimos Exploradores viajan de Cajamarca a la Luna para salvar Selene.
 
 Funciona en cualquier navegador moderno, en celulares y computadoras, sin instalar nada y sin cuenta. El progreso se guarda en el navegador.
 
@@ -150,7 +150,7 @@ Funciona en cualquier navegador moderno, en celulares y computadoras, sin instal
 3. Entra a una zona marcada con un **círculo celeste** para abrir sus actividades. El **círculo dorado** marca la siguiente zona recomendada; toca **💡** para recibir una pista de Orbi.
 4. Cada actividad da **⭐ estrellas** y desbloquea datos (🎒) y logros (🏆). Recoge los **8 fragmentos de estrella ✦** escondidos en el mapa para ganar estrellas extra.
 5. Al completar **dos zonas** se abre la cúpula del observatorio: **La Señal de Ray**, con datos reales de la NASA.
-6. Cuando tengas las 5 pistas de las cinco zonas principales, abre la **Misión principal** y **enfrenta a la Reina Hueca** en una batalla de preguntas, con la ayuda de tus amigos.
+6. Cuando tengas las 5 pistas de las cinco zonas principales, abre la **Misión principal** y **enfrenta a la Reina Hueca**: una breve escena, *Viaje a la Luna* (se puede saltar y volver a ver desde la Misión principal), lleva a los Últimos Exploradores de Cajamarca a Selene; luego viene una batalla de preguntas en la que te ayudan tus amigos.
 
 ⚙️ Ajustes: idioma, tema, música y efectos de sonido, reiniciar el progreso y volver a la portada. La página **📜 Créditos** muestra el equipo, las fuentes y el uso de IA.
 
@@ -164,7 +164,7 @@ Funciona en cualquier navegador moderno, en celulares y computadoras, sin instal
 | 🌱 **Zonas Verdes** | 🌱 Invernadero lunar · 🌡️ Control térmico | Equilibrar el oxígeno entre plantas y tripulación; mantener un hábitat entre 15 y 25 °C |
 | 🎤 **Auditorio** | 🎤 Línea del tiempo · 📷 Realidad aumentada | Ordenar misiones lunares (Luna 2, Apolo 11…); realidad aumentada de bajo costo con la cámara del celular (Luna, módulo lunar, radiación, traje) |
 | 📡 **La Señal de Ray** | 📈 El termómetro de la Tierra · 🔥 Mapa de incendios | Leer una gráfica real de temperatura global; leer un mapa real de incendios visto por satélite |
-| 🛰️ **Final** | ⚔️ Batalla contra la Reina Hueca | Repaso de todo lo aprendido en forma de preguntas |
+| 🛰️ **Final** (en la Luna) | 🚀 Viaje a la Luna · ⚔️ Batalla contra la Reina Hueca | Velocidad de escape, el viaje a la Luna, alunizar sin paracaídas; repaso de todo lo aprendido en forma de preguntas |
 
 ### Datos de la NASA usados
 

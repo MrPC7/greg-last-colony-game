@@ -194,6 +194,9 @@ button.cd{cursor:pointer}button.cd:hover{border-color:#7c4dff}
 .end .endc .pt{width:64px}
 .end .endc .wmp{margin:0 4px}
 @media(max-width:480px){.end .memv{flex-direction:column}}
+/* Journey to the Moon: key-art crop above a scene (components/games/Journey.tsx) */
+.jart{margin:8px auto 0;border-radius:10px;animation:memIn .9s ease both}
+@media(prefers-reduced-motion:reduce){.jart{animation:none}}
 .certn{display:grid;gap:6px;margin:8px 0}
 .certn input{font:inherit;padding:10px;border-radius:10px;border:2px solid var(--bd);background:var(--bg);color:var(--fg)}
 .certc{display:block;width:100%;height:auto;aspect-ratio:1200/850;border-radius:10px;margin:8px 0}

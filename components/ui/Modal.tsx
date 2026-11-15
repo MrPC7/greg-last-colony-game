@@ -21,6 +21,7 @@ const BossFight = dynamic(() => import("@/components/games/registry").then((m) =
 const BossLose = dynamic(() => import("@/components/games/registry").then((m) => m.BossLose), { ssr: false, loading: Loading });
 const Certificate = dynamic(() => import("@/components/games/registry").then((m) => m.Certificate), { ssr: false, loading: Loading });
 const Ending = dynamic(() => import("@/components/games/registry").then((m) => m.Ending), { ssr: false, loading: Loading });
+const Journey = dynamic(() => import("@/components/games/registry").then((m) => m.Journey), { ssr: false, loading: Loading });
 const RayMemory = dynamic(() => import("@/components/games/registry").then((m) => m.RayMemory), { ssr: false, loading: Loading });
 
 /** Prototype `#md` + `.card` with the ✕ button. */
@@ -56,6 +57,7 @@ export default function ModalHost() {
     case "main": body = <MainMissionPanel />; break;
     case "boss": body = <BossFight />; break;
     case "ending": body = <Ending />; break;
+    case "journey": body = <Journey toBoss={!!m.toBoss} />; break;
     case "certificate": body = <Certificate />; break;
     case "bossLose": body = <BossLose broke={m.broke} />; break;
     case "ar": body = <ARView />; break;

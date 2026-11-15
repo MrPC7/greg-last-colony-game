@@ -6,8 +6,10 @@ import { sfx } from "./audio";
 import { haptic } from "./haptics";
 import { CH, rival } from "./characters";
 import {
+  BOSS_INTRO,
   MEMORY_ZONES,
   ORD,
+  RAY_BEFORE_BOSS,
   RAY_MEMORIES,
   SENAL_OPENED,
   SENAL_UNLOCK,
@@ -186,6 +188,8 @@ export type ModalSpec =
   | { kind: "achievements" }
   | { kind: "main" }
   | { kind: "boss" }
+  /** Journey to the Moon cutscene: before the boss (`toBoss`), or replayed from the main mission */
+  | { kind: "journey"; toBoss?: boolean }
   /** Phase 6: ending cutscene (after the first win, or replayed from the main mission) */
   | { kind: "ending" }
   /** Phase 6: "Explorador/a de Selene" certificate */
@@ -265,6 +269,14 @@ export const isBusy = () => {
   const s = useUI.getState();
   return !!s.modal || !!s.talk;
 };
+
+/** The boss intro dialogue, then the fight. Phase 5: with all his memories back, Ray reveals his
+ *  origin first. Called at the end of the Journey to the Moon cutscene. */
+export function startBossIntro() {
+  const memories = useGame.getState().rayMemories;
+  const intro = memories.length >= RAY_MEMORIES.length ? [...RAY_BEFORE_BOSS, ...BOSS_INTRO] : BOSS_INTRO;
+  useUI.getState().startTalk(intro, () => useUI.getState().openModal({ kind: "boss" }));
+}
 
 /**
  * Award an activity win (prototype `win` with all its wrappers): stars, crystal, fact,

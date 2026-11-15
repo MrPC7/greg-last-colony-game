@@ -12,6 +12,7 @@ export { default as BossFight, BossLose } from "./BossFight";
 export { default as Certificate } from "./Certificate";
 export { default as Ending } from "./Ending";
 export { default as FireMap } from "./FireMap";
+export { default as Journey } from "./Journey";
 export { default as JumpSim } from "./JumpSim";
 export { default as LanderGame } from "./LanderGame";
 export { default as Lessons } from "./Lessons";

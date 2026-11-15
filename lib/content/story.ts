@@ -45,13 +45,13 @@ export const START_POS = { x: 52, y: 42 };
 /** Intro dialogue when entering the map (prototype `play`). */
 export const INTRO_TALK: Line[] = [
   [2, {
-    es: "¡Psst, {n}! Soy Orbi. Capté una señal llamada NOX-Ω desde la Luna. Esta escuela, la I.E. Aula Estelar, es nuestra base.",
-    en: "Psst, {n}! I’m Orbi. I picked up a signal called NOX-Ω from the Moon. This school, I.E. Aula Estelar, is our base.",
+    es: "¡Psst, {n}! Soy Orbi. Capté una señal llamada NOX-Ω que viaja 384.400 km desde la Luna hasta aquí, a Cajamarca. Tu escuela, la I.E. Aula Estelar, será nuestra base en la Tierra.",
+    en: "Psst, {n}! I’m Orbi. I picked up a signal called NOX-Ω that travels 384,400 km from the Moon all the way here, to Cajamarca. Your school, I.E. Aula Estelar, will be our base on Earth.",
   }],
   ["H", { es: "¿Una señal? ¿Y qué tengo que hacer?", en: "A signal? And what do I have to do?" }],
   [2, {
-    es: "Visitar las cinco zonas. En cada una aprenderás algo que necesitaremos. Te seguiré a todas partes; toca 💡 si te pierdes.",
-    en: "Visit the five zones. In each one you will learn something we will need. I will follow you everywhere; tap 💡 if you get lost.",
+    es: "Visitar las cinco zonas de la escuela. En cada una aprenderás algo que necesitaremos cuando viajemos a la Luna. Te seguiré a todas partes; toca 💡 si te pierdes.",
+    en: "Visit the five zones of the school. In each one you will learn something we will need when we travel to the Moon. I will follow you everywhere; tap 💡 if you get lost.",
   }],
 ];
 
@@ -70,8 +70,8 @@ export const HINT_FINISHED: Localized = {
   en: "You saved the colony, {n}! In the Main mission you can watch the ending again and download your certificate.",
 };
 export const HINT_DONE: Localized = {
-  es: "¡Ya visitaste todo, {n}! Toca ¡Vamos! (Misión principal) y enfrenta a la Reina Hueca.",
-  en: "You’ve visited everything, {n}! Tap Let’s go! (Main mission) and face the Hollow Queen.",
+  es: "¡Ya visitaste todo, {n}! Toca ¡Vamos! (Misión principal), viaja a la Luna y enfrenta a la Reina Hueca.",
+  en: "You’ve visited everything, {n}! Tap Let’s go! (Main mission), travel to the Moon and face the Hollow Queen.",
 };
 
 /** `ZS[zone][0]`: dialogue before entering a zone for the first time. */
@@ -106,8 +106,8 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
     }],
     ["H", { es: "¿Señales? ¿De dónde?", en: "Signals? From where?" }],
     [RAY, {
-      es: "De la Tierra. Los satélites de la NASA miran nuestro planeta todos los días: miden cuánto calor hace y ven los incendios desde el espacio.",
-      en: "From Earth. NASA satellites watch our planet every day: they measure how hot it is and spot fires from space.",
+      es: "Del cielo. Los satélites de la NASA miran la Tierra todos los días: miden cuánto calor hace y ven los incendios desde el espacio.",
+      en: "From the sky. NASA satellites watch Earth every day: they measure how hot it is and spot fires from space.",
     }],
     [RAY, {
       es: "Y algo anda mal: la Reina Hueca quiere conquistar la Tierra con fuego y calor. Ven, te muestro los datos reales.",
@@ -141,8 +141,8 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
     ["H", { es: "Entonces sigue el ritmo de la Luna.", en: "So it follows the rhythm of the Moon." }],
   ],
   lab: [[2, {
-    es: "¡Pista 2! La señal rebota en la superficie: hay algo esperándonos allá abajo.",
-    en: "Clue 2! The signal bounces off the surface: something is waiting for us down there.",
+    es: "¡Pista 2! La señal rebota en la superficie lunar: hay algo esperándonos allá arriba, en la Luna.",
+    en: "Clue 2! The signal bounces off the lunar surface: something is waiting for us up there, on the Moon.",
   }]],
   cancha: [
     ["R", { es: "Vaya… la gravedad me ganó. Cuenten conmigo.", en: "Wow… gravity beat me. Count me in." }],
@@ -175,8 +175,8 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
       en: "Do you think you can hear my voice without getting lost in it?",
     }],
     [2, {
-      es: "Es la Reina Hueca. Toca ¡Vamos! en la Misión principal cuando estés listo.",
-      en: "That is the Hollow Queen. Tap Let’s go! on the Main mission when you are ready.",
+      es: "Es la Reina Hueca. Cuando estés listo, toca ¡Vamos! en la Misión principal: viajaremos a la Luna.",
+      en: "That is the Hollow Queen. When you are ready, tap Let’s go! on the Main mission: we will travel to the Moon.",
     }],
   ],
 };
@@ -184,16 +184,16 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
 /** Extra dialogue after a zone's outro (prototype has none): the dome opens after SENAL_UNLOCK zones. */
 export const SENAL_OPENED: Line[] = [
   [2, {
-    es: "¡Mira, {n}! El domo del observatorio se encendió. Alguien envía una señal desde la Tierra.",
-    en: "Look, {n}! The observatory dome just lit up. Someone is sending a signal from Earth.",
+    es: "¡Mira, {n}! El domo del observatorio se encendió. Está recibiendo señales de los satélites que miran la Tierra.",
+    en: "Look, {n}! The observatory dome just lit up. It is picking up signals from the satellites that watch Earth.",
   }],
   [2, { es: "Sube al domo, arriba en el centro del mapa.", en: "Go up to the dome, at the top center of the map." }],
 ];
 /** Orbi, when the dome is still locked. */
 export const SENAL_LOCKED: Line[] = [
   [2, {
-    es: "Ese domo capta señales de la Tierra, pero aún está apagado. Completa {k} zonas para encenderlo ({d}/{k}).",
-    en: "That dome picks up signals from Earth, but it is still switched off. Complete {k} zones to turn it on ({d}/{k}).",
+    es: "Ese domo capta señales de los satélites que miran la Tierra, pero aún está apagado. Completa {k} zonas para encenderlo ({d}/{k}).",
+    en: "That dome picks up signals from the satellites that watch Earth, but it is still switched off. Complete {k} zones to turn it on ({d}/{k}).",
   }],
 ];
 /** Added to Orbi's 💡 hint while the dome is open and not yet done. */
@@ -310,8 +310,8 @@ export const CL: Localized[] = [
 /** `mgo`: dialogue before the boss fight. */
 export const BOSS_INTRO: Line[] = [
   [5, {
-    es: "Así que encontraron mi señal… Ahora escucharán mi voz.",
-    en: "So you found my signal… Now you will hear my voice.",
+    es: "Así que siguieron la señal hasta la Luna… Ahora escucharán mi voz.",
+    en: "So you followed the signal all the way to the Moon… Now you will hear my voice.",
   }],
   ["H", { es: "No tenemos miedo. ¡Tenemos ciencia!", en: "We are not afraid. We have science!" }],
   [2, {
@@ -323,7 +323,7 @@ export const BOSS_INTRO: Line[] = [
 /** `bend(1)`: dialogue after defeating the Hollow Queen. */
 export const BOSS_WIN_TALK: Line[] = [
   [5, { es: "Imposible… mi voz ya no los confunde.", en: "Impossible… my voice no longer confuses them." }],
-  [2, { es: "¡Lo lograron! La colonia está a salvo.", en: "You did it! The colony is safe." }],
+  [2, { es: "¡Lo lograron! Selene, la colonia, está a salvo.", en: "You did it! Selene, the colony, is safe." }],
   ["H", { es: "Aprendimos que la ciencia y el esfuerzo salvan al universo.", en: "We learned that science and effort save the universe." }],
   // Phase 6: Elen's "Chapter 2" line moved to the last scene of the ENDING cutscene.
 ];
@@ -344,13 +344,13 @@ export const SHARDS_DONE: Line[] = [
 
 /** `IN`: intro cinematic lines with the CH portraits that pop in. */
 export const IN: { text: Localized; chars: number[] }[] = [
-  { text: { es: "Año 2087. Una señal misteriosa llega desde la Luna…", en: "Year 2087. A mysterious signal arrives from the Moon…" }, chars: [] },
-  { text: { es: "Greg, un estudiante que sueña con ser astronauta.", en: "Greg, a student who dreams of becoming an astronaut." }, chars: [0] },
+  { text: { es: "Año 2087. Una señal misteriosa viaja desde la Luna hasta Cajamarca, en el Perú…", en: "Year 2087. A mysterious signal travels from the Moon to Cajamarca, Peru…" }, chars: [] },
+  { text: { es: "Greg, un estudiante de la I.E. Aula Estelar que sueña con ser astronauta.", en: "Greg, a student at I.E. Aula Estelar who dreams of becoming an astronaut." }, chars: [0] },
   { text: { es: "Elen, la narradora que ve lo que otros no ven.", en: "Elen, the storyteller who sees what others do not." }, chars: [1] },
   { text: { es: "Orbi, un archivista alienígena y tu guía.", en: "Orbi, an alien archivist and your guide." }, chars: [2] },
   { text: { es: "Joseph, un rival con más corazón del que aparenta.", en: "Joseph, a rival with more heart than he seems." }, chars: [3] },
-  { text: { es: "Los Sin Raíz y la Reina Hueca quieren devorar la colonia.", en: "The Rootless and the Hollow Queen want to devour the colony." }, chars: [4, 5] },
-  { text: { es: "Aprende ciencia real. Salva la Colonia Última.", en: "Learn real science. Save the Last Colony." }, chars: [] },
+  { text: { es: "Los Sin Raíz y la Reina Hueca quieren devorar Selene, la colonia de la Luna.", en: "The Rootless and the Hollow Queen want to devour Selene, the colony on the Moon." }, chars: [4, 5] },
+  { text: { es: "Aprende ciencia real en la Tierra. Viaja a la Luna. Salva la Colonia Última.", en: "Learn real science on Earth. Travel to the Moon. Save the Last Colony." }, chars: [] },
 ];
 /** Milliseconds each cinematic line stays on screen. */
 export const IN_MS = 3600;
@@ -442,8 +442,8 @@ export const MEMORY_TXT = {
 /** Before the boss, once all 6 memories are back (prepended to BOSS_INTRO). */
 export const RAY_BEFORE_BOSS: Line[] = [
   [RAY, {
-    es: "{n}, espera. Ya lo recuerdo todo: vengo de Selene, la colonia de la Luna que la Reina Hueca invadió.",
-    en: "{n}, wait. I remember everything now: I come from Selene, the Moon colony the Hollow Queen invaded.",
+    es: "{n}, espera. Ya lo recuerdo todo: Selene es mi hogar, la colonia de la Luna que la Reina Hueca invadió.",
+    en: "{n}, wait. I remember everything now: Selene is my home, the Moon colony the Hollow Queen invaded.",
   }],
   [RAY, {
     es: "Ahora quiere hacerle lo mismo a la Tierra, con incendios y calor. ¡No la dejemos!",
@@ -505,8 +505,8 @@ export const ENDING: EndingScene[] = [
     chars: [1, 3, "H"],
     title: { es: "Fin del Capítulo 1", en: "End of Chapter 1" },
     lines: [
-      { es: "Elen: «¡Presentaré toda la aventura en el Auditorio!»", en: "Elen: “I’ll present the whole adventure in the Auditorium!”" },
-      { es: "Joseph: «Y después, revancha de ping pong… en la Luna.»", en: "Joseph: “And after that, a ping pong rematch… on the Moon.”" },
+      { es: "Elen: «¡Cuando volvamos a Cajamarca, presentaré toda la aventura en el Auditorio de la escuela!»", en: "Elen: “When we get back to Cajamarca, I’ll present the whole adventure in the school Auditorium!”" },
+      { es: "Joseph: «Y antes de volver, revancha de ping pong… ¡con gravedad lunar de verdad!»", en: "Joseph: “And before we head home, a ping pong rematch… with real lunar gravity!”" },
       { es: "Continuará… Capítulo 2: «Los que miran desde arriba».", en: "To be continued… Chapter 2: “Those Who Watch from Above”." },
     ],
   },
@@ -523,4 +523,85 @@ export const ENDING_TXT = {
   cert: { es: "📜 Obtener mi certificado", en: "📜 Get my certificate" },
   back: { es: "Volver al mapa", en: "Back to the map" },
   replay: { es: "🎬 Ver el final otra vez", en: "🎬 Watch the ending again" },
+} satisfies Record<string, Localized>;
+
+
+// ---------------------------------------------------------------------------
+// Journey to the Moon (before the boss): the Last Explorers leave Cajamarca for Selene
+// ---------------------------------------------------------------------------
+
+/** A crop of the key art ([x, y, w, h] in its 1170×651 prototype space, see lib/characters.ts)
+ *  shown above a scene, with its accessible description. */
+export type SceneArt = { rect: [number, number, number, number]; alt: Localized };
+
+/** One scene of the journey: same shape as an ending scene, plus an optional key-art crop. */
+export type JourneyScene = EndingScene & { art?: SceneArt };
+
+/** Plays when the player taps "Face the Hollow Queen" (before Ray's lines and BOSS_INTRO), and
+ *  can be replayed from the main mission. Uses only the key art and the cast portraits. */
+export const JOURNEY: JourneyScene[] = [
+  {
+    chars: [0, 1, 3],
+    title: { es: "Adiós, Cajamarca", en: "Goodbye, Cajamarca" },
+    lines: [
+      { es: "Al amanecer, los Últimos Exploradores —Greg, Elen y Joseph— se despiden de la I.E. Aula Estelar, en Cajamarca, Perú.", en: "At dawn, the Last Explorers —Greg, Elen and Joseph— say goodbye to I.E. Aula Estelar, in Cajamarca, Peru." },
+      { es: "En la mochila llevan las cinco pistas de NOX-Ω y todo lo que aprendieron en su escuela.", en: "In their backpacks they carry the five clues of NOX-Ω and everything they learned at their school." },
+      { es: "{n}: «Selene nos necesita. ¡Vamos a la Luna!»", en: "{n}: “Selene needs us. Let’s go to the Moon!”" },
+    ],
+  },
+  {
+    chars: [2, RAY],
+    title: { es: "¡Despegue!", en: "Liftoff!" },
+    lines: [
+      { es: "Orbi: «3… 2… 1… ¡despegue!» El cohete ruge y sube atravesando las nubes.", en: "Orbi: “3… 2… 1… liftoff!” The rocket roars and climbs through the clouds." },
+      { es: "Para escapar de la gravedad de la Tierra, hay que viajar a unos 11 km por segundo: ¡más de 40.000 km/h!", en: "To escape Earth’s gravity, you have to travel at about 11 km per second: over 40,000 km/h!" },
+      { es: "Ray: «Este es el camino que hice en mi cápsula… pero al revés.»", en: "Ray: “This is the path I took in my capsule… but the other way round.”" },
+    ],
+  },
+  {
+    chars: ["H"],
+    title: { es: "La Tierra desde el espacio", en: "Earth from space" },
+    art: {
+      rect: [880, 188, 190, 84],
+      alt: { es: "La Tierra, azul y blanca, flotando en el espacio negro", en: "Earth, blue and white, floating in black space" },
+    },
+    lines: [
+      { es: "Por la ventana, la Tierra se ve azul y pequeña, como una canica.", en: "Through the window, Earth looks blue and tiny, like a marble." },
+      { es: "{n}: «Desde aquí no se ven fronteras… solo un planeta que hay que cuidar.»", en: "{n}: “From up here you can’t see any borders… just one planet we have to look after.”" },
+      { es: "Son unos 384.400 km: unos tres días de viaje, como en las misiones Apolo.", en: "It’s about 384,400 km: around three days of travel, just like the Apollo missions." },
+    ],
+  },
+  {
+    chars: [2],
+    title: { es: "Alunizaje junto a Selene", en: "Landing near Selene" },
+    art: {
+      rect: [885, 225, 285, 240],
+      alt: { es: "Las cúpulas de Selene en la Luna, con un Sin Raíz delante", en: "Selene’s domes on the Moon, with a Rootless one in front" },
+    },
+    lines: [
+      { es: "Sin aire no hay paracaídas: el módulo frena con su motor y se posa suave, a menos de 2,5 m/s… ¡como en el Laboratorio Digital!", en: "With no air there are no parachutes: the lander brakes with its engine and touches down gently, under 2.5 m/s… just like in the Digital Lab!" },
+      { es: "Junto al cráter aparecen las cúpulas de Selene, la Colonia Última. Están en silencio, y entre ellas vagan los Sin Raíz.", en: "Next to the crater stand the domes of Selene, the Last Colony. They are silent, and the Rootless wander between them." },
+    ],
+  },
+  {
+    chars: [],
+    title: { es: "Los Últimos Exploradores en la Luna", en: "The Last Explorers on the Moon" },
+    art: {
+      rect: [0, 0, 1170, 651],
+      alt: {
+        es: "Greg, Elen, Orbi y Joseph en la Luna, frente a la Reina Hueca y las cúpulas de Selene",
+        en: "Greg, Elen, Orbi and Joseph on the Moon, facing the Hollow Queen and Selene’s domes",
+      },
+    },
+    lines: [
+      { es: "Cielo negro, polvo gris y pasos que flotan: pesan seis veces menos que en Cajamarca.", en: "Black sky, grey dust and floating steps: they weigh six times less than in Cajamarca." },
+      { es: "Sobre las cúpulas se alza una sombra enorme. La Reina Hueca los esperaba.", en: "A huge shadow rises over the domes. The Hollow Queen was waiting for them." },
+      { es: "Orbi: «Recuerden todo lo que aprendimos en la escuela. ¡Es hora de salvar Selene!»", en: "Orbi: “Remember everything we learned at school. It’s time to save Selene!”" },
+    ],
+  },
+];
+
+export const JOURNEY_TXT = {
+  scene: { es: "🚀 Viaje a la Luna · {i}/{total}", en: "🚀 Journey to the Moon · {i}/{total}" },
+  replay: { es: "🚀 Ver el viaje a la Luna", en: "🚀 Watch the journey to the Moon" },
 } satisfies Record<string, Localized>;

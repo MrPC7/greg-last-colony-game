@@ -325,8 +325,8 @@ export const BODY = {
 export const BODY_TXT = {
   title: { es: "🧑‍🚀 Entrenamiento de astronauta", en: "🧑‍🚀 Astronaut training" },
   desc: {
-    es: "Planifica tu día en la base: con poca gravedad el cuerpo cambia. Elige sueño, ejercicio y trabajo; 3 h son fijas para aseo y comidas.",
-    en: "Plan your day on the base: with low gravity the body changes. Choose sleep, exercise and work; 3 h are fixed for hygiene and meals.",
+    es: "Planifica tu día en una base lunar: con poca gravedad el cuerpo cambia. Elige sueño, ejercicio y trabajo; 3 h son fijas para aseo y comidas.",
+    en: "Plan your day on a lunar base: with low gravity the body changes. Choose sleep, exercise and work; 3 h are fixed for hygiene and meals.",
   },
   sleep: { es: "😴 Sueño:", en: "😴 Sleep:" },
   exercise: { es: "🏋️ Ejercicio:", en: "🏋️ Exercise:" },
@@ -978,8 +978,8 @@ export const PATCH_COLORS: { c: string; name: Localized }[] = [
 export const PATCH_TXT = {
   title: { es: "🎨 Parche de misión", en: "🎨 Mission patch" },
   greg: {
-    es: "Estoy en 5.º de secundaria y sueño con trabajar en la NASA. En matemáticas no me va tan bien… ¡pero dibujar es lo mío! Cada misión espacial tiene su propio parche, cosido en el traje. Diseñemos el de nuestra colonia.",
-    en: "I’m in my final year of secondary school and I dream of working at NASA. Maths isn’t my best subject… but drawing is my thing! Every space mission has its own patch, sewn onto the suit. Let’s design one for our colony.",
+    es: "Estoy en 5.º de secundaria y sueño con trabajar en la NASA. En matemáticas no me va tan bien… ¡pero dibujar es lo mío! Cada misión espacial tiene su propio parche, cosido en el traje. Diseñemos el de nuestra misión a Selene.",
+    en: "I’m in my final year of secondary school and I dream of working at NASA. Maths isn’t my best subject… but drawing is my thing! Every space mission has its own patch, sewn onto the suit. Let’s design one for our mission to Selene.",
   },
   canvas: { es: "Lienzo de dibujo del parche de misión", en: "Mission patch drawing canvas" },
   brush: { es: "🖌️ Pincel", en: "🖌️ Brush" },
