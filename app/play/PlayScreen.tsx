@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import PhoneBar from "@/components/map/PhoneBar";
+import RotateHint from "@/components/map/RotateHint";
 import Stage from "@/components/map/Stage";
 import { music } from "@/lib/audio";
 import { INTRO_TALK } from "@/lib/content/story";
@@ -24,12 +26,15 @@ export default function PlayScreen() {
   }, [langChosen]);
 
   return (
-    <div id="app">
+    <div id="app" className="play">
+      <RotateHint />
       <div id="hub">
         <Stage />
         {/* Narrow screens only (CSS): the label burned into map.jpg is too small to read there. */}
         <p className="mapcap">{t("ai.watermark")}</p>
         <p className="s">{t("hub.help")}</p>
+        {/* Phones only (CSS): [Info] [Control] [Chat] under the map, or beside it in landscape. */}
+        <PhoneBar />
       </div>
     </div>
   );

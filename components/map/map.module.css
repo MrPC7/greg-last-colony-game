@@ -90,13 +90,20 @@ button.pn{cursor:pointer}
 .bnm,.bct{display:flex;flex-direction:column;min-width:0}
 .bnm>*,.bct>*{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bnm small,.bct{font-size:13px}
-/* Narrow: the live HUD moves to the top bar; the map box stays as a plain panel in the same style
-   as the zone labels / nav panels (.zl, .pn) so the static "Greg / Nivel 1 / 0 / 0" painted in
-   map.jpg never shows. */
-/* Radius scales with the map (14px on the 75px-tall desktop box ≈ 1.2vw) so the small box keeps
-   square-enough corners and covers the painted corners (e.g. the gear) of the art. */
+/* Narrow: the live HUD moves to the top bar. The painted "Greg / Nivel 1 / 0 / 0" box of map.jpg
+   (top-right, over the night sky) is covered with a patch of that sky — colours sampled from the
+   art around it, a few stars, edges feathered into the painting — so no empty frame is left. */
 @media(max-width:820px){
-  .hud{border-radius:1.2vw;background:linear-gradient(#0f1d52,#08102f);border-color:#4cb8ff;box-shadow:0 0 .45cqw #2f9bffcc,inset 0 0 .5cqw #2f9bff66}
+  .hud{left:69%;top:0;width:31%;height:15%;padding:0;border:0;border-radius:0;box-shadow:none;pointer-events:none;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 34%,#fff,#0000),radial-gradient(1px 1px at 33% 64%,#fffc,#0000),
+      radial-gradient(1px 1px at 52% 22%,#fff,#0000),radial-gradient(1.5px 1.5px at 74% 50%,#e6f0ff,#0000),
+      radial-gradient(1px 1px at 90% 20%,#fff9,#0000),radial-gradient(1px 1px at 63% 80%,#d9ccffcc,#0000),
+      radial-gradient(ellipse 45% 55% at 8% 75%,#4d33c7aa,#0000),radial-gradient(ellipse 40% 55% at 60% 105%,#4835b6cc,#0000),
+      radial-gradient(ellipse 35% 60% at 95% 85%,#483997aa,#0000),
+      linear-gradient(#0a1662,#0d1a72 30%,#1d2591 70%,#33309f);
+    -webkit-mask-image:linear-gradient(90deg,#0000,#000 7%),linear-gradient(#000 91%,#0000);-webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,#0000,#000 7%),linear-gradient(#000 91%,#0000);mask-composite:intersect}
   .hud>*{display:none}.barHud{display:flex}
 }
 

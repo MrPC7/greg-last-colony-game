@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { sfx } from "./audio";
+import { haptic } from "./haptics";
 import { CH, rival } from "./characters";
 import {
   MEMORY_ZONES,
@@ -274,6 +275,7 @@ export function awardWin(id: ActivityId | "boss", stars: number) {
   const first = useGame.getState().win(id, stars);
   if (first) {
     sfx("win");
+    haptic([30, 60, 40]);
     let outro = (ZONE_OUTRO as Record<string, Line[] | undefined>)[id] ?? [];
     // Phase 4: the zone that reaches SENAL_UNLOCK completed zones also opens the observatory dome.
     const done = useGame.getState().done;

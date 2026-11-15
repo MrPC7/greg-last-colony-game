@@ -62,6 +62,35 @@ export const UI = {
   // Speech bubble
   "bubble.continue": { es: "Toca para continuar ▶", en: "Tap to continue ▶" },
 
+  // Phone controls bar under the map (components/map/PhoneBar.tsx), screens ≤ 820px / phone landscape
+  "pad.info": { es: "Info", en: "Info" },
+  "pad.infoToggle": { es: "Mostrar u ocultar la ayuda", en: "Show or hide the help" },
+  "pad.help": {
+    es: "Muévete con la cruceta o tocando el mapa. Acércate a un círculo celeste y pulsa Entrar.",
+    en: "Move with the D-pad or by tapping the map. Walk up to a cyan circle and press Enter.",
+  },
+  "pad.next": { es: "Siguiente:", en: "Next:" },
+  "pad.controls": { es: "Controles", en: "Controls" },
+  "pad.up": { es: "Arriba", en: "Up" },
+  "pad.down": { es: "Abajo", en: "Down" },
+  "pad.left": { es: "Izquierda", en: "Left" },
+  "pad.right": { es: "Derecha", en: "Right" },
+  "pad.enter": { es: "Entrar", en: "Enter" },
+  "pad.continue": { es: "Seguir", en: "Next" },
+  "pad.chat": { es: "Chat", en: "Chat" },
+  "pad.chatIdle": { es: "Aquí aparecerán los mensajes de Orbi, Ray y tus amigos.", en: "Messages from Orbi, Ray and your friends will show up here." },
+  "pad.askOrbi": { es: "💡 Pedir pista a Orbi", en: "💡 Ask Orbi for a hint" },
+
+  // Full screen + rotate hint (phones)
+  "fs.enter": { es: "Pantalla completa", en: "Full screen" },
+  "fs.exit": { es: "Salir de pantalla completa", en: "Exit full screen" },
+  "fs.ios": {
+    es: "Tu navegador no permite pantalla completa aquí. En iPhone: toca Compartir → «Añadir a pantalla de inicio» y abre el juego desde allí.",
+    en: "Your browser doesn’t allow full screen here. On iPhone: tap Share → “Add to Home Screen” and open the game from there.",
+  },
+  "rotate.hint": { es: "🔄 Gira el teléfono para ver el mapa más grande.", en: "🔄 Turn your phone sideways for a bigger map." },
+  "rotate.dismiss": { es: "Cerrar aviso", en: "Dismiss tip" },
+
   // Common
   "common.close": { es: "Cerrar", en: "Close" },
   "common.continue": { es: "Seguir", en: "Continue" },

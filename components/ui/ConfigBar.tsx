@@ -1,10 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import Hud from "@/components/map/Hud";
 import { useLang, useT } from "@/lib/i18n";
 import { useGame, useUI, type Theme } from "@/lib/store";
+import FullscreenButton from "./FullscreenButton";
 
 const THEME_ICON: Record<Theme, string> = { auto: "🌓", light: "☀️", dark: "🌙" };
 const NEXT_THEME: Record<Theme, Theme> = { auto: "dark", dark: "light", light: "auto" };
@@ -19,6 +20,16 @@ export default function ConfigBar() {
   const modalOpen = useUI((s) => !!s.modal);
   const slot = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLDivElement>(null);
+  const row = useRef<HTMLDivElement>(null);
+
+  // Publish the bar's height (--cfgh) so the phone-landscape map can fill the rest of the screen.
+  useEffect(() => {
+    const el = row.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => document.documentElement.style.setProperty("--cfgh", el.offsetHeight + "px"));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // While a modal is open, the buttons float above its backdrop (#md, z-index 9) so language,
   // sound, theme and settings stay usable. They are pinned exactly where they sit in the row
@@ -49,10 +60,11 @@ export default function ConfigBar() {
   }, [modalOpen]);
 
   return (
-    <div id="cfg">
+    <div id="cfg" ref={row}>
       {onMap && <Hud bar />}
       <div className="cfgs" ref={slot}>
       <div className="cfgb" ref={bar}>
+        <FullscreenButton />
         <button id="lg" onClick={() => setLang(lang === "en" ? "es" : "en")} aria-label={`${lang.toUpperCase()} · ${t("lang.toggle")}`}>
           🌐 {lang.toUpperCase()}
         </button>

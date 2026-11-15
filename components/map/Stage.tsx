@@ -20,6 +20,7 @@ import {
 } from "@/lib/content/story";
 import type { Line, Localized } from "@/lib/content/types";
 import { useT } from "@/lib/i18n";
+import { padClear, padHas, setPadEnter, setPadNear } from "@/lib/pad";
 import { isBusy, useGame, useUI } from "@/lib/store";
 import Hotspot from "./Hotspot";
 import Hud from "./Hud";
@@ -63,7 +64,7 @@ function enterZone(i: number) {
 }
 
 /** Prototype `hint()`: Orbi points to the next zone in ORD. */
-function hint() {
+export function hint() {
   if (isBusy()) return;
   const done = useGame.getState().done;
   const n = ORD.findIndex((k) => !done[k]);
@@ -128,8 +129,10 @@ export default function Stage() {
       let ax = 0;
       let ay = 0;
       if (!busy) {
-        const dx = +(K.has("d") || K.has("ArrowRight")) - +(K.has("a") || K.has("ArrowLeft"));
-        const dy = +(K.has("s") || K.has("ArrowDown")) - +(K.has("w") || K.has("ArrowUp"));
+        // The phone D-pad (lib/pad.ts) holds virtual arrow keys: same movement as the keyboard.
+        const has = (k: string) => K.has(k) || padHas(k);
+        const dx = +(has("d") || has("ArrowRight")) - +(has("a") || has("ArrowLeft"));
+        const dy = +(has("s") || has("ArrowDown")) - +(has("w") || has("ArrowUp"));
         if (dx || dy) {
           s.tgt = null;
           const m = Math.hypot(dx, dy);
@@ -202,6 +205,7 @@ export default function Stage() {
       if (np !== s.np) {
         s.np = np;
         setNear(np);
+        setPadNear(np >= 0);
       }
       // Persist the position whenever the hero comes to a stop.
       if (s.moving && !mv && !s.tgt) save();
@@ -220,7 +224,14 @@ export default function Stage() {
       if (k.startsWith("Arrow")) e.preventDefault();
     };
     const onUp = (e: KeyboardEvent) => K.delete(normKey(e));
-    const onBlur = () => K.clear();
+    const onBlur = () => {
+      K.clear();
+      padClear();
+    };
+    // The phone "Entrar / Enter" button does what E / Enter does here.
+    setPadEnter(() => {
+      if (s.np >= 0 && !isBusy()) enterZone(s.np);
+    });
     document.addEventListener("keydown", onDown);
     document.addEventListener("keyup", onUp);
     window.addEventListener("blur", onBlur);
@@ -235,6 +246,9 @@ export default function Stage() {
       document.removeEventListener("keydown", onDown);
       document.removeEventListener("keyup", onUp);
       window.removeEventListener("blur", onBlur);
+      setPadEnter(null);
+      setPadNear(false);
+      padClear();
       unsub();
       save();
       ctrl.current = null;

@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     images: [ogImage],
   },
+  // Opened from the iPhone home screen the game runs full screen (iPhone Safari has no Fullscreen
+  // API for pages; the ⛶ button explains this, components/ui/FullscreenButton.tsx).
+  appleWebApp: { capable: true, title: UI["app.title"].es, statusBarStyle: "black-translucent" },
   twitter: {
     card: "summary_large_image",
     title: both("app.title"),
