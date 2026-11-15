@@ -64,14 +64,14 @@ export const HT: Localized[] = [
   { es: "Por último, el Auditorio, abajo a la derecha.", en: "Finally, the Auditorium, bottom right." },
 ];
 export const HINT_SUFFIX: Localized = { es: "Te marqué el círculo dorado.", en: "I marked the golden circle for you." };
-/** Phase 6: Orbi's 💡 hint once the Hollow Queen is defeated. */
+/** Phase 6: Orbi's 💡 hint once the Queen of the Void is defeated. */
 export const HINT_FINISHED: Localized = {
   es: "¡Salvaste la colonia, {n}! En la Misión principal puedes ver el final otra vez y descargar tu certificado.",
   en: "You saved the colony, {n}! In the Main mission you can watch the ending again and download your certificate.",
 };
 export const HINT_DONE: Localized = {
-  es: "¡Ya visitaste todo, {n}! Toca ¡Vamos! (Misión principal), viaja a la Luna y enfrenta a la Reina Hueca.",
-  en: "You’ve visited everything, {n}! Tap Let’s go! (Main mission), travel to the Moon and face the Hollow Queen.",
+  es: "¡Ya visitaste todo, {n}! Toca ¡Vamos! (Misión principal), viaja a la Luna y enfrenta a la Reina del Vacío.",
+  en: "You’ve visited everything, {n}! Tap Let’s go! (Main mission), travel to the Moon and face the Queen of the Void.",
 };
 
 /** `ZS[zone][0]`: dialogue before entering a zone for the first time. */
@@ -110,8 +110,8 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
       en: "From the sky. NASA satellites watch Earth every day: they measure how hot it is and spot fires from space.",
     }],
     [RAY, {
-      es: "Y algo anda mal: la Reina Hueca quiere conquistar la Tierra con fuego y calor. Ven, te muestro los datos reales.",
-      en: "And something is wrong: the Hollow Queen wants to conquer Earth with fire and heat. Come, I’ll show you the real data.",
+      es: "Y algo anda mal: la Reina del Vacío quiere conquistar la Tierra con fuego y calor. Ven, te muestro los datos reales.",
+      en: "And something is wrong: the Queen of the Void wants to conquer Earth with fire and heat. Come, I’ll show you the real data.",
     }],
   ],
   aud: [
@@ -125,8 +125,8 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
       en: "I even added the Artemis missions: in 2026 four astronauts travelled around the Moon again!",
     }],
     [2, {
-      es: "En el Auditorio cuentan la historia de las misiones. Ordénalas bien: la pista final está en el pasado.",
-      en: "The Auditorium tells the story of the missions. Put them in order: the final clue is in the past.",
+      es: "En el Auditorio cuentan la historia de las misiones. Ordénalas bien: el último núcleo de energía está en el pasado.",
+      en: "The Auditorium tells the story of the missions. Put them in order: the last energy core lies in the past.",
     }],
   ],
 };
@@ -135,21 +135,21 @@ export const ZONE_INTRO: Record<ZoneId, Line[]> = {
 export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
   aulas: [
     [2, {
-      es: "¡Pista 1! La señal se repite cada 29,5 días: justo lo que dura un día lunar.",
-      en: "Clue 1! The signal repeats every 29.5 days: exactly one lunar day.",
+      es: "¡Núcleo de energía 1! La señal se repite cada 29,5 días: justo lo que dura un día lunar.",
+      en: "Energy core 1! The signal repeats every 29.5 days: exactly one lunar day.",
     }],
     ["H", { es: "Entonces sigue el ritmo de la Luna.", en: "So it follows the rhythm of the Moon." }],
   ],
   lab: [[2, {
-    es: "¡Pista 2! La señal rebota en la superficie lunar: hay algo esperándonos allá arriba, en la Luna.",
-    en: "Clue 2! The signal bounces off the lunar surface: something is waiting for us up there, on the Moon.",
+    es: "¡Núcleo de energía 2! La señal rebota en la superficie lunar: hay algo esperándonos allá arriba, en la Luna.",
+    en: "Energy core 2! The signal bounces off the lunar surface: something is waiting for us up there, on the Moon.",
   }]],
   cancha: [
     ["R", { es: "Vaya… la gravedad me ganó. Cuenten conmigo.", en: "Wow… gravity beat me. Count me in." }],
-    [2, { es: "¡Pista 3 y un aliado nuevo!", en: "Clue 3 and a new ally!" }],
+    [2, { es: "¡Núcleo de energía 3 y un aliado nuevo!", en: "Energy core 3 and a new ally!" }],
   ],
   verdes: [
-    [2, { es: "¡Pista 4! Algo se movió entre las plantas…", en: "Clue 4! Something moved among the plants…" }],
+    [2, { es: "¡Núcleo de energía 4! Algo se movió entre las plantas…", en: "Energy core 4! Something moved among the plants…" }],
     [4, { es: "No… tenemos… hogar.", en: "We… have… no home." }],
     [2, { es: "Un Sin Raíz. Nos vigilan: hay que darse prisa.", en: "A Rootless one. They are watching us: we must hurry." }],
   ],
@@ -158,7 +158,7 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
       es: "¿Lo ves, {n}? Desde 1880 la Tierra se calentó más de 1 °C. Parece poco, pero es como si todo el planeta tuviera fiebre.",
       en: "See, {n}? Since 1880 Earth has warmed by more than 1 °C. It sounds small, but it’s like the whole planet has a fever.",
     }],
-    ["H", { es: "Entonces la Reina Hueca ya empezó…", en: "So the Hollow Queen has already started…" }],
+    ["H", { es: "Entonces la Reina del Vacío ya empezó…", en: "So the Queen of the Void has already started…" }],
     [RAY, {
       es: "Por eso hay que entender los datos. En el domo también tengo el mapa de incendios de hoy. ¡Échale un vistazo!",
       en: "That’s why we need to understand the data. The dome also has today’s fire map. Take a look!",
@@ -166,8 +166,8 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
   ],
   aud: [
     [2, {
-      es: "¡Pista 5! Chang’e 4 llegó a la cara oculta: NOX-Ω está allí.",
-      en: "Clue 5! Chang’e 4 reached the far side: NOX-Ω is there.",
+      es: "¡Núcleo de energía 5! Chang’e 4 llegó a la cara oculta: NOX-Ω está allí.",
+      en: "Energy core 5! Chang’e 4 reached the far side: NOX-Ω is there.",
     }],
     ["H", { es: "Entonces vamos a enfrentarla.", en: "Then let’s face it." }],
     [5, {
@@ -175,8 +175,8 @@ export const ZONE_OUTRO: Record<ZoneId, Line[]> = {
       en: "Do you think you can hear my voice without getting lost in it?",
     }],
     [2, {
-      es: "Es la Reina Hueca. Cuando estés listo, toca ¡Vamos! en la Misión principal: viajaremos a la Luna.",
-      en: "That is the Hollow Queen. When you are ready, tap Let’s go! on the Main mission: we will travel to the Moon.",
+      es: "Es la Reina del Vacío. Cuando estés listo, toca ¡Vamos! en la Misión principal: viajaremos a la Luna.",
+      en: "That is the Queen of the Void. When you are ready, tap Let’s go! on the Main mission: we will travel to the Moon.",
     }],
   ],
 };
@@ -293,12 +293,12 @@ export const FACTS: Record<ActivityId | "boss", Localized> = {
     en: "The Moon’s gravity is about 6 times weaker than Earth’s: a ball takes about 2.5 times longer to fall from the same height.",
   },
   boss: {
-    es: "La Reina Hueca cayó: la lógica y el esfuerzo salvan al universo.",
-    en: "The Hollow Queen has fallen: logic and effort save the universe.",
+    es: "La Reina del Vacío cayó: la lógica y el esfuerzo salvan al universo.",
+    en: "The Queen of the Void has fallen: logic and effort save the universe.",
   },
 };
 
-/** `CL`: the five clue lines of the main mission (one per ORD zone). */
+/** `CL`: the five energy-core lines of the main mission (one per ORD zone). */
 export const CL: Localized[] = [
   { es: "La señal sigue el ritmo de la Luna.", en: "The signal follows the Moon’s rhythm." },
   { es: "Rebota en la superficie.", en: "It bounces off the surface." },
@@ -320,7 +320,7 @@ export const BOSS_INTRO: Line[] = [
   }],
 ];
 
-/** `bend(1)`: dialogue after defeating the Hollow Queen. */
+/** `bend(1)`: dialogue after defeating the Queen of the Void. */
 export const BOSS_WIN_TALK: Line[] = [
   [5, { es: "Imposible… mi voz ya no los confunde.", en: "Impossible… my voice no longer confuses them." }],
   [2, { es: "¡Lo lograron! Selene, la colonia, está a salvo.", en: "You did it! Selene, the colony, is safe." }],
@@ -345,11 +345,11 @@ export const SHARDS_DONE: Line[] = [
 /** `IN`: intro cinematic lines with the CH portraits that pop in. */
 export const IN: { text: Localized; chars: number[] }[] = [
   { text: { es: "Año 2087. Una señal misteriosa viaja desde la Luna hasta Cajamarca, en el Perú…", en: "Year 2087. A mysterious signal travels from the Moon to Cajamarca, Peru…" }, chars: [] },
-  { text: { es: "Greg, un estudiante de la I.E. Aula Estelar que sueña con ser astronauta.", en: "Greg, a student at I.E. Aula Estelar who dreams of becoming an astronaut." }, chars: [0] },
-  { text: { es: "Elen, la narradora que ve lo que otros no ven.", en: "Elen, the storyteller who sees what others do not." }, chars: [1] },
+  { text: { es: "Greg, el estratega: un estudiante de la I.E. Aula Estelar que sueña con ser astronauta.", en: "Greg, the strategist: a student at I.E. Aula Estelar who dreams of becoming an astronaut." }, chars: [0] },
+  { text: { es: "Elen, la científica que ve lo que otros no ven.", en: "Elen, the scientist who sees what others do not." }, chars: [1] },
   { text: { es: "Orbi, un archivista alienígena y tu guía.", en: "Orbi, an alien archivist and your guide." }, chars: [2] },
-  { text: { es: "Joseph, un rival con más corazón del que aparenta.", en: "Joseph, a rival with more heart than he seems." }, chars: [3] },
-  { text: { es: "Los Sin Raíz y la Reina Hueca quieren devorar Selene, la colonia de la Luna.", en: "The Rootless and the Hollow Queen want to devour Selene, the colony on the Moon." }, chars: [4, 5] },
+  { text: { es: "Joseph, el ingeniero: un rival con más corazón del que aparenta.", en: "Joseph, the engineer: a rival with more heart than he seems." }, chars: [3] },
+  { text: { es: "Los Sin Raíz y la Reina del Vacío quieren devorar Selene, la colonia de la Luna.", en: "The Rootless and the Queen of the Void want to devour Selene, the colony on the Moon." }, chars: [4, 5] },
   { text: { es: "Aprende ciencia real en la Tierra. Viaja a la Luna. Salva la Colonia Última.", en: "Learn real science on Earth. Travel to the Moon. Save the Last Colony." }, chars: [] },
 ];
 /** Milliseconds each cinematic line stays on screen. */
@@ -370,7 +370,7 @@ export const BG: { icon: string; name: Localized; desc: Localized; ok: (s: Progr
   { icon: "🎨", name: { es: "Artista espacial", en: "Space artist" }, desc: { es: "Diseña tu parche de misión con Greg", en: "Design your mission patch with Greg" }, ok: (s) => !!s.done.patch },
   { icon: "🏓", name: { es: "Campeón de la cancha", en: "Court champion" }, desc: { es: "Gánale a Joseph al ping pong lunar", en: "Beat Joseph at lunar ping pong" }, ok: (s) => !!s.done.pong },
   { icon: "🧠", name: { es: "Guardián de recuerdos", en: "Memory keeper" }, desc: { es: "Recupera los 6 recuerdos de Ray", en: "Recover Ray’s 6 memories" }, ok: (s) => s.rayMemories.length >= RAY_MEMORIES.length },
-  { icon: "👑", name: { es: "Vencedor de la Reina", en: "Queen slayer" }, desc: { es: "Derrota a la Reina Hueca", en: "Defeat the Hollow Queen" }, ok: (s) => !!s.done.boss },
+  { icon: "👑", name: { es: "Vencedor de la Reina", en: "Queen slayer" }, desc: { es: "Derrota a la Reina del Vacío", en: "Defeat the Queen of the Void" }, ok: (s) => !!s.done.boss },
 ];
 
 // ---------------------------------------------------------------------------
@@ -415,7 +415,7 @@ export const RAY_MEMORIES: { icon: string; lines: Localized[] }[] = [
   {
     icon: "👑",
     lines: [
-      { es: "Un día llegó una voz hueca. Quien la escuchaba olvidaba de dónde venía.", en: "One day a hollow voice arrived. Whoever heard it forgot where they came from." },
+      { es: "Un día llegó una voz del vacío. Quien la escuchaba olvidaba de dónde venía.", en: "One day a voice from the void arrived. Whoever heard it forgot where they came from." },
       { es: "Así nacieron los Sin Raíz… y yo también la escuché.", en: "That is how the Rootless were born… and I heard it too." },
     ],
   },
@@ -442,8 +442,8 @@ export const MEMORY_TXT = {
 /** Before the boss, once all 6 memories are back (prepended to BOSS_INTRO). */
 export const RAY_BEFORE_BOSS: Line[] = [
   [RAY, {
-    es: "{n}, espera. Ya lo recuerdo todo: Selene es mi hogar, la colonia de la Luna que la Reina Hueca invadió.",
-    en: "{n}, wait. I remember everything now: Selene is my home, the Moon colony the Hollow Queen invaded.",
+    es: "{n}, espera. Ya lo recuerdo todo: Selene es mi hogar, la colonia de la Luna que la Reina del Vacío invadió.",
+    en: "{n}, wait. I remember everything now: Selene is my home, the Moon colony the Queen of the Void invaded.",
   }],
   [RAY, {
     es: "Ahora quiere hacerle lo mismo a la Tierra, con incendios y calor. ¡No la dejemos!",
@@ -462,9 +462,9 @@ export type EndingScene = { chars: Speaker[]; title: Localized; lines: Localized
 export const ENDING: EndingScene[] = [
   {
     chars: [5],
-    title: { es: "La voz hueca se apaga", en: "The hollow voice fades" },
+    title: { es: "La voz del vacío se apaga", en: "The voice from the void fades" },
     lines: [
-      { es: "Sin preguntas que la confundan, la voz de la Reina Hueca se deshace como polvo lunar.", en: "With no questions left to confuse anyone, the Hollow Queen’s voice crumbles like moon dust." },
+      { es: "Sin preguntas que la confundan, la voz de la Reina del Vacío se deshace como polvo lunar.", en: "With no questions left to confuse anyone, the Queen of the Void’s voice crumbles like moon dust." },
       { es: "En la cara oculta de la Luna, la señal NOX-Ω deja de sonar.", en: "On the far side of the Moon, the NOX-Ω signal falls silent." },
     ],
   },
@@ -517,8 +517,8 @@ export const ENDING_TXT = {
   next: { es: "Siguiente ▶", en: "Next ▶" },
   skip: { es: "⏭ Saltar", en: "⏭ Skip" },
   done: {
-    es: "🏆 ¡Misión cumplida! Descifraste NOX-Ω, derrotaste a la Reina Hueca y salvaste la Colonia Última.",
-    en: "🏆 Mission complete! You decoded NOX-Ω, defeated the Hollow Queen and saved the Last Colony.",
+    es: "🏆 ¡Misión cumplida! Descifraste NOX-Ω, derrotaste a la Reina del Vacío y salvaste la Colonia Última.",
+    en: "🏆 Mission complete! You decoded NOX-Ω, defeated the Queen of the Void and saved the Last Colony.",
   },
   cert: { es: "📜 Obtener mi certificado", en: "📜 Get my certificate" },
   back: { es: "Volver al mapa", en: "Back to the map" },
@@ -538,7 +538,7 @@ export type SceneArt = { rect: [number, number, number, number]; alt: Localized 
  *  (`moon`: its accessible description) the full "La Luna en Peligro" scene art (MoonScene.tsx). */
 export type JourneyScene = EndingScene & { art?: SceneArt; moon?: Localized };
 
-/** Plays when the player taps "Face the Hollow Queen" (before Ray's lines and BOSS_INTRO), and
+/** Plays when the player taps "Face the Queen of the Void" (before Ray's lines and BOSS_INTRO), and
  *  can be replayed from the main mission. Uses the key art, the cast portraits and, for the last
  *  scene, scene03 ("La Luna en Peligro"). */
 export const JOURNEY: JourneyScene[] = [
@@ -547,7 +547,7 @@ export const JOURNEY: JourneyScene[] = [
     title: { es: "Adiós, Cajamarca", en: "Goodbye, Cajamarca" },
     lines: [
       { es: "Al amanecer, los Últimos Exploradores —Greg, Elen y Joseph— se despiden de la I.E. Aula Estelar, en Cajamarca, Perú.", en: "At dawn, the Last Explorers —Greg, Elen and Joseph— say goodbye to I.E. Aula Estelar, in Cajamarca, Peru." },
-      { es: "En la mochila llevan las cinco pistas de NOX-Ω y todo lo que aprendieron en su escuela.", en: "In their backpacks they carry the five clues of NOX-Ω and everything they learned at their school." },
+      { es: "En la mochila llevan los cinco núcleos de energía para Selene y todo lo que aprendieron en su escuela.", en: "In their backpacks they carry the five energy cores for Selene and everything they learned at their school." },
       { es: "{n}: «Selene nos necesita. ¡Vamos a la Luna!»", en: "{n}: “Selene needs us. Let’s go to the Moon!”" },
     ],
   },
@@ -589,12 +589,12 @@ export const JOURNEY: JourneyScene[] = [
     chars: [],
     title: { es: "Los Últimos Exploradores en la Luna", en: "The Last Explorers on the Moon" },
     moon: {
-      es: "Desde la cabina de la nave, Greg, Elen, Orbi y Joseph ven la Luna invadida: la Reina Hueca se alza sobre las cúpulas de Selene entre naves oscuras",
-      en: "From the ship’s cockpit, Greg, Elen, Orbi and Joseph see the invaded Moon: the Hollow Queen rises over Selene’s domes among dark ships",
+      es: "Desde la cabina de la nave, Greg, Elen, Orbi y Joseph ven la Luna invadida: la Reina del Vacío se alza sobre las cúpulas de Selene entre naves oscuras",
+      en: "From the ship’s cockpit, Greg, Elen, Orbi and Joseph see the invaded Moon: the Queen of the Void rises over Selene’s domes among dark ships",
     },
     lines: [
       { es: "Cielo negro, polvo gris y pasos que flotan: pesan seis veces menos que en Cajamarca.", en: "Black sky, grey dust and floating steps: they weigh six times less than in Cajamarca." },
-      { es: "Sobre las cúpulas se alza una sombra enorme. La Reina Hueca los esperaba.", en: "A huge shadow rises over the domes. The Hollow Queen was waiting for them." },
+      { es: "Sobre las cúpulas se alza una sombra enorme. La Reina del Vacío los esperaba.", en: "A huge shadow rises over the domes. The Queen of the Void was waiting for them." },
       { es: "Orbi: «Recuerden todo lo que aprendimos en la escuela. ¡Es hora de salvar Selene!»", en: "Orbi: “Remember everything we learned at school. It’s time to save Selene!”" },
     ],
   },
@@ -676,7 +676,7 @@ export const BRIEF_PANELS: { id: string; title: Localized; items: Localized[]; l
 // ---------------------------------------------------------------------------
 // "La Luna en Peligro" scene (public/img/scene03.jpg, components/map/MoonScene.tsx): HTML copies
 // of its painted text panels. Last scene of the Journey to the Moon and backdrop of the boss
-// intro. The art calls the villain "Reina del Vacío"; the game's name, Reina Hueca, is used here.
+// intro. The villain is the Reina del Vacío / Queen of the Void (as in the art and the GDD v2).
 // ---------------------------------------------------------------------------
 
 export const MOON_TXT = {
@@ -684,13 +684,13 @@ export const MOON_TXT = {
   scenario: { es: "Escenario 02 · La Luna en Peligro", en: "Scenario 02 · The Moon in Danger" },
   current: { es: "Misión Actual", en: "Current Mission" },
   rescue: { es: "Rescata la Luna", en: "Rescue the Moon" },
-  task1: { es: "Analiza la invasión de la Reina Hueca", en: "Analyze the Hollow Queen’s invasion" },
+  task1: { es: "Analiza la invasión de la Reina del Vacío", en: "Analyze the Queen of the Void’s invasion" },
   task2: { es: "Protege la nave y prepara el aterrizaje", en: "Protect the ship and prepare the landing" },
   /** Orbi's painted line: "¡{n}!" in bold, then the rest. */
   callout: { es: "¡{n}!", en: "{n}!" },
   orbi: {
-    es: "La Reina Hueca ha invadido la Luna… Debemos aprender todo sobre la misión lunar y prepararnos para enfrentarla.",
-    en: "The Hollow Queen has invaded the Moon… We must learn everything about the lunar mission and get ready to face her.",
+    es: "La Reina del Vacío ha invadido la Luna… Debemos aprender todo sobre la misión lunar y prepararnos para enfrentarla.",
+    en: "The Queen of the Void has invaded the Moon… We must learn everything about the lunar mission and get ready to face her.",
   },
   learn: { es: "Aprende y prepárate:", en: "Learn and get ready:" },
   tutorial: { es: "Tutorial STEM", en: "STEM Tutorial" },

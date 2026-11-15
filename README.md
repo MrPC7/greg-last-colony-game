@@ -12,7 +12,7 @@
 
 *Greg and the Last Colony* is a free, bilingual (Spanish / English) educational browser game about the Moon and about our own planet, made for the **NASA Space Apps Challenge 2026 — Cajamarca (Peru) local event**.
 
-It is the year 2087 and a mysterious signal, **NOX-Ω**, travels from the Moon to Earth. Greg, a student who dreams of becoming an astronaut, explores his school, *I.E. Aula Estelar* in Cajamarca, Peru, with Orbi (an alien archivist and guide), Elen and Joseph. Each area of the school teaches a piece of real science, and each lesson is a clue for facing the Hollow Queen, who wants to devour **Selene**, the Last Colony on the Moon. Along the way, Ray shows Greg real NASA satellite data about Earth's temperature and fires. With all five clues, the Last Explorers fly from Cajamarca to the Moon to save Selene.
+It is the year 2087 and a mysterious signal, **NOX-Ω**, travels from the Moon to Earth. Greg, a student who dreams of becoming an astronaut, explores his school, *I.E. Aula Estelar* in Cajamarca, Peru, with Orbi (an alien archivist and guide), Elen and Joseph. Each area of the school teaches a piece of real science, and each lesson recovers one of the five **energy cores** for **Selene**, the Last Colony on the Moon, which the Queen of the Void wants to devour. Along the way, Ray shows Greg real NASA satellite data about Earth's temperature and fires. With all five energy cores, the Last Explorers fly from Cajamarca to the Moon to save Selene.
 
 It runs in any modern browser, on phones and computers, with no installation and no account. Progress is saved in the browser.
 
@@ -23,7 +23,7 @@ It runs in any modern browser, on phones and computers, with no installation and
 3. Walk into a zone marked with a **cyan circle** to open its activities. The **golden circle** marks the recommended next zone; tap **💡** for a hint from Orbi.
 4. Each activity gives **⭐ stars** and unlocks facts (🎒) and achievements (🏆). Pick up the **8 star fragments ✦** hidden on the map for bonus stars.
 5. After completing **two zones**, the observatory dome opens: **Ray's Signal**, with real NASA data.
-6. Once you have the 5 clues from the five main zones, open the **Main mission** and **face the Hollow Queen**: a short *Journey to the Moon* cutscene (skippable, and replayable from the Main mission) takes the Last Explorers from Cajamarca to Selene, then comes a quiz battle where your friends help you.
+6. Once you have the 5 energy cores from the five main zones, open the **Main mission** and **face the Queen of the Void**: a short *Journey to the Moon* cutscene (skippable, and replayable from the Main mission) takes the Last Explorers from Cajamarca to Selene, then comes a quiz battle where your friends help you.
 
 ⚙️ Settings: language, theme, music and sound effects, reset progress, back to the title screen. The **📜 Credits** page lists the team, sources and AI use.
 
@@ -37,7 +37,7 @@ It runs in any modern browser, on phones and computers, with no installation and
 | 🌱 **Green Zones** | 🌱 Lunar greenhouse · 🌡️ Thermal control | Balancing oxygen between plants and crew; keeping a habitat between 15 and 25 °C |
 | 🎤 **Auditorium** | 🎤 Timeline · 📷 Augmented reality | Ordering Moon missions (Luna 2, Apollo 11…); low-cost AR with the phone camera (Moon, lander, radiation, suit) |
 | 📡 **Ray's Signal** | 📈 Earth's thermometer · 🔥 Fire map | Reading a real global temperature chart; reading a real satellite fire map |
-| 🛰️ **Final** (on the Moon) | 🚀 Journey to the Moon · ⚔️ Hollow Queen battle | Escape velocity, the trip to the Moon, landing without parachutes; review quiz of everything learned |
+| 🛰️ **Final** (on the Moon) | 🚀 Journey to the Moon · ⚔️ Queen of the Void battle | Escape velocity, the trip to the Moon, landing without parachutes; review quiz of everything learned |
 
 ### NASA data used
 
@@ -55,6 +55,9 @@ The science facts in the quizzes, lessons and mini-games come from these NASA pa
 - NASA Science — Moon facts: https://science.nasa.gov/moon/facts/
 - NASA Science — Earth's Moon: https://science.nasa.gov/moon/
 - NASA — Apollo 11 mission: https://www.nasa.gov/mission/apollo-11/
+- NASA — Apollo 17 mission: https://www.nasa.gov/mission/apollo-17/
+- NASA — Artemis: https://www.nasa.gov/humans-in-space/artemis/
+- NASA — Spacewalk Spacesuit Basics: https://www.nasa.gov/centers-and-facilities/johnson/spacewalk-spacesuit-basics/
 
 #### "🚀 NASA Fact" cards (one per mini-game)
 
@@ -72,7 +75,7 @@ Every mini-game has a **🚀 NASA Fact** button in its header, and the card also
 - **Mission patch** — Apollo Mission Patches: https://science.nasa.gov/resource/apollo-mission-patches/
 - **Lunar ping pong** — 50 Years Ago: Apollo 14 Lands at Fra Mauro: https://www.nasa.gov/history/50-years-ago-apollo-14-lands-at-fra-mauro/
 - **Augmented reality** — What Is a Spacesuit? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-spacesuit-grades-k-4/
-- **Final battle: the Hollow Queen** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
+- **Final battle: the Queen of the Void** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
 - *Earth's thermometer* and *Fire map* show their NASA dataset (GISTEMP, FIRMS, above) in the same "Source: NASA — …" line.
 
 This game does not use NASA logos, insignia or branding, and it is not endorsed by NASA.
@@ -82,6 +85,10 @@ This game does not use NASA logos, insignia or branding, and it is not endorsed 
 - **Images:** the school map, the key art and the character sheet were generated with AI (AI text-to-image generation tool). They carry the label "AI-generated image" inside the file itself and also on top of the image in the game. The portraits and map characters are crops of those same images and carry a small "AI" mark.
 - **Code:** developed by the team with AI-assisted programming tools.
 - **Sound and music:** synthesised in the browser with Web Audio (no audio files).
+
+### Roadmap
+
+This web game is the **MVP** of the team's Game Design Document (GDD v2). The planned full version will be built in **Unity with AR Foundation**, with **8 scenes** that take the Last Explorers from Cajamarca to the Last Colony.
 
 ### Team
 
@@ -139,7 +146,7 @@ The script saves the raw CSVs to `scripts/raw/` and writes the snapshot date int
 
 *Greg y la Colonia Última* es un juego educativo gratuito y bilingüe (español / inglés) para el navegador, sobre la Luna y sobre nuestro propio planeta, hecho para el **NASA Space Apps Challenge 2026 — sede Cajamarca (Perú)**.
 
-Es el año 2087 y una señal misteriosa, **NOX-Ω**, viaja desde la Luna hasta la Tierra. Greg, un estudiante que sueña con ser astronauta, explora su colegio, la *I.E. Aula Estelar* de Cajamarca (Perú), junto a Orbi (un archivista alienígena y su guía), Elen y Joseph. Cada zona del colegio enseña algo de ciencia real, y cada lección es una pista para enfrentar a la Reina Hueca, que quiere devorar **Selene**, la Colonia Última de la Luna. En el camino, Ray le muestra a Greg datos reales de satélites de la NASA sobre la temperatura y los incendios de la Tierra. Con las cinco pistas, los Últimos Exploradores viajan de Cajamarca a la Luna para salvar Selene.
+Es el año 2087 y una señal misteriosa, **NOX-Ω**, viaja desde la Luna hasta la Tierra. Greg, un estudiante que sueña con ser astronauta, explora su colegio, la *I.E. Aula Estelar* de Cajamarca (Perú), junto a Orbi (un archivista alienígena y su guía), Elen y Joseph. Cada zona del colegio enseña algo de ciencia real, y cada lección recupera uno de los cinco **núcleos de energía** para **Selene**, la Colonia Última de la Luna, que la Reina del Vacío quiere devorar. En el camino, Ray le muestra a Greg datos reales de satélites de la NASA sobre la temperatura y los incendios de la Tierra. Con los cinco núcleos de energía, los Últimos Exploradores viajan de Cajamarca a la Luna para salvar Selene.
 
 Funciona en cualquier navegador moderno, en celulares y computadoras, sin instalar nada y sin cuenta. El progreso se guarda en el navegador.
 
@@ -150,7 +157,7 @@ Funciona en cualquier navegador moderno, en celulares y computadoras, sin instal
 3. Entra a una zona marcada con un **círculo celeste** para abrir sus actividades. El **círculo dorado** marca la siguiente zona recomendada; toca **💡** para recibir una pista de Orbi.
 4. Cada actividad da **⭐ estrellas** y desbloquea datos (🎒) y logros (🏆). Recoge los **8 fragmentos de estrella ✦** escondidos en el mapa para ganar estrellas extra.
 5. Al completar **dos zonas** se abre la cúpula del observatorio: **La Señal de Ray**, con datos reales de la NASA.
-6. Cuando tengas las 5 pistas de las cinco zonas principales, abre la **Misión principal** y **enfrenta a la Reina Hueca**: una breve escena, *Viaje a la Luna* (se puede saltar y volver a ver desde la Misión principal), lleva a los Últimos Exploradores de Cajamarca a Selene; luego viene una batalla de preguntas en la que te ayudan tus amigos.
+6. Cuando tengas los 5 núcleos de energía de las cinco zonas principales, abre la **Misión principal** y **enfrenta a la Reina del Vacío**: una breve escena, *Viaje a la Luna* (se puede saltar y volver a ver desde la Misión principal), lleva a los Últimos Exploradores de Cajamarca a Selene; luego viene una batalla de preguntas en la que te ayudan tus amigos.
 
 ⚙️ Ajustes: idioma, tema, música y efectos de sonido, reiniciar el progreso y volver a la portada. La página **📜 Créditos** muestra el equipo, las fuentes y el uso de IA.
 
@@ -164,7 +171,7 @@ Funciona en cualquier navegador moderno, en celulares y computadoras, sin instal
 | 🌱 **Zonas Verdes** | 🌱 Invernadero lunar · 🌡️ Control térmico | Equilibrar el oxígeno entre plantas y tripulación; mantener un hábitat entre 15 y 25 °C |
 | 🎤 **Auditorio** | 🎤 Línea del tiempo · 📷 Realidad aumentada | Ordenar misiones lunares (Luna 2, Apolo 11…); realidad aumentada de bajo costo con la cámara del celular (Luna, módulo lunar, radiación, traje) |
 | 📡 **La Señal de Ray** | 📈 El termómetro de la Tierra · 🔥 Mapa de incendios | Leer una gráfica real de temperatura global; leer un mapa real de incendios visto por satélite |
-| 🛰️ **Final** (en la Luna) | 🚀 Viaje a la Luna · ⚔️ Batalla contra la Reina Hueca | Velocidad de escape, el viaje a la Luna, alunizar sin paracaídas; repaso de todo lo aprendido en forma de preguntas |
+| 🛰️ **Final** (en la Luna) | 🚀 Viaje a la Luna · ⚔️ Batalla contra la Reina del Vacío | Velocidad de escape, el viaje a la Luna, alunizar sin paracaídas; repaso de todo lo aprendido en forma de preguntas |
 
 ### Datos de la NASA usados
 
@@ -182,6 +189,9 @@ Los datos científicos de los quizzes, lecciones y mini-juegos provienen de esta
 - NASA Science — La Luna: datos: https://science.nasa.gov/moon/facts/
 - NASA Science — La Luna: https://science.nasa.gov/moon/
 - NASA — Misión Apolo 11: https://www.nasa.gov/mission/apollo-11/
+- NASA — Misión Apolo 17: https://www.nasa.gov/mission/apollo-17/
+- NASA — Artemis: https://www.nasa.gov/humans-in-space/artemis/
+- NASA — Spacewalk Spacesuit Basics (conceptos básicos del traje espacial): https://www.nasa.gov/centers-and-facilities/johnson/spacewalk-spacesuit-basics/
 
 #### Tarjetas «🚀 Dato NASA» (una por mini-juego)
 
@@ -199,7 +209,7 @@ Cada mini-juego tiene un botón **🚀 Dato NASA** en su encabezado, y la tarjet
 - **Parche de misión** — Apollo Mission Patches: https://science.nasa.gov/resource/apollo-mission-patches/
 - **Ping pong lunar** — 50 Years Ago: Apollo 14 Lands at Fra Mauro: https://www.nasa.gov/history/50-years-ago-apollo-14-lands-at-fra-mauro/
 - **Realidad aumentada** — What Is a Spacesuit? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-a-spacesuit-grades-k-4/
-- **Batalla final: la Reina Hueca** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
+- **Batalla final: la Reina del Vacío** — What Is the Artemis Program? (Grades K-4): https://www.nasa.gov/learning-resources/for-kids-and-students/what-is-the-artemis-program-grades-k-4/
 - *El termómetro de la Tierra* y el *Mapa de incendios* muestran su conjunto de datos de la NASA (GISTEMP, FIRMS, arriba) en la misma línea «Fuente: NASA — …».
 
 Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respaldado por la NASA.
@@ -209,6 +219,10 @@ Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respalda
 - **Imágenes:** el mapa del colegio, la portada y la lámina de personajes fueron generados con IA (herramienta de generación de imágenes con IA, texto a imagen). Llevan la marca «Imagen generada con IA» dentro del propio archivo y también encima de la imagen en el juego. Los retratos y personajes del mapa son recortes de esas mismas imágenes y llevan una pequeña marca «IA».
 - **Código:** desarrollado por el equipo con herramientas de programación asistida por IA.
 - **Sonido y música:** generados en el navegador con Web Audio (sin archivos de audio).
+
+### Hoja de ruta
+
+Este juego web es el **MVP** del Documento de Diseño del Juego (GDD v2) del equipo. La versión completa planeada se hará en **Unity con AR Foundation**, con **8 escenas** que llevan a los Últimos Exploradores de Cajamarca a la Colonia Última.
 
 ### Equipo
 

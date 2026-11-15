@@ -55,6 +55,30 @@ export const NASA_RESOURCES: Source[] = [
       en: "Apollo 11 (1969) facts used in the Auditorium timeline and in the questions.",
     },
   },
+  {
+    name: { es: "NASA — Misión Apolo 17", en: "NASA — Apollo 17 mission" },
+    url: "https://www.nasa.gov/mission/apollo-17/",
+    use: {
+      es: "Apolo 17 (1972), la última misión tripulada que llegó a la Luna: referencia para la historia de las misiones lunares.",
+      en: "Apollo 17 (1972), the last crewed mission to land on the Moon: reference for the history of the lunar missions.",
+    },
+  },
+  {
+    name: { es: "NASA — Artemis", en: "NASA — Artemis" },
+    url: "https://www.nasa.gov/humans-in-space/artemis/",
+    use: {
+      es: "El programa Artemis de regreso a la Luna: referencia para el viaje a la Luna y la colonia Selene.",
+      en: "The Artemis program’s return to the Moon: reference for the journey to the Moon and the Selene colony.",
+    },
+  },
+  {
+    name: { es: "NASA — Conceptos básicos del traje espacial (Spacewalk Spacesuit Basics)", en: "NASA — Spacewalk Spacesuit Basics" },
+    url: "https://www.nasa.gov/centers-and-facilities/johnson/spacewalk-spacesuit-basics/",
+    use: {
+      es: "Cómo protege el traje espacial a los astronautas: referencia para los trajes espaciales de la misión lunar.",
+      en: "How a spacesuit protects astronauts: reference for the spacesuits of the lunar mission.",
+    },
+  },
 ];
 
 /** NASA resources of the "🚀 Dato NASA / NASA Fact" card of every mini-game, grouped by game.

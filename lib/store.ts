@@ -44,7 +44,7 @@ type Progress = {
   patch: string | null;
   /** Phase 6: name typed for the certificate. Only kept on this device (localStorage), never sent anywhere. */
   playerName: string;
-  /** Phase 6: ISO date of the first win against the Hollow Queen (shown on the certificate). */
+  /** Phase 6: ISO date of the first win against the Queen of the Void (shown on the certificate). */
   finishedAt: string | null;
   /** The "Misión Lunar – Fase 1" briefing was closed with ¡Comenzar! (shown before the map until then). */
   briefingSeen: boolean;

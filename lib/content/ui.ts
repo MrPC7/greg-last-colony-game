@@ -28,8 +28,8 @@ export const UI = {
 
   // Title screen
   "title.artLabel": {
-    es: "Greg y la Colonia Última: Greg, Elen, Orbi y Joseph frente a la Reina Hueca",
-    en: "Greg and the Last Colony: Greg, Elen, Orbi and Joseph facing the Hollow Queen",
+    es: "Greg y la Colonia Última: Greg, Elen, Orbi y Joseph frente a la Reina del Vacío",
+    en: "Greg and the Last Colony: Greg, Elen, Orbi and Joseph facing the Queen of the Void",
   },
   "title.start": { es: "▶ EMPEZAR", en: "▶ START" },
   "title.skip": { es: "⏭ Saltar", en: "⏭ Skip" },
@@ -116,8 +116,8 @@ export const UI = {
   "quiz.hint": { es: "💡 Pista de Orbi", en: "💡 Orbi’s hint" },
   "ach.title": { es: "🏆 Logros", en: "🏆 Achievements" },
   "main.title": { es: "🛰️ Misión principal: el origen de NOX-Ω", en: "🛰️ Main mission: the origin of NOX-Ω" },
-  "main.progress": { es: "{d}/5 pistas reunidas", en: "{d}/5 clues gathered" },
-  "main.fight": { es: "⚔️ ¡Enfrentar a la Reina Hueca!", en: "⚔️ Face the Hollow Queen!" },
+  "main.progress": { es: "{d}/5 núcleos de energía recuperados", en: "{d}/5 energy cores recovered" },
+  "main.fight": { es: "⚔️ ¡Enfrentar a la Reina del Vacío!", en: "⚔️ Face the Queen of the Void!" },
   "main.locked": {
     es: "Completa las cinco zonas para descifrar NOX-Ω.",
     en: "Complete all five zones to decode NOX-Ω.",

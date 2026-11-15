@@ -8,7 +8,7 @@ import { ENDING, ENDING_TXT } from "@/lib/content/story";
 import { useT } from "@/lib/i18n";
 import { resolveSpeaker, useGame, useUI } from "@/lib/store";
 
-/** Phase 6 · Ending cutscene: shown after the Hollow Queen falls (and replayable from the main
+/** Phase 6 · Ending cutscene: shown after the Queen of the Void falls (and replayable from the main
  *  mission). Scene by scene — the Queen's voice fades, Ray reveals his origin, the Rootless go
  *  home, the colony is saved, Ray's real-data message, end of Chapter 1 — with the characters'
  *  portraits and lines that fade in (static with prefers-reduced-motion). The last scene leads

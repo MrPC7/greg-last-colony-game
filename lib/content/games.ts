@@ -429,7 +429,7 @@ export const TL_TXT = {
 // ---------------------------------------------------------------------------
 // Final · BossFight (prototype `BQ`, `fight`, `bturn`, `ba`, `ally`, `bend`)
 // Phase 6: a mixed quiz drawn from every zone (incl. La Señal de Ray and the Phase 5 crew
-// features). Every correct answer breaks one segment of the Hollow Queen's shield;
+// features). Every correct answer breaks one segment of the Queen of the Void's shield;
 // 3 wrong answers → retry.
 // ---------------------------------------------------------------------------
 
@@ -729,9 +729,9 @@ export function drawBossQuiz(rnd: () => number = Math.random): BossQuestion[] {
 }
 
 export const BOSS_TXT = {
-  title: { es: "👑 Reina Hueca", en: "👑 Hollow Queen" },
+  title: { es: "👑 Reina del Vacío", en: "👑 Queen of the Void" },
   queen: { es: "Escudo de la Reina", en: "Queen’s shield" },
-  art: { es: "La Reina Hueca", en: "The Hollow Queen" }, // new: image aria-label
+  art: { es: "La Reina del Vacío", en: "The Queen of the Void" }, // new: image aria-label
   segments: { es: "Escudo de la Reina: {k} de {total} segmentos", en: "Queen’s shield: {k} of {total} segments" },
   lives: { es: "Tus vidas: {k} de {total}", en: "Your lives: {k} of {total}" },
   rules: {
@@ -768,7 +768,7 @@ export const CERT = { w: 1200, h: 850, maxName: 32 };
 
 export const CERT_TXT = {
   title: { es: "📜 Tu certificado", en: "📜 Your certificate" },
-  locked: { es: "Derrota a la Reina Hueca para obtener tu certificado.", en: "Defeat the Hollow Queen to get your certificate." },
+  locked: { es: "Derrota a la Reina del Vacío para obtener tu certificado.", en: "Defeat the Queen of the Void to get your certificate." },
   nameLabel: { es: "Escribe tu nombre para el certificado:", en: "Type your name for the certificate:" },
   namePh: { es: "Tu nombre", en: "Your name" },
   privacy: {
@@ -786,8 +786,8 @@ export const CERT_TXT = {
   certifies: { es: "Se certifica que", en: "This certifies that" },
   noName: { es: "Tu nombre aquí", en: "Your name here" },
   body1: {
-    es: "salvó la Colonia Última junto a {hero}, derrotó a la Reina Hueca",
-    en: "saved the Last Colony alongside {hero}, defeated the Hollow Queen",
+    es: "salvó la Colonia Última junto a {hero}, derrotó a la Reina del Vacío",
+    en: "saved the Last Colony alongside {hero}, defeated the Queen of the Void",
   },
   body2: {
     es: "y aprendió ciencia lunar leyendo datos reales de la NASA.",

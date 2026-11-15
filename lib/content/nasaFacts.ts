@@ -143,7 +143,7 @@ export const NASA_FACTS: Record<NasaFactId, NasaFact> = {
   },
   boss: {
     icon: "🌙",
-    game: { es: "Batalla final: la Reina Hueca", en: "Final battle: the Hollow Queen" },
+    game: { es: "Batalla final: la Reina del Vacío", en: "Final battle: the Queen of the Void" },
     text: {
       es: "El programa Artemis lleva el nombre de la hermana gemela de Apolo. Con él, la NASA estudia la Luna y aprende cómo los astronautas podrían vivir y trabajar algún día en Marte.",
       en: "The Artemis program is named after Apollo’s twin sister. With it, NASA studies the Moon and learns how astronauts could one day live and work on Mars.",

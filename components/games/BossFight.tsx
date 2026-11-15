@@ -45,7 +45,7 @@ function endFight(won: boolean, broke: number) {
 
 /** Phase 6 BossFight: a mixed quiz drawn from every zone — the 5 ORD zones, La Señal de Ray
  *  (GISTEMP + FIRMS) and the Phase 5 crew features. Each right answer breaks one of the
- *  Hollow Queen's 8 shield segments; each wrong answer costs one of 3 lives (unless a friend's
+ *  Queen of the Void's 8 shield segments; each wrong answer costs one of 3 lives (unless a friend's
  *  shield is up); 0 lives → retry. The prototype's three one-use allies stay: Orbi removes a
  *  wrong option, the first friend gives the explanation as a hint, the second raises a shield.
  *  Shield broken → win (5 ★, "boss") → ending cutscene → certificate. */

@@ -12,8 +12,8 @@ import { resolveSpeaker, startBossIntro, useGame, useUI } from "@/lib/store";
 /** Journey to the Moon cutscene, in the style of the ending: the Last Explorers leave Cajamarca,
  *  lift off, see Earth from space and land next to Selene. Scenes show cast portraits and, for the
  *  space scenes, a crop of the key art (with its AI label); the last scene shows scene03 ("La Luna
- *  en Peligro", MoonScene.tsx). `toBoss`: opened by "Face the Hollow
- *  Queen" — the last scene (or Skip) goes on to the boss intro. Otherwise it is a replay from the
+ *  en Peligro", MoonScene.tsx). `toBoss`: opened by "Face the Queen of
+ *  the Void" — the last scene (or Skip) goes on to the boss intro. Otherwise it is a replay from the
  *  main mission and simply closes. */
 export default function Journey({ toBoss }: { toBoss: boolean }) {
   const t = useT();

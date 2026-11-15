@@ -41,7 +41,7 @@ export const CH: Character[] = [
   { n: { es: "Orbi", en: "Orbi" }, col: "#ffd54a", f: [620, 200, 280, 280], b: [585, 200, 330, 555], sp: { file: "orbi", fx: 0.52, zoom: 2.1, top: 2 } },
   { n: { es: "Joseph", en: "Joseph" }, col: "#e53935", f: [935, 115, 170, 170], b: [905, 110, 265, 640], sp: { file: "joseph", fx: 0.44, zoom: 2.3, top: 6 } },
   { n: { es: "Sin Raíz", en: "Rootless" }, col: "#26c6da", f: [1185, 15, 140, 140], b: [1150, 15, 326, 725], sp: { file: "ray", fx: 0.32, zoom: 3, top: 6 } },
-  { n: { es: "Reina Hueca", en: "Hollow Queen" }, col: "#ab47bc", f: [505, 0, 150, 150], im: "key" },
+  { n: { es: "Reina del Vacío", en: "Queen of the Void" }, col: "#ab47bc", f: [505, 0, 150, 150], im: "key" },
   // Phase 4: Ray, the Rootless one who shows NASA data (same art as CH[4]).
   { n: { es: "Ray, el Sin Raíz", en: "Ray, the Wanderer" }, col: "#26c6da", f: [1185, 15, 140, 140], b: [1150, 15, 326, 725], sp: { file: "ray", fx: 0.32, zoom: 3, top: 6 } },
 ];
@@ -74,14 +74,14 @@ export function crop(s: Rect, im: Sheet): { size: string; position: string } {
 export const STATS: Record<number, { role: Localized; stats: [Localized, number][] }> = {
   0: {
     role: { es: "Estratega", en: "Strategist" },
-    stats: [[{ es: "Lógica", en: "Logic" }, 5], [{ es: "Resistencia", en: "Endurance" }, 4], [{ es: "Velocidad", en: "Speed" }, 3]],
+    stats: [[{ es: "Lógica", en: "Logic" }, 5], [{ es: "Liderazgo", en: "Leadership" }, 4], [{ es: "Planificación", en: "Planning" }, 3]],
   },
   1: {
-    role: { es: "Narradora", en: "Storyteller" },
-    stats: [[{ es: "Memoria", en: "Memory" }, 5], [{ es: "Empatía", en: "Empathy" }, 5], [{ es: "Estrategia", en: "Strategy" }, 3]],
+    role: { es: "Científica", en: "Scientist" },
+    stats: [[{ es: "Física", en: "Physics" }, 5], [{ es: "Matemáticas", en: "Mathematics" }, 5], [{ es: "Experimentación", en: "Experimentation" }, 3]],
   },
   3: {
-    role: { es: "Rival", en: "Rival" },
-    stats: [[{ es: "Velocidad", en: "Speed" }, 5], [{ es: "Fuerza", en: "Strength" }, 4], [{ es: "Táctica", en: "Tactics" }, 3]],
+    role: { es: "Ingeniero", en: "Engineer" },
+    stats: [[{ es: "Mecánica", en: "Mechanics" }, 5], [{ es: "Circuitos", en: "Circuits" }, 4], [{ es: "Reparaciones", en: "Repairs" }, 3]],
   },
 };

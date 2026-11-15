@@ -140,7 +140,7 @@ export function InventoryPanel() {
   );
 }
 
-/** Prototype `main()` (redesigned version): the 5 clues of NOX-Ω. */
+/** Prototype `main()` (redesigned version): the 5 energy cores for Selene. */
 export function MainMissionPanel() {
   const t = useT();
   const done = useGame((s) => s.done);
