@@ -53,7 +53,7 @@ export default function ConfigBar() {
       {onMap && <Hud bar />}
       <div className="cfgs" ref={slot}>
       <div className="cfgb" ref={bar}>
-        <button id="lg" onClick={() => setLang(lang === "en" ? "es" : "en")} aria-label={t("lang.toggle")}>
+        <button id="lg" onClick={() => setLang(lang === "en" ? "es" : "en")} aria-label={`${lang.toUpperCase()} · ${t("lang.toggle")}`}>
           🌐 {lang.toUpperCase()}
         </button>
         <button id="bm" onClick={toggleMusic} aria-label={t("cfg.music")} aria-pressed={musicOn} style={{ opacity: musicOn ? 1 : 0.4 }}>🎵</button>

@@ -6,9 +6,38 @@ import { UI } from "@/lib/content/ui";
 import "./globals.css";
 
 // Static metadata is Spanish-first; AppShell updates document.title and <html lang> on the client.
+// Link-preview crawlers do not run JS and see one static HTML per page, so the Open Graph /
+// Twitter card carries both languages side by side (ES first) plus es/en locales.
+const both = (key: "app.title" | "app.description" | "app.ogImageAlt") => `${UI[key].es} · ${UI[key].en}`;
+const ogImage = {
+  url: asset("/img/keyart.jpg"),
+  width: 1400,
+  height: 779,
+  type: "image/jpeg",
+  alt: both("app.ogImageAlt"),
+};
+
 export const metadata: Metadata = {
+  // Absolute base for og:image / og:url (GitHub Pages origin; see .env.production and deploy.yml).
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: UI["app.title"].es,
   description: UI["app.description"].es,
+  openGraph: {
+    type: "website",
+    siteName: both("app.title"),
+    title: both("app.title"),
+    description: both("app.description"),
+    url: asset("/"),
+    locale: "es_ES",
+    alternateLocale: ["en_US"],
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: both("app.title"),
+    description: both("app.description"),
+    images: [ogImage],
+  },
 };
 
 export const viewport: Viewport = {
@@ -19,9 +48,10 @@ export const viewport: Viewport = {
 
 // The prototype's --map / --key / --cast CSS variables, pointing at the extracted images.
 const imageVars = {
-  "--map": `url(${asset("/img/map.jpg")})`,
-  "--key": `url(${asset("/img/keyart.jpg")})`,
-  "--cast": `url(${asset("/img/cast.jpg")})`,
+  "--map": `url(${asset("/img/map.webp")})`,
+  "--map-sm": `url(${asset("/img/map-sm.webp")})`,
+  "--key": `url(${asset("/img/keyart.webp")})`,
+  "--cast": `url(${asset("/img/cast.webp")})`,
 } as CSSProperties;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

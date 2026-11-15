@@ -9,6 +9,10 @@ export const UI = {
     es: "Juego educativo sobre la Luna — NASA Space Apps Challenge 2026 Cajamarca",
     en: "Educational game about the Moon — NASA Space Apps Challenge 2026 Cajamarca",
   },
+  "app.ogImageAlt": {
+    es: "Arte principal de Greg y la Colonia Última (imagen generada con IA)",
+    en: "Greg and the Last Colony key art (AI-generated image)",
+  },
 
   // Language picker
   "lang.choose": { es: "Elige tu idioma", en: "Choose your language" },
@@ -54,6 +58,7 @@ export const UI = {
   // Common
   "common.close": { es: "Cerrar", en: "Close" },
   "common.continue": { es: "Seguir", en: "Continue" },
+  "common.loading": { es: "Cargando…", en: "Loading…" },
 
   // Zone menu
   "zone.choose": { es: "Elige una actividad:", en: "Choose an activity:" },

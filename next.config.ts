@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   assetPrefix: basePath || undefined,
   trailingSlash: true,
   images: { unoptimized: true },
+  // Inline the (small) global CSS into each HTML page: removes the render-blocking
+  // stylesheet round trip, which matters most for first-time mobile visitors (Lighthouse LCP).
+  experimental: { inlineCss: true },
   turbopack: {
     rules: {
       // CSS modules must keep `as: "*.module.css"`, otherwise Turbopack treats them as

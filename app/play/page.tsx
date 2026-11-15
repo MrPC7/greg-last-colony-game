@@ -1,34 +1,16 @@
-"use client";
+import { preload } from "react-dom";
+import { asset } from "@/lib/asset";
+import PlayScreen from "./PlayScreen";
 
-import { useEffect } from "react";
-import Stage from "@/components/map/Stage";
-import { music } from "@/lib/audio";
-import { INTRO_TALK } from "@/lib/content/story";
-import { useT } from "@/lib/i18n";
-import { useGame, useUI } from "@/lib/store";
+// Must match the media query in components/map/map.module.css.
+const MAP_SM_MEDIA = "(max-width: 640px) and (max-resolution: 2dppx)";
 
-/** Map stage (prototype `#hub`). */
+/** Map stage. The map image is the LCP element but is only painted after hydration
+ *  (CSS background), so preload the variant the CSS will pick (and the cast sheet for
+ *  the hotspot sprites) from the static HTML. */
 export default function PlayPage() {
-  const t = useT();
-  const langChosen = useGame((s) => s.lang !== null);
-
-  useEffect(() => {
-    music("explore");
-    return () => useUI.getState().clearAll();
-  }, []);
-
-  // Orbi's welcome (prototype `play`), once the first-launch language choice is made.
-  useEffect(() => {
-    if (!langChosen) return;
-    useUI.getState().startTalk(INTRO_TALK);
-  }, [langChosen]);
-
-  return (
-    <div id="app">
-      <div id="hub">
-        <Stage />
-        <p className="s">{t("hub.help")}</p>
-      </div>
-    </div>
-  );
+  preload(asset("/img/map-sm.webp"), { as: "image", fetchPriority: "high", media: MAP_SM_MEDIA });
+  preload(asset("/img/map.webp"), { as: "image", fetchPriority: "high", media: `not all and ${MAP_SM_MEDIA}` });
+  preload(asset("/img/cast.webp"), { as: "image" });
+  return <PlayScreen />;
 }

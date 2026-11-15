@@ -1,14 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { GAMES } from "@/components/games";
-import Achievements from "@/components/games/Achievements";
-import ARView from "@/components/games/ARView";
-import BossFight, { BossLose } from "@/components/games/BossFight";
-import Certificate from "@/components/games/Certificate";
-import Ending from "@/components/games/Ending";
-import RayMemory from "@/components/games/RayMemory";
 import { useT } from "@/lib/i18n";
+import Loading from "./Loading";
 import { useUI } from "@/lib/store";
 import {
   InventoryPanel,
@@ -17,6 +13,15 @@ import {
   SettingsPanel,
   ZoneMenu,
 } from "./Panels";
+
+// Code-split: these panels are only downloaded when opened.
+const Achievements = dynamic(() => import("@/components/games/registry").then((m) => m.Achievements), { ssr: false, loading: Loading });
+const ARView = dynamic(() => import("@/components/games/registry").then((m) => m.ARView), { ssr: false, loading: Loading });
+const BossFight = dynamic(() => import("@/components/games/registry").then((m) => m.BossFight), { ssr: false, loading: Loading });
+const BossLose = dynamic(() => import("@/components/games/registry").then((m) => m.BossLose), { ssr: false, loading: Loading });
+const Certificate = dynamic(() => import("@/components/games/registry").then((m) => m.Certificate), { ssr: false, loading: Loading });
+const Ending = dynamic(() => import("@/components/games/registry").then((m) => m.Ending), { ssr: false, loading: Loading });
+const RayMemory = dynamic(() => import("@/components/games/registry").then((m) => m.RayMemory), { ssr: false, loading: Loading });
 
 /** Prototype `#md` + `.card` with the ✕ button. */
 export function Modal({ children }: { children: ReactNode }) {

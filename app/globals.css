@@ -16,7 +16,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans
 .art{aspect-ratio:1170/651;background:var(--key) center/100% 100%;border-radius:12px}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px}
 .b{background:#7c4dff;color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
-.b.o{background:#e65100}
+.b.o{background:#cc4700} /* prototype #e65100, darkened to pass WCAG AA (4.7:1) with white text */
 .b:disabled{opacity:.5;cursor:default}
 .pk{position:relative;width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
 .pk.on{border-color:#ffd54a}

@@ -45,7 +45,7 @@ export default function Certificate() {
   const g = useGame();
   const cv = useRef<HTMLCanvasElement>(null);
   const [saved, setSaved] = useState(false);
-  const cast = useImage(asset("/img/cast.jpg"));
+  const cast = useImage(asset("/img/cast.webp"));
   const patch = useImage(g.patch);
   const name = g.playerName.trim();
   const won = !!g.done.boss;

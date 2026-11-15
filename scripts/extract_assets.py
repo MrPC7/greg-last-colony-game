@@ -21,6 +21,10 @@ above it.
 
 Requires Pillow (pip install Pillow).
 
+Each image is also written as a .webp sibling (WEBP_QUALITY) used by the game's
+CSS (the map also as an 800 px "map-sm.webp" for phones); the .jpg files
+are kept for Open Graph previews.
+
 Usage:
   python scripts/extract_assets.py "../Greg and the Last Colony.html"
   python scripts/extract_assets.py <html> --out public/img
@@ -45,6 +49,12 @@ TARGETS = {
 PATTERN = re.compile(
     r"--(?P<var>map|key|cast)\s*:\s*url\(\s*['\"]?data:image/jpeg;base64,(?P<data>[A-Za-z0-9+/=\s]+?)['\"]?\s*\)"
 )
+
+WEBP_QUALITY = 80
+# The map (the /play LCP image) also gets a SMALL_WIDTH px "-sm.webp" for phones.
+# Not the key art / cast: their sheets are also cropped for character faces.
+SMALL_VARIANTS = {"map"}
+SMALL_WIDTH = 800
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -151,6 +161,21 @@ def main() -> int:
             note = f", AI label {bw * 100:.2f}cqw x {bh * 100:.2f}cqw"
         dest.write_bytes(data)
         print(f"--{var:<4} -> {dest} ({len(found[var]):,} -> {len(data):,} bytes{note})")
+        # WebP copy (same pixels, watermark included) for the in-game CSS backgrounds:
+        # roughly half the bytes, which keeps Lighthouse mobile LCP in budget.
+        # The .jpg stays for Open Graph previews and the certificate canvas.
+        from PIL import Image
+
+        webp = dest.with_suffix(".webp")
+        img = Image.open(io.BytesIO(data))
+        img.save(webp, "WEBP", quality=WEBP_QUALITY, method=6)
+        print(f"         -> {webp} ({webp.stat().st_size:,} bytes)")
+        if var in SMALL_VARIANTS:
+            # Smaller copy for phones up to 2x DPR (media query in the CSS + preload).
+            sm = dest.with_name(dest.stem + "-sm.webp")
+            h = round(img.height * SMALL_WIDTH / img.width)
+            img.resize((SMALL_WIDTH, h), Image.LANCZOS).save(sm, "WEBP", quality=WEBP_QUALITY, method=6)
+            print(f"         -> {sm} ({sm.stat().st_size:,} bytes)")
     return 0
 
 
