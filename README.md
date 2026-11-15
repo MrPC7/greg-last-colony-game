@@ -8,6 +8,12 @@
 
 ## English
 
+### About the game
+
+A free, bilingual (Spanish / English), story-driven browser game for students aged 10+. Kids from Cajamarca, Peru recover 5 energy cores, travel to the Moon and defeat the Queen of the Void.
+Along the way: hands-on lunar physics mini-games, real NASA GISTEMP and FIRMS data, a NASA fact in every game, an AR camera mode and phone-friendly controls.
+It takes about **20–30 minutes** to finish.
+
 ### What it is
 
 *Greg and the Last Colony* is a free, bilingual (Spanish / English) educational browser game about the Moon and about our own planet, made for the **NASA Space Apps Challenge 2026 — Cajamarca (Peru) local event**.
@@ -26,6 +32,15 @@ It runs in any modern browser, on phones and computers, with no installation and
 6. Once you have the 5 energy cores from the five main zones, open the **Main mission** and **face the Queen of the Void**: a short *Journey to the Moon* cutscene (skippable, and replayable from the Main mission) takes the Last Explorers from Cajamarca to Selene, then comes a quiz battle where your friends help you.
 
 ⚙️ Settings: language, theme, music and sound effects, reset progress, back to the title screen. The **📜 Credits** page lists the team, sources and AI use.
+
+### 🏅 Certificate
+
+Completing all missions and defeating the Queen of the Void unlocks a downloadable **"Selene Explorer" certificate** with the player's name, their character, stars, crystals, Ray's memories and their mission patch.
+
+<p align="center">
+  <img src="docs/certificate-sample.png" alt="Sample Selene Explorer certificate" width="600"><br>
+  <em>Sample certificate (Pranshu Chaurasia)</em>
+</p>
 
 ### Zones and mini-games
 
@@ -142,6 +157,12 @@ The script saves the raw CSVs to `scripts/raw/` and writes the snapshot date int
 
 ## Español
 
+### Sobre el juego
+
+Un juego de navegador gratuito, bilingüe (español / inglés) y con historia, para estudiantes de 10 años en adelante. Chicos y chicas de Cajamarca (Perú) recuperan 5 núcleos de energía, viajan a la Luna y derrotan a la Reina del Vacío.
+En el camino: mini-juegos prácticos de física lunar, datos reales de la NASA (GISTEMP y FIRMS), un dato NASA en cada juego, cámara de realidad aumentada y controles para celular.
+Se termina en unos **20–30 minutos**.
+
 ### Qué es
 
 *Greg y la Colonia Última* es un juego educativo gratuito y bilingüe (español / inglés) para el navegador, sobre la Luna y sobre nuestro propio planeta, hecho para el **NASA Space Apps Challenge 2026 — sede Cajamarca (Perú)**.
@@ -160,6 +181,15 @@ Funciona en cualquier navegador moderno, en celulares y computadoras, sin instal
 6. Cuando tengas los 5 núcleos de energía de las cinco zonas principales, abre la **Misión principal** y **enfrenta a la Reina del Vacío**: una breve escena, *Viaje a la Luna* (se puede saltar y volver a ver desde la Misión principal), lleva a los Últimos Exploradores de Cajamarca a Selene; luego viene una batalla de preguntas en la que te ayudan tus amigos.
 
 ⚙️ Ajustes: idioma, tema, música y efectos de sonido, reiniciar el progreso y volver a la portada. La página **📜 Créditos** muestra el equipo, las fuentes y el uso de IA.
+
+### 🏅 Certificado
+
+Completar todas las misiones y derrotar a la Reina del Vacío desbloquea un **certificado de «Explorador/a de Selene»** descargable, con el nombre del jugador, su personaje, estrellas, cristales, recuerdos de Ray y su parche de misión.
+
+<p align="center">
+  <img src="docs/certificate-sample.png" alt="Certificado de ejemplo de Explorador/a de Selene" width="600"><br>
+  <em>Certificado de ejemplo (Pranshu Chaurasia)</em>
+</p>
 
 ### Zonas y mini-juegos
 
