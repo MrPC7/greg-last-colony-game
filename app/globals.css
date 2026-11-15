@@ -11,7 +11,29 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0820;--fg:#f1ecff;--card:#171238;--bd:#3b3180}}
 :root[data-theme="dark"]{--bg:#0b0820;--fg:#f1ecff;--card:#171238;--bd:#3b3180}
 *{box-sizing:border-box}[hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,sans-serif}
+body{margin:0;background:var(--sp1);color:var(--pfg);font:16px/1.45 system-ui,sans-serif}
+/* Space backdrop behind every page (title, play, credits), in both themes: navy-to-purple radial
+   gradient (::before) + CSS-only starfield (::after, two tiled layers twinkling out of phase).
+   Fixed, behind content, no JS and no images, so it costs nothing for Lighthouse.
+   Text sitting directly on it uses --pfg; cards keep --fg / --card. */
+:root{--pfg:#f1ecff;--sp0:#3a2a8c;--sp1:#1b1f5e;--sp2:#120d3a;--glow:#9b6bff66}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sp0:#2a1660;--sp1:#0b0f2e;--sp2:#05031a;--glow:#7c4dff55}}
+:root[data-theme="dark"]{--sp0:#2a1660;--sp1:#0b0f2e;--sp2:#05031a;--glow:#7c4dff55}
+body::before,body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
+body::before{background:radial-gradient(ellipse 90% 70% at 50% 35%,var(--sp0) 0%,var(--sp1) 55%,var(--sp2) 100%)}
+body::after{
+  background-image:
+    radial-gradient(1px 1px at 23px 41px,#fff,#0000),radial-gradient(1px 1px at 131px 87px,#fffc,#0000),
+    radial-gradient(1.5px 1.5px at 197px 163px,#fff,#0000),radial-gradient(1px 1px at 61px 211px,#d9ccffcc,#0000),
+    radial-gradient(1px 1px at 251px 19px,#fff9,#0000),
+    radial-gradient(1px 1px at 89px 127px,#fffb,#0000),radial-gradient(1.5px 1.5px at 307px 241px,#e6f0ff,#0000),
+    radial-gradient(1px 1px at 173px 293px,#fff,#0000),radial-gradient(1px 1px at 353px 67px,#d9ccff,#0000);
+  background-size:283px 307px,283px 307px,283px 307px,283px 307px,283px 307px,379px 349px,379px 349px,379px 349px,379px 349px;
+  opacity:.8;animation:tw 7s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.45}}
+@media(prefers-reduced-motion:reduce){body::after{animation:none}}
+/* Soft purple glow behind the map and the title art. */
+.art,#hub>div:first-child{box-shadow:0 0 40px 6px var(--glow),0 0 120px 30px color-mix(in srgb,var(--glow) 45%,transparent)}
 #app{max-width:1180px;margin:0 auto;padding:8px}
 .art{aspect-ratio:1170/651;background:var(--key) center/100% 100%;border-radius:12px}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px}

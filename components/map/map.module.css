@@ -23,7 +23,9 @@
 .zl,.pn{position:absolute;padding:0;margin:0;font:inherit;color:#fff;text-align:left;
   background:linear-gradient(#0f1d52,#08102f);border:max(1px,.15cqw) solid #4cb8ff;
   box-shadow:0 0 .45cqw #2f9bffcc,inset 0 0 .5cqw #2f9bff66}
-.zl{z-index:1;border-radius:1.3cqw;cursor:pointer}
+/* Above the character sprites (z-index 3 + y%, so ≤ 97): when Greg or Orbi walks over a label,
+   the label stays readable on top and the character passes behind it. */
+.zl{z-index:100;border-radius:1.3cqw;cursor:pointer}
 .pn{z-index:4;border-radius:1.5cqw}
 button.pn{cursor:pointer}
 .zl:focus-visible,.pn:focus-visible,.tab:focus-visible{outline:2px solid #ffd54a;outline-offset:1px}
