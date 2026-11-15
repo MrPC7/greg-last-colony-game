@@ -1003,13 +1003,20 @@ export const PATCH_TXT = {
 // Phase 5 · Cancha · LunarPingPong (Joseph) — pong with Earth / Moon gravity
 // ---------------------------------------------------------------------------
 
-/** Canvas units are px; gravity in px/s² = g (m/s²) × scale. First to `target` points wins.
- *  Joseph aims up to ±aiError × paddle height off the ball on each return, so he can miss.
- *  Stars: 3 if you won at least one point with Earth gravity, else 2. */
+/** Canvas units are px, speeds px/s; gravity in px/s² = g (m/s²) × scale. First to `target` points wins.
+ *  Tuned for kids 10+: your paddle is a bit taller than Joseph's (more on touch screens), the ball
+ *  speeds up ×speedUp per hit up to maxVx (vertical speed capped at maxVy), and every serve has a short 3-2-1 countdown (`countdown` s, after a `pointPause` s pause).
+ *  Joseph waits ~aiReact s before reacting to your shot, chases the ball's current height (no prediction)
+ *  and aims up to ±aiError × his paddle height off, so a typical player wins most matches.
+ *  The floor always bounces the ball at least minBounce × table height, so it can't roll along it.
+ *  Stars: 3 if you won at least one full rally played with Earth gravity, else 2. */
 export const PONG = {
   w: 360, h: 240, scale: 30, gEarth: 9.81, gMoon: 1.62,
-  paddleH: 52, paddleW: 8, ball: 6, serveVx: 170, maxVx: 360, maxVy: 420,
-  playerSpeed: 280, aiSpeed: 135, aiError: 0.75, target: 3, starsEarth: 3, stars: 2,
+  paddleH: 52, playerH: 56, playerHTouch: 60, paddleW: 8, ball: 6,
+  serveVx: 150, serveVy: 40, speedUp: 1.05, maxVx: 270, maxVy: 170, spin: 140, minBounce: 0.2,
+  playerSpeed: 400, dragSpeed: 1200,
+  aiSpeed: 140, aiReact: 0.3, aiError: 0.75, countdown: 1.5, pointPause: 0.6,
+  target: 3, starsEarth: 3, stars: 2,
 };
 
 export const PONG_TXT = {
@@ -1019,18 +1026,21 @@ export const PONG_TXT = {
     en: "The court is my turf! I’ve played football and ping pong since I was little. Here the ball falls because of gravity: the button switches it between Earth and the Moon. Let’s see if you can beat me!",
   },
   desc: {
-    es: "Mueve tu paleta (izquierda) arrastrando en la mesa, o con ↑ ↓ / W S. Primero en llegar a {k} puntos gana. Tecla G: cambiar gravedad.",
-    en: "Move your paddle (left) by dragging on the table, or with ↑ ↓ / W S. First to {k} points wins. G key: switch gravity.",
+    es: "Mueve tu paleta (izquierda) arrastrando el dedo o el ratón en cualquier parte de la mesa, con los botones ▲ ▼ o con ↑ ↓ / W S. Primero en llegar a {k} puntos gana. Tecla G: cambiar gravedad.",
+    en: "Move your paddle (left) by dragging your finger or mouse anywhere on the table, with the ▲ ▼ buttons, or with ↑ ↓ / W S. First to {k} points wins. G key: switch gravity.",
   },
   canvas: { es: "Mesa de ping pong: tu paleta a la izquierda, la de Joseph a la derecha", en: "Ping pong table: your paddle on the left, Joseph’s on the right" },
   earth: { es: "🌍 Gravedad: Tierra (9,81 m/s²)", en: "🌍 Gravity: Earth (9.81 m/s²)" },
   moon: { es: "🌙 Gravedad: Luna (1,62 m/s²)", en: "🌙 Gravity: Moon (1.62 m/s²)" },
   start: { es: "▶ Sacar", en: "▶ Serve" },
   again: { es: "🔁 Otra partida", en: "🔁 Another match" },
+  restart: { es: "↺ Reiniciar", en: "↺ Restart" },
+  up: { es: "Subir paleta", en: "Paddle up" },
+  down: { es: "Bajar paleta", en: "Paddle down" },
   score: { es: "Tú {a} – {b} Joseph", en: "You {a} – {b} Joseph" },
   tip3: {
-    es: "Para 3 ⭐: gana al menos un punto con la gravedad de la Tierra.",
-    en: "For 3 ⭐: win at least one point with Earth’s gravity.",
+    es: "Para 3 ⭐: gana al menos un punto con la gravedad de la Tierra activa durante todo el intercambio.",
+    en: "For 3 ⭐: win at least one point with Earth’s gravity on for the whole rally.",
   },
   point: { es: "¡Punto para ti!", en: "Point for you!" },
   pointAi: { es: "Punto para Joseph.", en: "Point for Joseph." },

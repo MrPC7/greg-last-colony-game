@@ -1,31 +1,44 @@
 "use client";
 
 import { GameTitle, NasaFactCard } from "@/components/ui/NasaFact";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent, type PointerEvent } from "react";
 import HostNote from "@/components/ui/HostNote";
 import { sfx } from "@/lib/audio";
 import { PONG, PONG_TXT } from "@/lib/content/games";
 import { useT } from "@/lib/i18n";
 import { awardWin } from "@/lib/store";
+import { countdownLeft, newSim, paddleX, startMatch, step, toggleGravity, type PongSim } from "./pongSim";
 
-const { w: W, h: H, paddleH: PH, paddleW: PW, ball: R } = PONG;
+const { w: W, h: H, paddleW: PW, paddleH: AH, ball: R } = PONG;
 const JOSEPH = 3;
-const PX = 14; // player paddle x (left edge)
-const AX = W - 14 - PW; // Joseph's paddle x
+const { you: PX, joe: AX } = paddleX(PONG);
+/** Phones in landscape: put the ▲▼ buttons beside the table instead of below it (same query as the map UI). */
+const PHONE_LANDSCAPE = "(orientation: landscape) and (max-height: 520px)";
+const COARSE = "(pointer: coarse)";
 
-type Sim = {
-  bx: number; by: number; vx: number; vy: number;
-  py: number; ay: number; target: number | null;
-  /** Joseph's aiming error for the current return (px), re-rolled every time you hit the ball */
-  err: number;
-  keys: { up: boolean; down: boolean };
-  moon: boolean; live: boolean; ts: number;
-};
 type Phase = "ready" | "play" | "won" | "lost";
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+/** Best effort: capture throws if the pointer is already gone (e.g. a very quick tap). */
+const capture = (el: Element, id: number) => {
+  try {
+    el.setPointerCapture(id);
+  } catch {}
+};
 
-function draw(c: HTMLCanvasElement | null, s: Sim, score: [number, number]) {
+function useMedia(q: string) {
+  return useSyncExternalStore(
+    (cb) => {
+      const m = window.matchMedia(q);
+      m.addEventListener("change", cb);
+      return () => m.removeEventListener("change", cb);
+    },
+    () => window.matchMedia(q).matches,
+    () => false,
+  );
+}
+
+function draw(c: HTMLCanvasElement | null, s: PongSim) {
   const x = c?.getContext("2d");
   if (!x) return;
   x.fillStyle = s.moon ? "#1b1f3b" : "#0d4f3c";
@@ -42,48 +55,58 @@ function draw(c: HTMLCanvasElement | null, s: Sim, score: [number, number]) {
   x.fillStyle = "#ffffffaa";
   x.font = "bold 28px system-ui, sans-serif";
   x.textAlign = "center";
-  x.fillText(String(score[0]), W / 2 - 40, 36);
-  x.fillText(String(score[1]), W / 2 + 40, 36);
+  x.textBaseline = "alphabetic";
+  x.fillText(String(s.score[0]), W / 2 - 40, 36);
+  x.fillText(String(s.score[1]), W / 2 + 40, 36);
   x.fillStyle = "#22b8cf";
-  x.fillRect(PX, s.py, PW, PH);
+  x.fillRect(PX, s.py, PW, s.ph);
   x.fillStyle = "#e53935";
-  x.fillRect(AX, s.ay, PW, PH);
+  x.fillRect(AX, s.ay, PW, AH);
   x.fillStyle = "#ffd54a";
   x.beginPath();
   x.arc(s.bx, s.by, R, 0, Math.PI * 2);
   x.fill();
+  // 3-2-1 before every serve, with an arrow showing who receives it.
+  const cd = countdownLeft(s, PONG);
+  if (cd > 0) {
+    x.fillStyle = "#ffffffdd";
+    x.font = "bold 56px system-ui, sans-serif";
+    x.textBaseline = "middle";
+    x.fillText(String(Math.ceil((cd / PONG.countdown) * 3)), W / 2, H * 0.62);
+    x.font = "bold 24px system-ui, sans-serif";
+    x.fillText(s.serveDir === 1 ? "→" : "←", W / 2, H / 3 - 22);
+  }
 }
 
 /** Phase 5 · Joseph's feature (Cancha Deportiva): pong against Joseph where the ball falls with
  *  Earth or Moon gravity (toggle any time: button or G). It bounces elastically off the table's
- *  top and bottom. First to 3 points wins: 3 ★ if you won a point under Earth gravity, else 2 ★. */
+ *  top and bottom. First to 3 points wins: 3 ★ if you won a full Earth-gravity rally, else 2 ★.
+ *  Physics and Joseph's AI live in ./pongSim (pure, swept collisions). */
 export default function LunarPingPong() {
   const t = useT();
   const cv = useRef<HTMLCanvasElement>(null);
-  const sim = useRef<Sim>({
-    bx: W / 2, by: H / 3, vx: 0, vy: 0, py: (H - PH) / 2, ay: (H - PH) / 2,
-    target: null, err: 0, keys: { up: false, down: false }, moon: true, live: false, ts: 0,
-  });
-  const score = useRef<[number, number]>([0, 0]);
+  const area = useRef<HTMLDivElement>(null);
+  const sim = useRef<PongSim>(newSim(PONG, false));
+  /** Pointer currently dragging the paddle (finger / pen / pressed mouse), or null. */
+  const drag = useRef<number | null>(null);
   const earthPoint = useRef(false);
   const [view, setView] = useState({ a: 0, b: 0, moon: true });
   const [phase, setPhase] = useState<Phase>("ready");
   const [msg, setMsg] = useState<"point" | "pointAi" | null>(null);
   const [gained, setGained] = useState(0);
+  const side = useMedia(PHONE_LANDSCAPE);
+  const coarse = useMedia(COARSE);
 
-  const serve = (dir: 1 | -1) => {
+  // Slightly taller paddle for fingers.
+  useEffect(() => {
     const s = sim.current;
-    s.bx = W / 2;
-    s.by = H / 3;
-    s.vx = dir * PONG.serveVx;
-    s.vy = -40;
-    s.ts = 0;
-    s.live = true;
-  };
+    s.ph = coarse ? PONG.playerHTouch : PONG.playerH;
+    s.py = clamp(s.py, 0, H - s.ph);
+  }, [coarse]);
 
   const toggle = () => {
     const s = sim.current;
-    s.moon = !s.moon;
+    toggleGravity(s);
     setView((v) => ({ ...v, moon: s.moon }));
     sfx("whoosh");
   };
@@ -91,104 +114,130 @@ export default function LunarPingPong() {
   useEffect(() => {
     const s = sim.current;
     let raf = 0;
-    let wait: ReturnType<typeof setTimeout> | undefined;
+    let last = 0;
     const loop = (ts: number) => {
-      const dt = Math.min(0.033, (ts - (s.ts || ts)) / 1e3);
-      s.ts = ts;
-      // Paddles: player by keys or pointer, Joseph follows the ball when it comes his way.
-      if (s.keys.up) s.py -= PONG.playerSpeed * dt;
-      if (s.keys.down) s.py += PONG.playerSpeed * dt;
-      if (s.target !== null) {
-        const d = s.target - PH / 2 - s.py;
-        s.py += clamp(d, -PONG.playerSpeed * 1.6 * dt, PONG.playerSpeed * 1.6 * dt);
-      }
-      s.py = clamp(s.py, 0, H - PH);
-      // Joseph only reacts once the ball crosses towards his side, and aims a bit off: beatable.
-      const aim = s.vx > 0 && s.bx > W * 0.4 ? s.by + s.err : H / 2;
-      s.ay += clamp(aim - PH / 2 - s.ay, -PONG.aiSpeed * dt, PONG.aiSpeed * dt);
-      s.ay = clamp(s.ay, 0, H - PH);
-
-      if (s.live) {
-        const g = (s.moon ? PONG.gMoon : PONG.gEarth) * PONG.scale;
-        s.vy = clamp(s.vy + g * dt, -PONG.maxVy, PONG.maxVy);
-        s.bx += s.vx * dt;
-        s.by += s.vy * dt;
-        // Elastic bounce on the floor and the ceiling.
-        if (s.by > H - R) { s.by = H - R; s.vy = -Math.abs(s.vy); }
-        if (s.by < R) { s.by = R; s.vy = Math.abs(s.vy); }
-        const hit = (px: number, py: number, dir: 1 | -1) => {
-          const inX = dir === 1 ? s.bx - R <= px + PW && s.bx > px : s.bx + R >= px && s.bx < px + PW;
-          if (!inX || s.by < py - R || s.by > py + PH + R || Math.sign(s.vx) === dir) return;
-          const off = (s.by - (py + PH / 2)) / (PH / 2);
-          s.vx = dir * Math.min(PONG.maxVx, Math.abs(s.vx) * 1.06);
-          s.vy = clamp(s.vy * 0.5 + off * 220, -PONG.maxVy, PONG.maxVy);
-          s.bx = dir === 1 ? px + PW + R : px - R;
-          if (dir === 1) s.err = (Math.random() * 2 - 1) * PH * PONG.aiError;
-          sfx("click");
-        };
-        hit(PX, s.py, 1);
-        hit(AX, s.ay, -1);
-        // Who scores: 0 = you (ball past Joseph), 1 = Joseph (ball past you).
-        const out: 0 | 1 | null = s.bx < -R ? 1 : s.bx > W + R ? 0 : null;
-        if (out !== null) {
-          s.live = false;
-          score.current[out]++;
-          if (out === 0 && !s.moon) earthPoint.current = true;
-          const [a, b] = score.current;
-          setView((v) => ({ ...v, a, b }));
-          if (a >= PONG.target || b >= PONG.target) {
-            const won = a >= PONG.target;
-            if (won) {
-              const st = earthPoint.current ? PONG.starsEarth : PONG.stars;
-              setGained(awardWin("pong", st) ? st : 0);
-            } else sfx("lose");
-            setMsg(null);
-            setPhase(won ? "won" : "lost");
-          } else {
-            sfx(out === 0 ? "ok" : "bad");
-            setMsg(out === 0 ? "point" : "pointAi");
-            // The side that lost the point receives the next serve.
-            wait = setTimeout(() => serve(out === 0 ? 1 : -1), 800);
-          }
+      const dt = last ? Math.min(0.033, (ts - last) / 1e3) : 0;
+      last = ts;
+      const ev = step(s, PONG, dt, Math.random);
+      if (ev.hit !== undefined) sfx("click");
+      if (ev.serve) setMsg(null);
+      if (ev.point !== undefined) {
+        const [a, b] = s.score;
+        if (ev.point === 0 && !s.rallyMoon) earthPoint.current = true;
+        setView((v) => ({ ...v, a, b }));
+        if (s.over) {
+          const won = a > b;
+          if (won) {
+            const st = earthPoint.current ? PONG.starsEarth : PONG.stars;
+            setGained(awardWin("pong", st) ? st : 0);
+          } else sfx("lose");
+          setMsg(null);
+          setPhase(won ? "won" : "lost");
+        } else {
+          sfx(ev.point === 0 ? "ok" : "bad");
+          setMsg(ev.point === 0 ? "point" : "pointAi");
         }
       }
-      draw(cv.current, s, score.current);
+      draw(cv.current, s);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
 
+    const typing = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      return !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+    };
     const key = (on: boolean) => (e: KeyboardEvent) => {
+      if (typing(e)) return;
       const k = e.key.toLowerCase();
-      if (k === "arrowup" || k === "w") { s.keys.up = on; e.preventDefault(); }
-      else if (k === "arrowdown" || k === "s") { s.keys.down = on; e.preventDefault(); }
-      else if (k === "g" && on && !e.repeat) toggle();
+      if (k === "arrowup" || k === "w") s.keys.up = on;
+      else if (k === "arrowdown" || k === "s") s.keys.down = on;
+      else {
+        if (k === "g" && on && !e.repeat) toggle();
+        return;
+      }
+      if (k.startsWith("arrow")) e.preventDefault(); // don't scroll the modal
+      if (on) s.target = null; // keys take over from a resting mouse pointer
+    };
+    // Releasing keys / buttons while the window is not focused would leave the paddle running.
+    const release = () => {
+      s.keys.up = s.keys.down = false;
+      s.nudge = 0;
     };
     const kd = key(true);
     const ku = key(false);
     document.addEventListener("keydown", kd);
     document.addEventListener("keyup", ku);
+    window.addEventListener("blur", release);
+    document.addEventListener("visibilitychange", release);
     return () => {
       cancelAnimationFrame(raf);
-      clearTimeout(wait);
       document.removeEventListener("keydown", kd);
       document.removeEventListener("keyup", ku);
+      window.removeEventListener("blur", release);
+      document.removeEventListener("visibilitychange", release);
     };
   }, []);
 
+  /** Start (or restart, also mid-match) a match from a clean state. */
   const start = () => {
     sfx("click");
-    score.current = [0, 0];
+    const s = sim.current;
+    startMatch(s, PONG, Math.random);
     earthPoint.current = false;
     setView((v) => ({ ...v, a: 0, b: 0 }));
     setMsg(null);
+    setGained(0);
     setPhase("play");
-    serve(Math.random() < 0.5 ? 1 : -1);
+    area.current?.scrollIntoView({ block: "end", behavior: "smooth" });
   };
 
-  const aimAt = (e: PointerEvent<HTMLCanvasElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    sim.current.target = ((e.clientY - r.top) / r.height) * H;
+  // ---- Pointer: drag anywhere in the game area (mouse also follows on hover) ----
+  const toY = (clientY: number) => {
+    const r = cv.current?.getBoundingClientRect();
+    return r && r.height ? clamp(((clientY - r.top) / r.height) * H, 0, H) : null;
   };
+  const down = (e: PointerEvent<HTMLDivElement>) => {
+    if ((e.target as Element).closest("button")) return;
+    drag.current = e.pointerId;
+    sim.current.target = toY(e.clientY);
+    capture(e.currentTarget, e.pointerId);
+  };
+  const move = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerId === drag.current || (drag.current === null && e.pointerType === "mouse")) {
+      sim.current.target = toY(e.clientY);
+    }
+  };
+  const up = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerId !== drag.current) return;
+    drag.current = null;
+    if (e.pointerType !== "mouse") sim.current.target = null;
+  };
+  const leave = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && drag.current === null) sim.current.target = null;
+  };
+
+  // ---- On-screen ▲▼: hold to move (direction in data-dir) ----
+  const holdDir = (e: { currentTarget: HTMLElement }) => (e.currentTarget.dataset.dir === "1" ? 1 : -1);
+  const holdStart = (e: PointerEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    sim.current.target = null;
+    sim.current.nudge = holdDir(e);
+    capture(e.currentTarget, e.pointerId);
+  };
+  const holdEnd = () => { sim.current.nudge = 0; };
+  /** Keyboard activation (Enter / Space on the focused button, detail 0): one step. */
+  const holdKey = (e: MouseEvent<HTMLButtonElement>) => {
+    if (e.detail !== 0) return;
+    const s = sim.current;
+    s.target = null;
+    s.py = clamp(s.py + holdDir(e) * 24, 0, H - s.ph);
+  };
+  const hold = {
+    onPointerDown: holdStart, onPointerUp: holdEnd, onPointerCancel: holdEnd, onLostPointerCapture: holdEnd,
+    onClick: holdKey, onContextMenu: (e: MouseEvent) => e.preventDefault(),
+  };
+  const arrowBtn = { width: 56, height: 48, padding: 0, fontSize: 22, touchAction: "none" } as const;
 
   const josephLine =
     phase === "won" || phase === "lost" ? PONG_TXT.josephWin : PONG_TXT.joseph;
@@ -198,16 +247,33 @@ export default function LunarPingPong() {
       <GameTitle fact="pong">{t(PONG_TXT.title)}</GameTitle>
       <HostNote ch={JOSEPH} text={josephLine} />
       <p className="s">{t(PONG_TXT.desc, { k: PONG.target })}</p>
-      <canvas
-        ref={cv}
-        width={W}
-        height={H}
-        aria-label={t(PONG_TXT.canvas)}
-        style={{ touchAction: "none", width: "100%", height: "auto" }}
-        onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); aimAt(e); }}
-        onPointerMove={aimAt}
-        onPointerLeave={() => { sim.current.target = null; }}
-      />
+      <div
+        ref={area}
+        onPointerDown={down}
+        onPointerMove={move}
+        onPointerUp={up}
+        onPointerCancel={up}
+        onPointerLeave={leave}
+        style={{
+          display: "flex", flexDirection: side ? "row-reverse" : "column", alignItems: "center", gap: 8,
+          touchAction: "none", userSelect: "none", WebkitUserSelect: "none", WebkitTouchCallout: "none",
+        }}
+      >
+        <canvas
+          ref={cv}
+          width={W}
+          height={H}
+          aria-label={t(PONG_TXT.canvas)}
+          style={{
+            display: "block", flex: side ? "1 1 0" : undefined, minWidth: 0, width: "100%", height: "auto",
+            aspectRatio: `${W} / ${H}`, maxWidth: `calc((100dvh - 165px) * ${W / H})`, margin: "0 auto",
+          }}
+        />
+        <div style={{ display: "flex", flexDirection: side ? "column" : "row", gap: 8, alignSelf: side ? "center" : "flex-start" }}>
+          <button type="button" className="b" style={arrowBtn} aria-label={t(PONG_TXT.up)} data-dir="-1" {...hold}>▲</button>
+          <button type="button" className="b" style={arrowBtn} aria-label={t(PONG_TXT.down)} data-dir="1" {...hold}>▼</button>
+        </div>
+      </div>
       <div className="s" role="status">
         {t(PONG_TXT.score, { a: view.a, b: view.b })}
         {msg && <> · {t(PONG_TXT[msg])}</>}
@@ -216,9 +282,9 @@ export default function LunarPingPong() {
         <button className="b" aria-pressed={!view.moon} onClick={toggle}>
           {t(view.moon ? PONG_TXT.moon : PONG_TXT.earth)}
         </button>
-        {phase !== "play" && (
-          <button className="b o" onClick={start}>{t(phase === "ready" ? PONG_TXT.start : PONG_TXT.again)}</button>
-        )}
+        <button className="b o" onClick={start}>
+          {t(phase === "ready" ? PONG_TXT.start : phase === "play" ? PONG_TXT.restart : PONG_TXT.again)}
+        </button>
       </div>
       <p className="s">
         {phase === "won"
