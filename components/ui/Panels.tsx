@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ACTIVITY_IDS,
+  BRIEF_TXT,
   CL,
   ENDING_TXT,
   FACTS,
@@ -184,6 +185,10 @@ export function MainMissionPanel() {
       ) : (
         <p className="s">{t("main.locked")}</p>
       )}
+      {/* Replay the "Misión Lunar – Fase 1" briefing (shown in place of the map until ¡Comenzar!). */}
+      <div className="st">
+        <button className="b" onClick={() => { useUI.getState().closeModal(); useUI.setState({ briefing: true }); }}>{t(BRIEF_TXT.replay)}</button>
+      </div>
       <CloseButton />
     </>
   );

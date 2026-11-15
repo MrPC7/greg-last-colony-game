@@ -605,3 +605,71 @@ export const JOURNEY_TXT = {
   scene: { es: "🚀 Viaje a la Luna · {i}/{total}", en: "🚀 Journey to the Moon · {i}/{total}" },
   replay: { es: "🚀 Ver el viaje a la Luna", en: "🚀 Watch the journey to the Moon" },
 } satisfies Record<string, Localized>;
+
+// ---------------------------------------------------------------------------
+// Briefing screen "Misión Lunar – Fase 1" (components/map/Briefing.tsx): HTML copies of every
+// text panel painted in public/img/briefing.jpg. Shown after the intro and before the map the
+// first time, and replayable from the main mission panel.
+// ---------------------------------------------------------------------------
+
+export const BRIEF_TXT = {
+  label: { es: "Misión Lunar – Fase 1: sesión informativa", en: "Lunar Mission – Phase 1: briefing" },
+  orbi: {
+    es: "¡Hola, equipo! Desde Cajamarca, viajaremos a la Luna. Primero, aprendamos cómo hacerlo de forma segura.",
+    en: "Hi, team! From Cajamarca, we’ll travel to the Moon. First, let’s learn how to do it safely.",
+  },
+  mission: { es: "Misión Lunar – Fase 1", en: "Lunar Mission – Phase 1" },
+  motto: { es: "Aprende. Practica. Explora.", en: "Learn. Practice. Explore." },
+  place: { es: "Cajamarca, Perú", en: "Cajamarca, Peru" },
+  flag: { es: "Bandera del Perú", en: "Flag of Peru" },
+  level: { es: "Nivel 1", en: "Level 1" },
+  banner1: { es: "Uniendo", en: "Uniting" },
+  banner2: { es: "ciencia, tecnología", en: "science, technology" },
+  banner3: { es: "y sueños", en: "and dreams" },
+  school: { es: "Escuela de Cajamarca", en: "Cajamarca School" },
+  bottom: {
+    es: "Completa los módulos para preparar la misión lunar desde la Tierra.",
+    en: "Complete the modules to prepare the lunar mission from Earth.",
+  },
+  start: { es: "¡Comenzar!", en: "Let’s go!" },
+  tap: { es: "Toca un panel para saber dónde se aprende.", en: "Tap a panel to see where you learn it." },
+  /** Orbi's line when a side panel is tapped. {topic}, {where} filled in Briefing.tsx. */
+  learn: { es: "{topic}: lo practicas en {where}.", en: "{topic}: you practice it in {where}." },
+  and: { es: "y en", en: "and in" },
+  replay: { es: "🛰️ Ver la sesión informativa (Fase 1)", en: "🛰️ Watch the briefing (Phase 1)" },
+} satisfies Record<string, Localized>;
+
+/** The five tappable side panels: painted title + check items, and the activities (zone → game)
+ *  that teach the topic. */
+export const BRIEF_PANELS: { id: string; title: Localized; items: Localized[]; learn: ActivityId[] }[] = [
+  {
+    id: "suits",
+    title: { es: "Trajes Espaciales", en: "Spacesuits" },
+    items: [{ es: "Presión", en: "Pressure" }, { es: "Temperatura", en: "Temperature" }, { es: "Movilidad", en: "Mobility" }],
+    learn: ["ar", "therm"],
+  },
+  {
+    id: "missions",
+    title: { es: "Misiones Lunares", en: "Lunar Missions" },
+    items: [{ es: "Apolo 11", en: "Apollo 11" }, { es: "Apolo 17", en: "Apollo 17" }, { es: "Actuales", en: "Current" }],
+    learn: ["aud"],
+  },
+  {
+    id: "life",
+    title: { es: "Soporte Vital", en: "Life Support" },
+    items: [{ es: "Oxígeno", en: "Oxygen" }, { es: "Agua", en: "Water" }, { es: "Control de CO₂", en: "CO₂ control" }],
+    learn: ["verdes"],
+  },
+  {
+    id: "rad",
+    title: { es: "Blindaje de Radiación", en: "Radiation Shielding" },
+    items: [{ es: "Rayos cósmicos", en: "Cosmic rays" }, { es: "Radiación solar", en: "Solar radiation" }],
+    learn: ["rad"],
+  },
+  {
+    id: "energy",
+    title: { es: "Energía de la Nave", en: "Ship Energy" },
+    items: [{ es: "Paneles solares", en: "Solar panels" }, { es: "Baterías", en: "Batteries" }],
+    learn: ["therm"],
+  },
+];

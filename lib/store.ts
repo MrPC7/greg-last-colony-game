@@ -46,6 +46,8 @@ type Progress = {
   playerName: string;
   /** Phase 6: ISO date of the first win against the Hollow Queen (shown on the certificate). */
   finishedAt: string | null;
+  /** The "Misión Lunar – Fase 1" briefing was closed with ¡Comenzar! (shown before the map until then). */
+  briefingSeen: boolean;
 };
 
 type Settings = {
@@ -73,6 +75,7 @@ type GameState = Progress &
     unlockMemory: () => number | null;
     setPatch: (dataUrl: string) => void;
     setPlayerName: (name: string) => void;
+    setBriefingSeen: () => void;
     resetProgress: () => void;
   };
 
@@ -87,6 +90,7 @@ const freshProgress = (): Progress => ({
   patch: null,
   playerName: "",
   finishedAt: null,
+  briefingSeen: false,
 });
 
 export const useGame = create<GameState>()(
@@ -130,6 +134,7 @@ export const useGame = create<GameState>()(
       },
       setPatch: (patch) => set({ patch }),
       setPlayerName: (playerName) => set({ playerName }),
+      setBriefingSeen: () => set({ briefingSeen: true }),
       resetProgress: () => set(freshProgress()),
     }),
     {
@@ -166,6 +171,7 @@ export const useGame = create<GameState>()(
         patch: s.patch,
         playerName: s.playerName,
         finishedAt: s.finishedAt,
+        briefingSeen: s.briefingSeen,
         character: s.character,
         lang: s.lang,
         theme: s.theme,
@@ -210,6 +216,9 @@ type UIState = {
   queued: (() => void) | null;
   /** request from a panel for the map to walk to a zone (prototype `visit(i)`) */
   visitReq: { i: number; nonce: number } | null;
+  /** Briefing screen shown in place of the map: replayed from the main mission panel. (The first
+   *  time it shows because `briefingSeen` is false; see app/play/PlayScreen.tsx.) */
+  briefing: boolean;
   openModal: (m: ModalSpec, onClose?: () => void) => void;
   closeModal: () => void;
   startTalk: (lines: Line[], done?: () => void) => void;
@@ -231,6 +240,7 @@ export const useUI = create<UIState>()((set, get) => ({
   talk: null,
   queued: null,
   visitReq: null,
+  briefing: false,
   openModal: (modal, onClose) => {
     sfx("click");
     set({ modal, onClose: onClose ?? null });
@@ -261,7 +271,7 @@ export const useUI = create<UIState>()((set, get) => ({
     blip(t.lines[t.i + 1]);
   },
   requestVisit: (i) => set({ visitReq: { i, nonce: Date.now() } }),
-  clearAll: () => set({ modal: null, onClose: null, talk: null, queued: null }),
+  clearAll: () => set({ modal: null, onClose: null, talk: null, queued: null, briefing: false }),
 }));
 
 /** Prototype `S.busy`: a modal or a speech bubble is open. */

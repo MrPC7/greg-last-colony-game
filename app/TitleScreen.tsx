@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import { Portrait, faceStyle } from "@/components/ui/Portrait";
 import Watermark from "@/components/ui/Watermark";
 import { music, sfx, unlock } from "@/lib/audio";
-import { CH, PL } from "@/lib/characters";
+import { CH, PL, STATS } from "@/lib/characters";
 import { IN, IN_MS } from "@/lib/content/story";
 import { useT } from "@/lib/i18n";
 import { useGame, useUI } from "@/lib/store";
@@ -91,6 +91,25 @@ export default function TitleScreen() {
               </button>
             ))}
           </span>
+          {/* Stat cards (display only), the selected hero highlighted. */}
+          <div className="stc">
+            {PL.map((i) => (
+              <div key={i} className={"stcard" + (character === i ? " on" : "")} style={{ "--cc": CH[i].col } as CSSProperties}>
+                <b>{t(CH[i].n)}</b>
+                <small>{t(STATS[i].role)}</small>
+                <ul>
+                  {STATS[i].stats.map(([name, v]) => (
+                    <li key={name.es}>
+                      <span>{t(name)}</span>
+                      <span className="stb" role="img" aria-label={t("title.stat", { stat: t(name), v })}>
+                        {[1, 2, 3, 4, 5].map((k) => <i key={k} className={k <= v ? "f" : undefined} />)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
           <button className="b" onClick={() => router.push("/play")}>{t("title.play")}</button>
           <button className="b o" onClick={() => useUI.getState().openModal({ kind: "ar" })}>{t("title.tryAr")}</button>
         </div>

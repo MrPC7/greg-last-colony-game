@@ -42,6 +42,21 @@ body::after{
 .b:disabled{opacity:.5;cursor:default}
 .pk{position:relative;width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
 .pk.on{border-color:#ffd54a}
+/* Character select stat cards (TitleScreen.tsx): display only, bars 1–5, the picked hero lit up.
+   Same dark game-UI panel look as the map HUD in both themes; three columns down to 360px. */
+.stc{flex-basis:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:620px}
+.stcard{min-width:0;padding:8px 10px;border-radius:12px;background:#140c32e6;border:2px solid #4f6bff;color:#fff;opacity:.72;transition:opacity .2s,border-color .2s,box-shadow .2s}
+.stcard.on{opacity:1;border-color:var(--cc);box-shadow:0 0 12px color-mix(in srgb,var(--cc) 60%,transparent)}
+.stcard>b{display:block;font-size:15px;color:var(--cc)}
+.stcard>small{display:block;font-size:12px;font-weight:700;opacity:.85;margin-bottom:4px}
+.stcard ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.stcard li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2px 6px;font-size:12px;line-height:1.2}
+.stcard li>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stb{display:inline-flex;gap:2px;flex:none}
+.stb i{display:block;width:10px;height:8px;border-radius:2px;background:#ffffff26}
+.stb i.f{background:var(--cc);box-shadow:0 0 4px color-mix(in srgb,var(--cc) 70%,transparent)}
+@media(max-width:480px){.stc{gap:5px}.stcard{padding:6px}.stcard li{flex-direction:column;align-items:flex-start}.stb i{width:9px}}
+@media(prefers-reduced-motion:reduce){.stcard{transition:none}}
 /* Top padding leaves room for the config buttons, which stay above the backdrop. */
 #md{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 44px) 10px 10px;z-index:9;overflow:auto}
 .card{background:var(--card);color:var(--fg);border:2px solid var(--bd);border-radius:14px;padding:16px;max-width:560px;width:100%;max-height:min(92vh,calc(100vh - 54px - env(safe-area-inset-top,0px)));overflow:auto}

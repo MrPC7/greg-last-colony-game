@@ -36,6 +36,7 @@ export const UI = {
   "title.choose": { es: "Elige tu personaje:", en: "Choose your character:" },
   "title.play": { es: "¡Jugar!", en: "Play!" },
   "title.tryAr": { es: "📷 Probar realidad aumentada", en: "📷 Try augmented reality" },
+  "title.stat": { es: "{stat}: {v} de 5", en: "{stat}: {v} of 5" },
 
   // Map / hub
   "hub.help": {

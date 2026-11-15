@@ -69,3 +69,19 @@ export function crop(s: Rect, im: Sheet): { size: string; position: string } {
     position: `${(x / (1 - w)) * 100}% ${(y / (1 - h)) * 100}%`,
   };
 }
+
+/** Character select stat cards (display only: no game logic reads them). Values 1–5. */
+export const STATS: Record<number, { role: Localized; stats: [Localized, number][] }> = {
+  0: {
+    role: { es: "Estratega", en: "Strategist" },
+    stats: [[{ es: "Lógica", en: "Logic" }, 5], [{ es: "Resistencia", en: "Endurance" }, 4], [{ es: "Velocidad", en: "Speed" }, 3]],
+  },
+  1: {
+    role: { es: "Narradora", en: "Storyteller" },
+    stats: [[{ es: "Memoria", en: "Memory" }, 5], [{ es: "Empatía", en: "Empathy" }, 5], [{ es: "Estrategia", en: "Strategy" }, 3]],
+  },
+  3: {
+    role: { es: "Rival", en: "Rival" },
+    stats: [[{ es: "Velocidad", en: "Speed" }, 5], [{ es: "Fuerza", en: "Strength" }, 4], [{ es: "Táctica", en: "Tactics" }, 3]],
+  },
+};
