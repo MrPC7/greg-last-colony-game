@@ -153,6 +153,10 @@ python scripts/build_data.py --offline    # rebuild from CSVs already saved in s
 
 The script saves the raw CSVs to `scripts/raw/` and writes the snapshot date into each JSON. If a download fails, it prints the URL: download that CSV by hand into `scripts/raw/` with the file name shown and run again with `--offline`. The FIRMS file only covers the **last 24 hours**, so every rebuild gives a new set of fires. After rebuilding, update the dates and counts in [`lib/content/credits.ts`](lib/content/credits.ts) (and in the "NASA data used" section above), then commit the new JSON files.
 
+### License
+
+The source code is released under the [MIT License](LICENSE). The art, characters, story and texts are licensed under [CC BY-NC 4.0](LICENSE-ASSETS.md); NASA data and facts follow NASA's own usage guidelines.
+
 ---
 
 ## Español
@@ -301,3 +305,7 @@ python scripts/build_data.py --offline    # regenera a partir de los CSV ya guar
 ```
 
 El script guarda los CSV originales en `scripts/raw/` y escribe la fecha de descarga en cada JSON. Si una descarga falla, muestra la URL: descarga ese CSV a mano en `scripts/raw/` con el nombre indicado y vuelve a ejecutar con `--offline`. El archivo de FIRMS solo cubre las **últimas 24 horas**, así que cada regeneración trae un conjunto nuevo de incendios. Después de regenerar, actualiza las fechas y cifras en [`lib/content/credits.ts`](lib/content/credits.ts) (y en la sección «Datos de la NASA usados» de arriba) y haz commit de los nuevos JSON.
+
+### Licencia
+
+El código fuente se publica bajo la [licencia MIT](LICENSE). El arte, los personajes, la historia y los textos están bajo licencia [CC BY-NC 4.0](LICENSE-ASSETS.md); los datos y la información de la NASA siguen las propias normas de uso de la NASA.
