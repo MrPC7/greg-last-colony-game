@@ -18,8 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
-      NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io
+      # Served at the root of the custom domain (public/CNAME), so no base path.
+      NEXT_PUBLIC_BASE_PATH: ""
+      NEXT_PUBLIC_SITE_URL: https://abatsigame.pranshuchaurasia.dev
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

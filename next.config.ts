@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// GitHub Pages serves the site under /<repo-name>. Set via NEXT_PUBLIC_BASE_PATH
-// (see .env.production and .github/workflows/deploy.yml). Empty in `next dev`.
+// Optional deploy sub-path, set via NEXT_PUBLIC_BASE_PATH (see .env.production and
+// .github/workflows/deploy.yml). Empty: the site is served at the root of its custom domain.
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {

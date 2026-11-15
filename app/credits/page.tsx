@@ -9,6 +9,7 @@ import {
   LIBRARIES,
   NASA_DATA,
   NASA_RESOURCES,
+  SITE_URL,
   TEAM,
   type Source,
 } from "@/lib/content/credits";
@@ -42,6 +43,8 @@ export default function CreditsPage() {
           <b>{t("app.title")}</b>
           <br />
           {t(C.event)}
+          <br />
+          {t(C.playOnline)} <a href={SITE_URL} target="_blank" rel="noopener noreferrer">{SITE_URL}</a>
         </p>
 
         <h2>{t(C.teamTitle)}</h2>

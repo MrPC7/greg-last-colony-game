@@ -3,6 +3,9 @@ import type { Localized } from "./types";
 // Credits page content (app/credits/page.tsx): team, NASA resources, AI (SI) disclosure,
 // open-source libraries. Every player-visible text is an {es, en} pair.
 
+/** Public address of the game (custom domain, served at the root). */
+export const SITE_URL = "https://abatsigame.pranshuchaurasia.dev/";
+
 // ---------------------------------------------------------------------------
 // Team — proper names are shown exactly as written (same in both languages).
 // ---------------------------------------------------------------------------
@@ -126,6 +129,7 @@ export const CREDITS = {
     es: "Proyecto para el NASA Space Apps Challenge 2026 — sede Cajamarca (Perú).",
     en: "Project for the NASA Space Apps Challenge 2026 — Cajamarca (Peru) local event.",
   },
+  playOnline: { es: "🌐 Juega en línea:", en: "🌐 Play online:" },
   teamTitle: { es: "👥 Equipo", en: "👥 Team" },
 
   nasaTitle: { es: "🌕 Recursos de la NASA usados", en: "🌕 NASA resources used" },

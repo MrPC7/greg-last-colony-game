@@ -18,7 +18,7 @@ const ogImage = {
 };
 
 export const metadata: Metadata = {
-  // Absolute base for og:image / og:url (GitHub Pages origin; see .env.production and deploy.yml).
+  // Absolute base for og:image / og:url (custom-domain origin; see .env.production and deploy.yml).
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: UI["app.title"].es,
   description: UI["app.description"].es,

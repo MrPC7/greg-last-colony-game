@@ -1,6 +1,6 @@
 # Greg and the Last Colony · Greg y la Colonia Última
 
-**▶ Play now / Juega ahora: https://mrpc7.github.io/greg-last-colony-game/**
+**▶ Play now / Juega ahora: https://abatsigame.pranshuchaurasia.dev/**
 
 [English](#english) · [Español](#español)
 
@@ -78,7 +78,7 @@ This game does not use NASA logos, insignia or branding, and it is not endorsed 
 - [Chart.js](https://github.com/chartjs/Chart.js) + [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2): temperature chart
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) 4 and CSS modules; SVG for the fire map; Canvas + `getUserMedia` for AR; Web Audio for sound
 - Python 3 (standard library) for the data build; [Pillow](https://github.com/python-pillow/Pillow) for image watermarking
-- Hosted on **GitHub Pages**, deployed by GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) on every push to `main`
+- Hosted on **GitHub Pages** at the custom domain `abatsigame.pranshuchaurasia.dev` ([`public/CNAME`](public/CNAME)), deployed by GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) on every push to `main`
 
 All game text lives in [`lib/content/`](lib/content/) as `{ es, en }` pairs.
 
@@ -99,7 +99,7 @@ npm run check:i18n   # check that every text has both Spanish and English
 npm run build        # static export to out/
 ```
 
-`npm run build` uses `NEXT_PUBLIC_BASE_PATH=/greg-last-colony-game` from [`.env.production`](.env.production), so the exported site expects to be served under that path (as on GitHub Pages). To preview the export at the root of a local server, build with an empty base path, e.g. `NEXT_PUBLIC_BASE_PATH= npm run build` (bash), then serve `out/` with any static server.
+`npm run build` reads [`.env.production`](.env.production): an empty `NEXT_PUBLIC_BASE_PATH` (the site is served at the root of https://abatsigame.pranshuchaurasia.dev/) and `NEXT_PUBLIC_SITE_URL` for the absolute Open Graph URLs. To preview the export, serve `out/` at the root of any static server. To host it under a sub-path instead, set `NEXT_PUBLIC_BASE_PATH=/<sub-path>` before building.
 
 ### Rebuild the NASA data
 
@@ -186,7 +186,7 @@ Este juego no usa logotipos, insignias ni marcas de la NASA, y no está respalda
 - [Chart.js](https://github.com/chartjs/Chart.js) + [react-chartjs-2](https://github.com/reactchartjs/react-chartjs-2): gráfica de temperatura
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) 4 y módulos CSS; SVG para el mapa de incendios; Canvas + `getUserMedia` para la realidad aumentada; Web Audio para el sonido
 - Python 3 (biblioteca estándar) para preparar los datos; [Pillow](https://github.com/python-pillow/Pillow) para la marca de agua de las imágenes
-- Publicado en **GitHub Pages** con GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) en cada push a `main`
+- Publicado en **GitHub Pages** con el dominio propio `abatsigame.pranshuchaurasia.dev` ([`public/CNAME`](public/CNAME)), mediante GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)) en cada push a `main`
 
 Todos los textos del juego están en [`lib/content/`](lib/content/) como pares `{ es, en }`.
 
@@ -207,7 +207,7 @@ npm run check:i18n   # comprueba que cada texto tenga español e inglés
 npm run build        # exportación estática en out/
 ```
 
-`npm run build` usa `NEXT_PUBLIC_BASE_PATH=/greg-last-colony-game` de [`.env.production`](.env.production), así que el sitio exportado espera servirse bajo esa ruta (como en GitHub Pages). Para probar la exportación en la raíz de un servidor local, compila con la ruta base vacía, por ejemplo `NEXT_PUBLIC_BASE_PATH= npm run build` (bash), y sirve `out/` con cualquier servidor estático.
+`npm run build` lee [`.env.production`](.env.production): `NEXT_PUBLIC_BASE_PATH` vacío (el sitio se sirve en la raíz de https://abatsigame.pranshuchaurasia.dev/) y `NEXT_PUBLIC_SITE_URL` para las URL absolutas de Open Graph. Para probar la exportación, sirve `out/` en la raíz de cualquier servidor estático. Para alojarlo bajo una subruta, define `NEXT_PUBLIC_BASE_PATH=/<subruta>` antes de compilar.
 
 ### Regenerar los datos de la NASA
 
