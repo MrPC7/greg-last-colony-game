@@ -7,32 +7,16 @@ import type { Lang, Localized } from "@/lib/content/types";
 import { useT } from "@/lib/i18n";
 import { setPadEnter } from "@/lib/pad";
 import { useUI } from "@/lib/store";
-import { FitText, place, type Box } from "./MapLabel";
+import { ArtWindow, FitText, place, type Box } from "./MapLabel";
 import styles from "./briefing.module.css";
 
 /** Size of briefing.jpg in px: every box below is measured on it (as in MapLabel.tsx for the map). */
 const BW = 1920;
 const BH = 1080;
 const FULL: Box = [0, 0, BW, BH];
-const pct = (v: number) => `${+v.toFixed(3)}%`;
 
-/** A window onto the briefing art at `at` (stage coordinates): shows the painted icon or picture
- *  itself, feathered into the HTML panel under it. Not rotated, so it always matches the art. */
-function ArtIcon({ at }: { at: Box }) {
-  const w = at[2] - at[0];
-  const h = at[3] - at[1];
-  return (
-    <span
-      aria-hidden
-      className={styles.art}
-      style={{
-        ...place(at, FULL),
-        backgroundSize: `${pct((BW / w) * 100)} ${pct((BH / h) * 100)}`,
-        backgroundPosition: `${pct((at[0] / (BW - w)) * 100)} ${pct((at[1] / (BH - h)) * 100)}`,
-      }}
-    />
-  );
-}
+/** A window onto the briefing art at `at` (stage coordinates). Not rotated, so it always matches the art. */
+const ArtIcon = ({ at }: { at: Box }) => <ArtWindow at={at} w={BW} h={BH} className={styles.art} />;
 
 /** Panel box in briefing px, its rotation (to match the painted perspective) and the icons /
  *  pictures painted on it, which are kept as art windows. `title` / `items`: text boxes in px. */

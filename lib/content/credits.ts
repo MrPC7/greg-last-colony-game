@@ -19,7 +19,7 @@ export const TEAM: string[] = [
   "Miguel Angel Vilca Mamani",
 ];
 
-/** AI tool used to generate the AI images (map.jpg, keyart.jpg, cast.jpg, briefing.jpg). */
+/** AI tool used to generate the AI images (map.jpg, keyart.jpg, cast.jpg, briefing.jpg, scene03.jpg). */
 export const AI_IMAGE_TOOL: Localized = {
   es: "Herramienta de generación de imágenes con IA (texto a imagen)",
   en: "AI text-to-image generation tool",
@@ -118,6 +118,7 @@ export const AI_IMAGES: { file: string; cssVar: string; ratio: string; crop?: nu
   { file: "img/cast.jpg", cssVar: "--cast", ratio: "1476/777", name: { es: "Personajes", en: "Characters" } },
   // Briefing screen: its burned-in label runs along the bottom edge under the painted bar, like the map's.
   { file: "img/briefing.jpg", cssVar: "--brief", ratio: "1920/1080", crop: 0.024, name: { es: "Sesión informativa (Misión Lunar – Fase 1)", en: "Briefing (Lunar Mission – Phase 1)" } },
+  { file: "img/scene03.jpg", cssVar: "--s03", ratio: "1920/1080", crop: 0.024, name: { es: "Escenario 02 · La Luna en Peligro", en: "Scenario 02 · The Moon in Danger" } },
 ];
 
 export type Library = { name: string; license: string; url: string; use: Localized };
@@ -169,8 +170,8 @@ export const CREDITS = {
 
   aiTitle: { es: "🤖 Uso de inteligencia artificial (IA)", en: "🤖 Use of artificial intelligence (AI)" },
   aiImages: {
-    es: "Imágenes: el mapa del colegio, la portada, la lámina de personajes y la pantalla de la sesión informativa «Misión Lunar – Fase 1» fueron generados con IA ({tool}). Los archivos descargables (.jpg) llevan la marca «Imagen generada con IA» dentro de la imagen; en el juego, el mapa y la sesión informativa la llevan en su borde inferior y la portada y la lámina de personajes la muestran encima de la imagen. Los personajes del mapa y los retratos son recortes de la lámina de personajes con el fondo quitado; los retratos llevan una pequeña marca «IA».",
-    en: "Images: the school map, the key art, the character sheet and the “Lunar Mission – Phase 1” briefing screen were generated with AI ({tool}). The downloadable files (.jpg) carry the label “AI-generated image” inside the image; in the game, the map and the briefing carry it along their bottom edge and the key art and character sheet show it on top of the image. The map characters and the portraits are cut-outs of the character sheet with the background removed; the portraits carry a small “AI” mark.",
+    es: "Imágenes: el mapa del colegio, la portada, la lámina de personajes, la pantalla de la sesión informativa «Misión Lunar – Fase 1» y la escena «La Luna en Peligro» fueron generados con IA ({tool}). Los archivos descargables (.jpg) llevan la marca «Imagen generada con IA» dentro de la imagen; en el juego, el mapa, la sesión informativa y la escena de la Luna la llevan en su borde inferior y la portada y la lámina de personajes la muestran encima de la imagen. Los personajes del mapa y los retratos son recortes de la lámina de personajes con el fondo quitado; los retratos llevan una pequeña marca «IA».",
+    en: "Images: the school map, the key art, the character sheet, the “Lunar Mission – Phase 1” briefing screen and the “The Moon in Danger” scene were generated with AI ({tool}). The downloadable files (.jpg) carry the label “AI-generated image” inside the image; in the game, the map, the briefing and the Moon scene carry it along their bottom edge and the key art and character sheet show it on top of the image. The map characters and the portraits are cut-outs of the character sheet with the background removed; the portraits carry a small “AI” mark.",
   },
   aiCode: {
     es: "Código: desarrollado por el equipo con herramientas de programación asistida por IA.",

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Briefing from "@/components/map/Briefing";
+import MoonScene from "@/components/map/MoonScene";
 import PhoneBar from "@/components/map/PhoneBar";
 import RotateHint from "@/components/map/RotateHint";
 import Stage from "@/components/map/Stage";
@@ -19,6 +20,8 @@ export default function PlayScreen() {
   const firstBriefing = useGame((s) => !s.briefingSeen);
   const replayBriefing = useUI((s) => s.briefing);
   const briefing = firstBriefing || replayBriefing;
+  // Boss intro dialogue: played over the "La Luna en Peligro" scene, in place of the map.
+  const bossScene = useUI((s) => s.bossScene);
 
   useEffect(() => {
     music("explore");
@@ -44,7 +47,7 @@ export default function PlayScreen() {
     <div id="app" className="play">
       <RotateHint />
       <div id="hub">
-        {briefing ? <Briefing onStart={start} /> : <Stage />}
+        {briefing ? <Briefing onStart={start} /> : bossScene ? <MoonScene live /> : <Stage />}
         {/* Narrow screens only (CSS): the label burned into map.jpg is too small to read there. */}
         <p className="mapcap">{t("ai.watermark")}</p>
         <p className="s">{t("hub.help")}</p>

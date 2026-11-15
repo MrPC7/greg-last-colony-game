@@ -57,6 +57,8 @@ const imageVars = {
   "--cast": `url(${asset("/img/cast.webp")})`,
   "--brief": `url(${asset("/img/briefing.webp")})`,
   "--brief-sm": `url(${asset("/img/briefing-sm.webp")})`,
+  "--s03": `url(${asset("/img/scene03.webp")})`,
+  "--s03-sm": `url(${asset("/img/scene03-sm.webp")})`,
 } as CSSProperties;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

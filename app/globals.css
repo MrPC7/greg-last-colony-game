@@ -42,6 +42,12 @@ body::after{
 .b:disabled{opacity:.5;cursor:default}
 .pk{position:relative;width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:var(--key);background-size:1064% auto;cursor:pointer;padding:0}
 .pk.on{border-color:#ffd54a}
+/* Last Journey scene: the full "La Luna en Peligro" art, so the card gets wider for it; never
+   taller than ~52% of the screen. */
+.card:has(.jmoon){max-width:min(980px,100%)}
+.jmoon{width:min(100%,calc(52vh * 16 / 9));margin:6px auto}
+/* Boss intro over the Moon scene: its dialogue box shows the lines, so no floating bubble. */
+body:has([data-moon-live]) #bub{display:none}
 /* Character select stat cards (TitleScreen.tsx): display only, bars 1–5, the picked hero lit up.
    Same dark game-UI panel look as the map HUD in both themes; three columns down to 360px. */
 .stc{flex-basis:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:620px}

@@ -534,11 +534,13 @@ export const ENDING_TXT = {
  *  shown above a scene, with its accessible description. */
 export type SceneArt = { rect: [number, number, number, number]; alt: Localized };
 
-/** One scene of the journey: same shape as an ending scene, plus an optional key-art crop. */
-export type JourneyScene = EndingScene & { art?: SceneArt };
+/** One scene of the journey: same shape as an ending scene, plus an optional key-art crop or
+ *  (`moon`: its accessible description) the full "La Luna en Peligro" scene art (MoonScene.tsx). */
+export type JourneyScene = EndingScene & { art?: SceneArt; moon?: Localized };
 
 /** Plays when the player taps "Face the Hollow Queen" (before Ray's lines and BOSS_INTRO), and
- *  can be replayed from the main mission. Uses only the key art and the cast portraits. */
+ *  can be replayed from the main mission. Uses the key art, the cast portraits and, for the last
+ *  scene, scene03 ("La Luna en Peligro"). */
 export const JOURNEY: JourneyScene[] = [
   {
     chars: [0, 1, 3],
@@ -586,12 +588,9 @@ export const JOURNEY: JourneyScene[] = [
   {
     chars: [],
     title: { es: "Los Últimos Exploradores en la Luna", en: "The Last Explorers on the Moon" },
-    art: {
-      rect: [0, 0, 1170, 651],
-      alt: {
-        es: "Greg, Elen, Orbi y Joseph en la Luna, frente a la Reina Hueca y las cúpulas de Selene",
-        en: "Greg, Elen, Orbi and Joseph on the Moon, facing the Hollow Queen and Selene’s domes",
-      },
+    moon: {
+      es: "Desde la cabina de la nave, Greg, Elen, Orbi y Joseph ven la Luna invadida: la Reina Hueca se alza sobre las cúpulas de Selene entre naves oscuras",
+      en: "From the ship’s cockpit, Greg, Elen, Orbi and Joseph see the invaded Moon: the Hollow Queen rises over Selene’s domes among dark ships",
     },
     lines: [
       { es: "Cielo negro, polvo gris y pasos que flotan: pesan seis veces menos que en Cajamarca.", en: "Black sky, grey dust and floating steps: they weigh six times less than in Cajamarca." },
@@ -672,4 +671,38 @@ export const BRIEF_PANELS: { id: string; title: Localized; items: Localized[]; l
     items: [{ es: "Paneles solares", en: "Solar panels" }, { es: "Baterías", en: "Batteries" }],
     learn: ["therm"],
   },
+];
+
+// ---------------------------------------------------------------------------
+// "La Luna en Peligro" scene (public/img/scene03.jpg, components/map/MoonScene.tsx): HTML copies
+// of its painted text panels. Last scene of the Journey to the Moon and backdrop of the boss
+// intro. The art calls the villain "Reina del Vacío"; the game's name, Reina Hueca, is used here.
+// ---------------------------------------------------------------------------
+
+export const MOON_TXT = {
+  label: { es: "Escenario 02: La Luna en Peligro", en: "Scenario 02: The Moon in Danger" },
+  scenario: { es: "Escenario 02 · La Luna en Peligro", en: "Scenario 02 · The Moon in Danger" },
+  current: { es: "Misión Actual", en: "Current Mission" },
+  rescue: { es: "Rescata la Luna", en: "Rescue the Moon" },
+  task1: { es: "Analiza la invasión de la Reina Hueca", en: "Analyze the Hollow Queen’s invasion" },
+  task2: { es: "Protege la nave y prepara el aterrizaje", en: "Protect the ship and prepare the landing" },
+  /** Orbi's painted line: "¡{n}!" in bold, then the rest. */
+  callout: { es: "¡{n}!", en: "{n}!" },
+  orbi: {
+    es: "La Reina Hueca ha invadido la Luna… Debemos aprender todo sobre la misión lunar y prepararnos para enfrentarla.",
+    en: "The Hollow Queen has invaded the Moon… We must learn everything about the lunar mission and get ready to face her.",
+  },
+  learn: { es: "Aprende y prepárate:", en: "Learn and get ready:" },
+  tutorial: { es: "Tutorial STEM", en: "STEM Tutorial" },
+  continue: { es: "¡Continuar!", en: "Continue!" },
+} satisfies Record<string, Localized>;
+
+/** The "Aprende y prepárate" list, in the painted order. */
+export const MOON_LEARN: Localized[] = [
+  { es: "Trajes Espaciales", en: "Spacesuits" },
+  { es: "Blindaje de Radiación", en: "Radiation Shielding" },
+  { es: "Soporte Vital", en: "Life Support" },
+  { es: "Energía de la Nave", en: "Ship Energy" },
+  { es: "Navegación Lunar", en: "Lunar Navigation" },
+  { es: "Aterrizaje Seguro", en: "Safe Landing" },
 ];

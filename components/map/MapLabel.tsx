@@ -41,6 +41,25 @@ export function MapIcon({ at, panel }: { at: Box; panel: Box }) {
   );
 }
 
+/** Window onto a full-screen scene image (W×H px, shown by `className`'s background) at `at`,
+ *  in % of the stage: the painted icon or picture itself, feathered into the HTML panel under it.
+ *  Used by the briefing and the Moon scene (Briefing.tsx, MoonScene.tsx). */
+export function ArtWindow({ at, w: W, h: H, className }: { at: Box; w: number; h: number; className: string }) {
+  const w = at[2] - at[0];
+  const h = at[3] - at[1];
+  return (
+    <span
+      aria-hidden
+      className={className}
+      style={{
+        ...place(at, [0, 0, W, H]),
+        backgroundSize: `${pct((W / w) * 100)} ${pct((H / h) * 100)}`,
+        backgroundPosition: `${pct((at[0] / (W - w)) * 100)} ${pct((at[1] / (H - h)) * 100)}`,
+      }}
+    />
+  );
+}
+
 /** Shrink the font (CSS var --fit, 0–1) until the content fits the box, in both directions. */
 function fit(el: HTMLElement | null) {
   if (!el) return;
