@@ -51,6 +51,11 @@ export const UI = {
   "nav.missions": { es: "Misiones", en: "Missions" },
   "nav.achievements": { es: "Logros", en: "Achievements" },
   "nav.main": { es: "Misión principal", en: "Main mission" },
+  // Panels painted in map.jpg, re-drawn in HTML over the art (components/map/NavBar.tsx).
+  "map.missionsSub": { es: "Completa desafíos y avanza en la historia", en: "Complete challenges and move the story forward" },
+  "map.mainTitle": { es: "Misión Principal:", en: "Main Mission:" },
+  "map.mainSub": { es: "Descubre el origen de NOX-Ω", en: "Discover the origin of NOX-Ω" },
+  "map.go": { es: "¡Vamos!", en: "Let’s go!" },
 
   // Speech bubble
   "bubble.continue": { es: "Toca para continuar ▶", en: "Tap to continue ▶" },

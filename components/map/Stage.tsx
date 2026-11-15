@@ -23,6 +23,7 @@ import { useT } from "@/lib/i18n";
 import { isBusy, useGame, useUI } from "@/lib/store";
 import Hotspot from "./Hotspot";
 import Hud from "./Hud";
+import { ZONE_LABELS, ZoneLabel } from "./MapLabel";
 import NavBar from "./NavBar";
 import PlayerToken from "./PlayerToken";
 import styles from "./map.module.css";
@@ -261,6 +262,13 @@ export default function Stage() {
       onPointerUp={() => (drag.current = false)}
       onPointerLeave={() => (drag.current = false)}
     >
+      {/* HTML copies of the zone labels painted in map.jpg, so EN players don't see Spanish. */}
+      {ZONES.map((p, i) => {
+        const geo = ZONE_LABELS[p.id];
+        return geo && p.sub ? (
+          <ZoneLabel key={p.id} geo={geo} title={t(p.n)} sub={t(p.sub)} onSelect={() => ctrl.current?.visit(i)} />
+        ) : null;
+      })}
       {ZONES.map((p, i) => (
         <Hotspot
           key={p.id}

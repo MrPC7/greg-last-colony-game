@@ -16,14 +16,15 @@ export type ActivityId =
 const RAY = 6;
 
 /** `P`: map hotspots, % coordinates on map.jpg. `wx`/`wy`: where the hero stands to enter
- *  (only for hotspots outside the walkable area, y < 24). */
-export const ZONES: { id: ZoneId; n: Localized; x: number; y: number; wx?: number; wy?: number }[] = [
-  { id: "aulas", n: { es: "Aulas", en: "Classrooms" }, x: 27.1, y: 30.1 },
-  { id: "lab", n: { es: "Laboratorio Digital", en: "Digital Lab" }, x: 83.4, y: 38.4 },
-  { id: "cancha", n: { es: "Cancha Deportiva", en: "Sports Court" }, x: 16.6, y: 52.5 },
-  { id: "verdes", n: { es: "Zonas Verdes", en: "Green Zones" }, x: 46.8, y: 70.3 },
+ *  (only for hotspots outside the walkable area, y < 24). `n` / `sub`: title and subtitle of the
+ *  zone label painted on the map, re-drawn in HTML over it (components/map/MapLabel.tsx). */
+export const ZONES: { id: ZoneId; n: Localized; sub?: Localized; x: number; y: number; wx?: number; wy?: number }[] = [
+  { id: "aulas", n: { es: "Aulas", en: "Classrooms" }, sub: { es: "Aprende y resuelve", en: "Learn and solve" }, x: 27.1, y: 30.1 },
+  { id: "lab", n: { es: "Laboratorio Digital", en: "Digital Lab" }, sub: { es: "Crea e innova", en: "Create and innovate" }, x: 83.4, y: 38.4 },
+  { id: "cancha", n: { es: "Cancha Deportiva", en: "Sports Court" }, sub: { es: "Demuestra tu talento", en: "Show your talent" }, x: 16.6, y: 52.5 },
+  { id: "verdes", n: { es: "Zonas Verdes", en: "Green Zones" }, sub: { es: "Descansa y recarga", en: "Rest and recharge" }, x: 46.8, y: 70.3 },
   // "Auditorio" alone had no TR entry in the prototype; translated here.
-  { id: "aud", n: { es: "Auditorio", en: "Auditorium" }, x: 80.6, y: 66.2 },
+  { id: "aud", n: { es: "Auditorio", en: "Auditorium" }, sub: { es: "Presenta tus ideas", en: "Share your ideas" }, x: 80.6, y: 66.2 },
   // Phase 4: the observatory dome on top of the main building (not part of ORD; unlocks after 2 zones).
   { id: "senal", n: { es: "La Señal de Ray", en: "Ray’s Signal" }, x: 59.3, y: 9.5, wx: 59.3, wy: 26 },
 ];
